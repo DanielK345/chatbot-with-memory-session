@@ -1,7 +1,6 @@
 """Main pipeline orchestrator for chat assistant."""
 
-import logging
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Union
 from app.memory.session_store import SessionStore
 from app.memory.summarizer import SessionSummarizer
 from app.memory.schemas import MessageRange
@@ -12,11 +11,11 @@ from app.query_understanding.context import ContextAugmenter
 from app.query_understanding.clarifier import ClarifyingQuestionGenerator
 from app.query_understanding.schemas import QueryUnderstanding
 from app.core.prompt_builder import PromptBuilder
-from app.llm.client import LLMClient, OllamaClient
-from typing import Union
+from app.llm.client import LLMClient
+from app.llm.ollama_client import OllamaClient
+from app.utils.logging import get_logger
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 
 class ChatPipeline:

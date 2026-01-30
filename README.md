@@ -96,6 +96,9 @@ chat-bot-with-memory/
 │       ├── client.py          # Unified LLM client (Gemini + Ollama)
 │       ├── gemini_client.py   # Gemini client wrapper
 │       └── json_guard.py       # JSON validation/retry
+│   │
+│   └── utils/
+│       └── logging.py          # Centralized logging configuration
 │
 ├── data/
 │   └── conversations/
@@ -270,6 +273,49 @@ OLLAMA_MODEL=llama3.1
 REDIS_URL=redis://localhost:6379
 SESSION_STORAGE_TYPE=file  # or "redis"
 MAX_CONTEXT_TOKENS=10000
+
+# Logging (optional)
+LOG_LEVEL=INFO  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+LOG_FILE=app.log  # Log file name (default: app.log)
+LOG_DIR=logs  # Log directory (default: logs)
+LOG_MAX_BYTES=10485760  # Max log file size in bytes (default: 10MB)
+LOG_BACKUP_COUNT=5  # Number of backup log files (default: 5)
+```
+
+### Logging Configuration
+
+The application uses centralized logging configured via `app/utils/logging.py`. Logs are written to both console and file (if configured).
+
+**Log Files:**
+- Default location: `logs/app.log`
+- Logs are automatically rotated when they exceed the configured size
+- Old log files are kept as backups (e.g., `app.log.1`, `app.log.2`)
+
+**Log Levels:**
+- `DEBUG`: Detailed information for debugging
+- `INFO`: General informational messages (default)
+- `WARNING`: Warning messages
+- `ERROR`: Error messages
+- `CRITICAL`: Critical errors
+
+**View logs:**
+```bash
+# Tail log file
+tail -f logs/app.log
+
+# View last 100 lines
+tail -n 100 logs/app.log
+```
+
+**Usage in code:**
+```python
+from app.utils.logging import get_logger
+
+logger = get_logger(__name__)
+logger.info("Information message")
+logger.debug("Debug message")
+logger.warning("Warning message")
+logger.error("Error message", exc_info=True)  # Include exception traceback
 ```
 
 ### Pipeline Parameters

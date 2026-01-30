@@ -2,7 +2,7 @@
 
 from typing import List, Dict, Any
 from app.memory.schemas import SessionSummary, SessionMemory, MessageRange
-from app.llm.client import OllamaClient
+from app.llm.ollama_client import OllamaClient
 
 
 class SessionSummarizer:

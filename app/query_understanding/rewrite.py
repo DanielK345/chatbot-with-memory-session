@@ -1,7 +1,7 @@
 """Query rewriting for ambiguous queries."""
 
 from typing import List, Dict, Any
-from app.llm.client import OllamaClient
+from app.llm.ollama_client import OllamaClient
 
 
 class QueryRewriter:

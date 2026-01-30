@@ -3,7 +3,7 @@
 import re
 from typing import Dict, Any
 from app.query_understanding.schemas import AmbiguityAnalysis
-from app.llm.client import OllamaClient
+from app.llm.ollama_client import OllamaClient
 
 
 class AmbiguityDetector:

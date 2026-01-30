@@ -6,6 +6,11 @@ import sys
 from app.core.pipeline import ChatPipeline
 from app.memory.session_store import SessionStore
 from app.llm.client import LLMClient
+from app.utils.logging import configure_logging_from_env, get_logger
+
+# Configure logging
+configure_logging_from_env()
+logger = get_logger(__name__)
 
 
 async def interactive_demo():
@@ -54,16 +59,19 @@ async def interactive_demo():
             
             # Process message
             print("\n[Processing...]")
+            logger.debug(f"Processing user input: {user_input[:100]}...")
             result = await pipeline.process_message(session_id, user_input)
             
             # Display response
             print(f"\nAssistant: {result['response']}")
+            logger.debug("Response generated successfully")
             
             # Display query understanding if ambiguous
             q_understanding = result['query_understanding']
             if q_understanding['is_ambiguous']:
                 print("\n[Query Understanding]")
                 print(f"  Ambiguous: Yes")
+                logger.info(f"Ambiguous query detected and processed")
                 if q_understanding.get('rewritten_query'):
                     print(f"  Rewritten: {q_understanding['rewritten_query']}")
                 if q_understanding.get('clarifying_questions'):
@@ -75,16 +83,18 @@ async def interactive_demo():
             metadata = result['pipeline_metadata']
             if metadata.get('summarization_triggered'):
                 print(f"\n[Pipeline] Summarization triggered! (tokens: {metadata['token_count']})")
+                logger.info(f"Session summarization triggered for session {session_id}")
                 if result.get('session_memory'):
                     print("  Session summary created.")
             
         except KeyboardInterrupt:
             print("\n\nGoodbye!")
+            logger.info("User interrupted session")
             break
         except Exception as e:
-            print(f"\nError: {e}")
-            import traceback
-            traceback.print_exc()
+            error_msg = f"Error processing message: {e}"
+            print(f"\n{error_msg}")
+            logger.error(error_msg, exc_info=True)
 
 
 async def load_conversation(filepath: str, pipeline: ChatPipeline, session_id: str):
@@ -104,11 +114,16 @@ async def load_conversation(filepath: str, pipeline: ChatPipeline, session_id: s
                     messages.append(msg)
             
             print(f"\nLoaded {len(messages)} messages from {filepath}")
+            logger.info(f"Loaded {len(messages)} messages from {filepath} for session {session_id}")
             print("You can now continue the conversation or trigger summarization with more messages.")
     except FileNotFoundError:
-        print(f"File not found: {filepath}")
+        error_msg = f"File not found: {filepath}"
+        print(error_msg)
+        logger.error(error_msg)
     except Exception as e:
-        print(f"Error loading conversation: {e}")
+        error_msg = f"Error loading conversation: {e}"
+        print(error_msg)
+        logger.error(error_msg, exc_info=True)
 
 
 async def demo_flows():
@@ -121,14 +136,18 @@ async def demo_flows():
     try:
         session_store = SessionStore(storage_type="file")
         llm_client = LLMClient(primary="gemini")
-        print(f"✓ Using {llm_client.get_active_provider().upper()} as LLM provider")
+        provider = llm_client.get_active_provider().upper()
+        print(f"✓ Using {provider} as LLM provider")
+        logger.info(f"LLM client initialized with provider: {provider}")
         pipeline = ChatPipeline(
             session_store,
             llm_client,
             max_context_tokens=3000  # Low threshold for demo
         )
     except Exception as e:
-        print(f"\n✗ Failed to initialize LLM client: {e}")
+        error_msg = f"Failed to initialize LLM client: {e}"
+        print(f"\n✗ {error_msg}")
+        logger.error(error_msg, exc_info=True)
         sys.exit(1)
     
     session_id = "demo_flow1"
