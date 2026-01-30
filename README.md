@@ -107,6 +107,7 @@ chat-bot-with-memory/
 │       └── mixed_flow.jsonl        # Demo: mixed scenarios
 │
 ├── cli_demo.py                # CLI demo script
+├── streamlit_app.py           # Streamlit web interface
 ├── docker-compose.yml
 ├── Dockerfile
 ├── requirements.txt
@@ -195,7 +196,25 @@ This demonstrates:
 1. **Flow 1**: Session memory trigger (long conversation → summarization)
 2. **Flow 2**: Ambiguous query handling (rewrite → context augmentation → clarifying questions)
 
-### Option 2: FastAPI Server
+### Option 2: Streamlit Web Interface (Recommended for Demo)
+
+Launch the Streamlit web interface:
+
+```bash
+streamlit run streamlit_app.py
+```
+
+The interface will open in your browser at `http://localhost:8501`
+
+**Features:**
+- Interactive chat interface
+- Real-time session memory visualization
+- Query understanding display
+- Pipeline metadata monitoring
+- Session management
+- Configurable context threshold
+
+### Option 3: FastAPI Server
 
 Start the FastAPI server:
 
@@ -221,7 +240,7 @@ curl -X POST "http://localhost:8000/api/chat" \
   }'
 ```
 
-### Option 3: Docker Compose
+### Option 4: Docker Compose
 
 ```bash
 docker-compose up --build
