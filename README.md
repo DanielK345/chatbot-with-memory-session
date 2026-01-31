@@ -214,12 +214,30 @@ The interface will open in your browser at `http://localhost:8501`
 - Session management
 - Configurable context threshold
 
-### Option 3: FastAPI Server
+### Option 3: FastAPI Server (Development with Auto-Reload)
 
-Start the FastAPI server:
+**For local development with auto-reload:**
 
 ```bash
-uvicorn app.main:app --reload
+python run_dev.py
+```
+
+Or using uvicorn directly:
+
+```bash
+uvicorn app.main:app --reload --reload-dir app
+```
+
+**For production-like local testing with gunicorn:**
+
+```bash
+python run_prod.py
+```
+
+Or with auto-reload enabled:
+
+```bash
+RELOAD=true python run_prod.py
 ```
 
 API will be available at `http://localhost:8000`
@@ -238,6 +256,14 @@ curl -X POST "http://localhost:8000/api/chat" \
     "session_id": "test_session",
     "message": "I need help with machine learning"
   }'
+```
+
+**Environment variables for server:**
+```bash
+PORT=8000          # Server port (default: 8000)
+HOST=127.0.0.1     # Server host (default: 127.0.0.1)
+WORKERS=4          # Gunicorn workers (default: 4, only for run_prod.py)
+RELOAD=true        # Enable auto-reload for gunicorn (default: false)
 ```
 
 ### Option 4: Docker Compose

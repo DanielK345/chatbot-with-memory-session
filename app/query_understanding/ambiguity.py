@@ -1,7 +1,7 @@
 """Ambiguity detection for user queries."""
 
 import re
-from typing import Dict, Any
+from typing import Dict, Any, List
 from app.query_understanding.schemas import AmbiguityAnalysis
 from app.llm.ollama_client import OllamaClient
 
@@ -81,11 +81,17 @@ A query is ambiguous if:
 
 Respond with JSON: {"is_ambiguous": true/false, "ambiguity_reason": "explanation"}"""
         
+        # Build context part separately to avoid backslash in f-string
+        if context_text:
+            context_part = f"Recent context:\n{context_text}"
+        else:
+            context_part = "No recent context."
+        
         user_prompt = f"""Is this query ambiguous or unclear?
 
 Query: {query}
 
-{f'Recent context:\n{context_text}' if context_text else 'No recent context.'}
+{context_part}
 
 Analyze if the query is ambiguous and provide a reason if it is."""
         

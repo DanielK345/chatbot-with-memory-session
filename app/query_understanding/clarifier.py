@@ -49,12 +49,20 @@ Questions should:
 - Help narrow down the user's intent
 - Be concise (one sentence each)"""
         
+        # Build context parts separately to avoid backslash in f-string
+        rewritten_part = f"Rewritten: {rewritten_query}" if rewritten_query else ""
+        
+        if context_text:
+            context_part = f"Context:\n{context_text}"
+        else:
+            context_part = "No context available."
+        
         user_prompt = f"""The user asked this query, which may still be unclear:
 
 Original: {query}
-{f'Rewritten: {rewritten_query}' if rewritten_query else ''}
+{rewritten_part}
 
-{f'Context:\n{context_text}' if context_text else 'No context available.'}
+{context_part}
 
 Generate {max_questions} clarifying questions that would help understand what the user really wants. Output as a JSON array of strings."""
         

@@ -46,7 +46,8 @@ class OllamaClient:
         prompt: str,
         system: Optional[str] = None,
         temperature: float = 0.7,
-        json_mode: bool = False
+        json_mode: bool = False,
+        max_tokens: Optional[int] = None
     ) -> str:
         """
         Generate text using Ollama.
@@ -56,6 +57,7 @@ class OllamaClient:
             system: System prompt (optional)
             temperature: Sampling temperature
             json_mode: Whether to force JSON output
+            max_tokens: Maximum tokens to generate (None = no limit)
             
         Returns:
             Generated text
@@ -71,6 +73,9 @@ class OllamaClient:
             "temperature": temperature,
             "stream": False
         }
+        
+        if max_tokens:
+            payload["options"] = {"num_predict": max_tokens}
         
         if json_mode:
             payload["format"] = "json"

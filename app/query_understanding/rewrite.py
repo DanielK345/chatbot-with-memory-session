@@ -46,13 +46,21 @@ Your rewritten query should:
 - Maintain the user's original intent
 - Be a complete, standalone question or request"""
         
+        # Build context parts separately to avoid backslash in f-string
+        ambiguity_part = f"Reason for ambiguity: {ambiguity_reason}" if ambiguity_reason else ""
+        
+        if context_text:
+            context_part = f"Recent conversation context:\n{context_text}"
+        else:
+            context_part = "No recent context."
+        
         user_prompt = f"""Rewrite this ambiguous query to be clearer:
 
 Original query: {query}
 
-{f'Reason for ambiguity: {ambiguity_reason}' if ambiguity_reason else ''}
+{ambiguity_part}
 
-{f'Recent conversation context:\n{context_text}' if context_text else 'No recent context.'}
+{context_part}
 
 Provide a clear, rewritten version of the query that removes ambiguity while preserving the user's intent."""
         

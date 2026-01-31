@@ -12,12 +12,13 @@ except ImportError:
     genai = None
 
 from app.llm.json_guard import JSONGuard
+from app.core.config import GOOGLE_API_KEY
 
 
 class GeminiClient:
     """Client for interacting with Google Gemini API."""
     
-    def __init__(self, api_key: Optional[str] = None, model: str = "gemini-pro"):
+    def __init__(self, api_key: Optional[str] = None, model: str = "gemini-flash-latest"):
         """
         Initialize Gemini client.
         
@@ -30,7 +31,7 @@ class GeminiClient:
                 "google-generativeai package not installed.\n"
                 "Install with: pip install google-generativeai"
             )
-        self.api_key = api_key or os.getenv("GOOGLE_API_KEY")
+        self.api_key = api_key or GOOGLE_API_KEY
         self.model_name = model
         self.json_guard = JSONGuard()
         self._client = None
@@ -66,7 +67,8 @@ class GeminiClient:
         prompt: str,
         system: Optional[str] = None,
         temperature: float = 0.7,
-        json_mode: bool = False
+        json_mode: bool = False,
+        max_tokens: Optional[int] = None
     ) -> str:
         """
         Generate text using Gemini.
@@ -76,6 +78,7 @@ class GeminiClient:
             system: System prompt (optional, will be prepended)
             temperature: Sampling temperature
             json_mode: Whether to force JSON output
+            max_tokens: Maximum tokens to generate (None = no limit)
             
         Returns:
             Generated text
@@ -92,6 +95,9 @@ class GeminiClient:
             generation_config = {
                 "temperature": temperature,
             }
+            
+            if max_tokens:
+                generation_config["max_output_tokens"] = max_tokens
             
             if json_mode:
                 generation_config["response_mime_type"] = "application/json"

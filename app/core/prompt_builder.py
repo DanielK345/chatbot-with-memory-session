@@ -23,7 +23,7 @@ class PromptBuilder:
         Returns:
             Tuple of (system_prompt, user_prompt)
         """
-        default_system = "You are a helpful, knowledgeable assistant. Provide clear, accurate responses."
+        default_system = "You are a helpful assistant. Be concise and accurate."
         system = system_prompt or default_system
         
         user_parts = []
@@ -32,7 +32,7 @@ class PromptBuilder:
             user_parts.append(augmented_context)
             user_parts.append("")  # Blank line separator
         
-        user_parts.append(f"User query: {query}")
+        user_parts.append(query)  # Direct query without "User query:" prefix for brevity
         
         user_prompt = "\n".join(user_parts)
         

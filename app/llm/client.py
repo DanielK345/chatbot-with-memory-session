@@ -27,7 +27,7 @@ class LLMClient:
         self,
         primary: str = "gemini",
         gemini_api_key: Optional[str] = None,
-        gemini_model: str = "gemini-pro",
+        gemini_model: str = "gemini-flash-latest",
         ollama_base_url: str = "http://localhost:11434",
         ollama_model: str = "llama3.1"
     ):
@@ -96,7 +96,8 @@ class LLMClient:
         prompt: str,
         system: Optional[str] = None,
         temperature: float = 0.7,
-        json_mode: bool = False
+        json_mode: bool = False,
+        max_tokens: Optional[int] = None
     ) -> str:
         """
         Generate text using active LLM, with automatic fallback.
@@ -106,6 +107,7 @@ class LLMClient:
             system: System prompt (optional)
             temperature: Sampling temperature
             json_mode: Whether to force JSON output
+            max_tokens: Maximum tokens to generate (None = no limit)
             
         Returns:
             Generated text
@@ -117,7 +119,8 @@ class LLMClient:
                     prompt=prompt,
                     system=system,
                     temperature=temperature,
-                    json_mode=json_mode
+                    json_mode=json_mode,
+                    max_tokens=max_tokens
                 )
             except Exception as e:
                 logger.warning(f"⚠ {self.active_provider} generation failed: {e}")
@@ -130,7 +133,8 @@ class LLMClient:
                             prompt=prompt,
                             system=system,
                             temperature=temperature,
-                            json_mode=json_mode
+                            json_mode=json_mode,
+                            max_tokens=max_tokens
                         )
                         self.active_client = self.ollama_client
                         self.active_provider = "ollama"
@@ -150,7 +154,8 @@ class LLMClient:
                             prompt=prompt,
                             system=system,
                             temperature=temperature,
-                            json_mode=json_mode
+                            json_mode=json_mode,
+                            max_tokens=max_tokens
                         )
                         self.active_client = self.gemini_client
                         self.active_provider = "gemini"
