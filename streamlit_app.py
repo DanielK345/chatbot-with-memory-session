@@ -41,13 +41,17 @@ st.markdown("""
         margin-bottom: 1rem;
     }
     .user-message {
-        background-color: #e3f2fd;
-        border-left: 4px solid #2196f3;
+        background-color: #1e3a5f;      /* deep blue */
+        border-left: 4px solid #3b82f6;  /* strong blue accent */
+        color: #e5eef7;                 /* light text */
     }
+
     .assistant-message {
-        background-color: #f1f8e9;
-        border-left: 4px solid #8bc34a;
+        background-color: #1f2933;      /* dark slate */
+        border-left: 4px solid #10b981;  /* emerald accent */
+        color: #e5e7eb;                 /* light gray text */
     }
+
     .info-box {
         background-color: #fff3e0;
         border-left: 4px solid #ff9800;
@@ -93,9 +97,25 @@ def main():
     # Header
     st.markdown('<h1 class="main-header">💬 Chat Assistant with Session Memory</h1>', unsafe_allow_html=True)
     st.markdown('<p class="sub-header">Intelligent chat with automatic session summarization and query understanding</p>', unsafe_allow_html=True)
+
+    # ---- SESSION STATE INITIALIZATION ----
+    if 'pipeline' not in st.session_state:
+        st.session_state.pipeline = None
+
+    if 'llm_provider' not in st.session_state:
+        st.session_state.llm_provider = None
+
+    if 'messages' not in st.session_state:
+        st.session_state.messages = []
+
+    if 'session_id' not in st.session_state:
+        st.session_state.session_id = "default_session"
+
+    if 'max_context_tokens' not in st.session_state:
+        st.session_state.max_context_tokens = 10000
     
     # Initialize pipeline
-    if 'pipeline' not in st.session_state or 'llm_provider' not in st.session_state:
+    if not st.session_state.pipeline or not st.session_state.llm_provider:
         with st.spinner("Initializing LLM client (Gemini default, Ollama fallback)..."):
             pipeline, provider = initialize_pipeline()
             if pipeline:
@@ -166,10 +186,6 @@ def main():
     
     with col1:
         st.subheader("💭 Chat")
-        
-        # Initialize chat history
-        if 'messages' not in st.session_state:
-            st.session_state.messages = []
         
         # Display chat history
         chat_container = st.container()

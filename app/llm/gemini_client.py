@@ -61,7 +61,20 @@ class GeminiClient:
                 "2. You have internet connection\n"
                 "3. The Gemini API is accessible"
             )
-    
+
+    def _extract_text(self, response) -> str:
+        if not response.candidates:
+            return ""
+
+        parts = response.candidates[0].content.parts
+
+        texts = []
+        for part in parts:
+            if hasattr(part, "text") and part.text:
+                texts.append(part.text)
+
+        return "\n".join(texts).strip()
+        
     async def generate(
         self,
         prompt: str,
@@ -109,7 +122,7 @@ class GeminiClient:
                 generation_config=generation_config
             )
             
-            return response.text
+            return self._extract_text(response)
         except Exception as e:
             raise RuntimeError(f"Gemini generation failed: {str(e)}")
     
