@@ -1,11 +1,101 @@
 """Streamlit interface for Chat Assistant with Session Memory."""
 
 import asyncio
+import re
+import html as _html
 import streamlit as st
 from app.core.pipeline import ChatPipeline
 from app.memory.session_store import SessionStore
 from app.llm.client import LLMClient
 from app.utils.logging import configure_logging_from_env, get_logger
+
+# Try to import the `markdown` package for robust conversion. If unavailable,
+# we'll use a small fallback converter below.
+try:
+    import markdown as _md
+    _HAS_MARKDOWN = True
+except Exception:
+    _HAS_MARKDOWN = False
+
+
+def _markdown_to_html(text: str) -> str:
+    """Convert a Markdown-like string to HTML.
+
+    Attempts to use the `markdown` package if available; otherwise a small
+    conservative fallback that handles headers, bold, italics, lists and
+    simple tables.
+    """
+    if not text:
+        return ""
+
+    if _HAS_MARKDOWN:
+        try:
+            return _md.markdown(text, extensions=["extra", "tables"]) or ""
+        except Exception:
+            pass
+
+    # Fallback conversion (simple and safe-ish)
+    safe = _html.escape(text)
+
+    # Headers: lines starting with #
+    def _hdr(m):
+        level = len(m.group(1))
+        return f"<h{level}>{m.group(2).strip()}</h{level}>"
+    safe = re.sub(r'^(#{1,6})\s+(.*)$', _hdr, safe, flags=re.MULTILINE)
+
+    # Bold **text**
+    safe = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', safe)
+    # Italic *text* or _text_
+    safe = re.sub(r'\*(.*?)\*', r'<em>\1</em>', safe)
+    safe = re.sub(r'_(.*?)_', r'<em>\1</em>', safe)
+
+    # Code fences ``` ``` -> <pre><code>
+    safe = re.sub(r'```\s*\n(.*?)\n```', lambda m: f"<pre><code>{m.group(1)}</code></pre>", safe, flags=re.S)
+
+    # Unordered lists
+    lines = safe.splitlines()
+    out_lines = []
+    in_ul = False
+    for ln in lines:
+        if re.match(r'^[\-\*]\s+', ln):
+            if not in_ul:
+                out_lines.append('<ul>')
+                in_ul = True
+            li_content = re.sub(r'^[\-\*]\s+', '', ln)
+            out_lines.append(f"<li>{li_content}</li>")
+        else:
+            if in_ul:
+                out_lines.append('</ul>')
+                in_ul = False
+            out_lines.append(ln)
+    if in_ul:
+        out_lines.append('</ul>')
+
+    safe = '\n'.join(out_lines)
+
+    # Simple table detection: lines containing | with header separator
+    if '|' in safe:
+        parts = [p for p in safe.split('\n') if '|' in p]
+        if len(parts) >= 2 and re.match(r'^\s*\|?\s*[:\-]+', parts[1]):
+            # crude table builder
+            rows = [row.strip() for row in parts if row.strip()]
+            cols = [c.strip() for c in rows[0].strip('|').split('|')]
+            html_tbl = ['<table>']
+            # header
+            html_tbl.append('<thead><tr>' + ''.join([f'<th>{_html.escape(c)}</th>' for c in cols]) + '</tr></thead>')
+            # body
+            html_tbl.append('<tbody>')
+            for r in rows[2:]:
+                cells = [c.strip() for c in r.strip('|').split('|')]
+                html_tbl.append('<tr>' + ''.join([f'<td>{_html.escape(c)}</td>' for c in cells]) + '</tr>')
+            html_tbl.append('</tbody></table>')
+            safe = '\n'.join([l for l in lines if '|' not in l]) + '\n' + '\n'.join(html_tbl)
+
+    # Paragraphs
+    paragraphs = [p for p in safe.split('\n\n') if p.strip()]
+    safe = ''.join([f'<p>{p}</p>' for p in paragraphs])
+
+    return safe
 
 # Configure logging
 configure_logging_from_env()
@@ -22,50 +112,74 @@ st.set_page_config(
 # Custom CSS for better styling
 st.markdown("""
     <style>
-    .main-header {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: #1f77b4;
-        text-align: center;
-        margin-bottom: 1rem;
+    /* Top banner */
+    .top-banner {
+        background: linear-gradient(90deg, #ff8a00 0%, #ff6a00 100%);
+        border-radius: 16px;
+        padding: 18px 24px;
+        margin-bottom: 18px;
+        color: white;
     }
-    .sub-header {
-        font-size: 1.2rem;
-        color: #666;
-        text-align: center;
-        margin-bottom: 2rem;
+    .banner-inner { max-width: 1100px; margin: 0 auto; }
+    .banner-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 12px;
     }
-    .chat-message {
-        padding: 1rem;
-        border-radius: 0.5rem;
-        margin-bottom: 1rem;
-    }
-    .user-message {
-        background-color: #1e3a5f;      /* deep blue */
-        border-left: 4px solid #3b82f6;  /* strong blue accent */
-        color: #e5eef7;                 /* light text */
+    .banner-sub { font-size: 0.95rem; opacity: 0.95; margin-top: 6px; }
+
+    /* Chat area */
+    .chat-row { display: flex; margin: 8px 4px; }
+    .chat-row.user { justify-content: flex-end; }
+    .chat-row.assistant { justify-content: flex-start; }
+
+    .chat-bubble {
+        max-width: 72%;
+        padding: 12px 16px;
+        border-radius: 18px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+        line-height: 1.4;
+        font-size: 0.98rem;
     }
 
-    .assistant-message {
-        background-color: #1f2933;      /* dark slate */
-        border-left: 4px solid #10b981;  /* emerald accent */
-        color: #e5e7eb;                 /* light gray text */
+    .assistant-bubble {
+        background: #f3f4f6; /* light gray */
+        color: #0f172a;
+        border: 1px solid rgba(15,23,42,0.04);
+        border-top-left-radius: 6px;
     }
 
-    .info-box {
-        background-color: #fff3e0;
-        border-left: 4px solid #ff9800;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        margin: 0.5rem 0;
+    .user-bubble {
+        background: #ff8a00; /* orange */
+        color: white;
+        border-top-right-radius: 6px;
     }
-    .success-box {
-        background-color: #e8f5e9;
-        border-left: 4px solid #4caf50;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        margin: 0.5rem 0;
+
+    /* Small orange pill for user short messages */
+    .user-bubble.small { padding: 8px 12px; border-radius: 14px; }
+
+    /* Info / status boxes */
+    .info-box { background-color: #fff3e0; border-left: 4px solid #ff9800; padding: 1rem; border-radius: 0.5rem; margin: 0.5rem 0; }
+    .success-box { background-color: #e8f5e9; border-left: 4px solid #4caf50; padding: 1rem; border-radius: 0.5rem; margin: 0.5rem 0; }
+
+    /* Input area adjustments */
+    .stButton>button {
+        background: #ff8a00 !important;
+        border-radius: 8px !important;
+        color: white !important;
+        border: none !important;
     }
+
+    .stTextInput>div>div>input {
+        border: 2px solid #ff8a00 !important;
+        border-radius: 14px !important;
+        padding: 12px !important;
+    }
+
+    /* Footer caption alignment */
+    .streamlit-expanderHeader { }
     </style>
 """, unsafe_allow_html=True)
 
@@ -79,7 +193,9 @@ def initialize_pipeline():
         pipeline = ChatPipeline(
             session_store,
             llm_client,
-            max_context_tokens=st.session_state.get('max_context_tokens', 10000)
+            max_context_tokens=st.session_state.get('max_context_tokens', 10000),
+            max_response_tokens=1500,
+            response_temperature=0.6
         )
         return pipeline, llm_client.get_active_provider()
     except Exception as e:
@@ -94,9 +210,18 @@ def process_message_async(pipeline, session_id, user_query):
 
 def main():
     """Main Streamlit application."""
-    # Header
-    st.markdown('<h1 class="main-header">💬 Chat Assistant with Session Memory</h1>', unsafe_allow_html=True)
-    st.markdown('<p class="sub-header">Intelligent chat with automatic session summarization and query understanding</p>', unsafe_allow_html=True)
+    # Header / top banner
+    st.markdown(
+            '''
+            <div class="top-banner">
+                <div class="banner-inner">
+                    <div class="banner-title">🤖 AI Chatbot</div>
+                    <div class="banner-sub">Chat with AI or generate flashcards from content</div>
+                </div>
+            </div>
+            ''',
+            unsafe_allow_html=True
+    )
 
     # ---- SESSION STATE INITIALIZATION ----
     if 'pipeline' not in st.session_state:
@@ -192,19 +317,39 @@ def main():
         with chat_container:
             for message in st.session_state.messages:
                 if message['role'] == 'user':
-                    st.markdown(f"""
-                        <div class="chat-message user-message">
-                            <strong>You:</strong> {message['content']}
-                        </div>
-                    """, unsafe_allow_html=True)
+                    # Right-aligned user bubble
+                                        user_text = _html.escape(message['content'] or "")
+                                        st.markdown(
+                                                f"""
+                                                <div class="chat-row user">
+                                                    <div class="chat-bubble user-bubble">{user_text}</div>
+                                                </div>
+                                                """,
+                                                unsafe_allow_html=True
+                                        )
                 else:
-                    st.markdown(f"""
-                        <div class="chat-message assistant-message">
-                            <strong>Assistant:</strong> {message['content']}
+                    # Left-aligned assistant bubble
+                    content = message['content'] or ""
+                    # Detect markdown-like content (headers, bold, lists, tables, code fences)
+                    md_markers = ['\n#', '\n-', '\n*', '**', '```', '|', '# ']
+                    looks_like_md = any(m in content for m in md_markers) or (len(content) > 300)
+
+                    if looks_like_md:
+                        html_content = _markdown_to_html(content)
+                    else:
+                        # Escape and preserve simple newlines
+                        html_content = _html.escape(content).replace('\n', '<br/>')
+
+                    st.markdown(
+                        f"""
+                        <div class="chat-row assistant">
+                          <div class="chat-bubble assistant-bubble">{html_content}</div>
                         </div>
-                    """, unsafe_allow_html=True)
-                    
-                    # Show query understanding if available
+                        """,
+                        unsafe_allow_html=True
+                    )
+
+                    # Show query understanding if available (preserve existing behavior)
                     if 'query_understanding' in message:
                         q_understanding = message['query_understanding']
                         if q_understanding.get('is_ambiguous'):
@@ -216,17 +361,20 @@ def main():
                                     st.warning("**Clarifying Questions:**")
                                     for q in q_understanding['clarifying_questions']:
                                         st.write(f"- {q}")
-                    
-                    # Show summarization info if triggered
+
+                    # Show summarization info if triggered (preserve existing behavior)
                     if 'pipeline_metadata' in message:
                         metadata = message['pipeline_metadata']
                         if metadata.get('summarization_triggered'):
-                            st.markdown("""
+                            st.markdown(
+                                """
                                 <div class="success-box">
                                     <strong>✅ Session Summarization Triggered!</strong><br>
                                     Context exceeded threshold and was summarized.
                                 </div>
-                            """, unsafe_allow_html=True)
+                                """,
+                                unsafe_allow_html=True
+                            )
         
         # Chat input
         user_input = st.chat_input("Type your message here...")

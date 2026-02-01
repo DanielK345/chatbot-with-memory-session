@@ -34,5 +34,5 @@ app.log*
 .DS_Store
 Thumbs.db
 
-Plan/
+docs/
 win_venv/

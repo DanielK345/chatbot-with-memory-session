@@ -3,8 +3,10 @@
 import logging
 import sys
 import os
+import json
 from pathlib import Path
 from typing import Optional
+from datetime import datetime
 from logging.handlers import RotatingFileHandler
 
 
@@ -127,6 +129,105 @@ def configure_logging_from_env() -> logging.Logger:
         max_bytes=max_bytes,
         backup_count=backup_count
     )
+
+
+class ConversationLogger:
+    """Logger for recording conversation exchanges."""
+    
+    def __init__(
+        self,
+        log_file: str = "conversations.log",
+        log_dir: str = "logs"
+    ):
+        """
+        Initialize conversation logger.
+        
+        Args:
+            log_file: Conversation log file name
+            log_dir: Directory for log files
+        """
+        # Create log directory if it doesn't exist
+        log_path = Path(log_dir)
+        log_path.mkdir(parents=True, exist_ok=True)
+        
+        self.log_file = log_path / log_file
+    
+    def log_exchange(
+        self,
+        session_id: str,
+        user_message: str,
+        assistant_response: str,
+        metadata: Optional[dict] = None
+    ) -> None:
+        """
+        Log a conversation exchange (user message + assistant response).
+        
+        Args:
+            session_id: Session identifier
+            user_message: User's message
+            assistant_response: Assistant's response
+            metadata: Optional metadata (e.g., query understanding, token count)
+        """
+        exchange = {
+            "timestamp": datetime.now().isoformat(),
+            "session_id": session_id,
+            "user": user_message,
+            "assistant": assistant_response
+        }
+        
+        if metadata:
+            exchange["metadata"] = metadata
+        
+        try:
+            with open(self.log_file, "a", encoding="utf-8") as f:
+                f.write(json.dumps(exchange, ensure_ascii=False) + "\n")
+        except Exception as e:
+            logger = logging.getLogger(__name__)
+            logger.error(f"Failed to log conversation exchange: {e}")
+    
+    def log_user_message(self, session_id: str, user_message: str) -> None:
+        """
+        Log only a user message (useful for intermediate logging).
+        
+        Args:
+            session_id: Session identifier
+            user_message: User's message
+        """
+        entry = {
+            "timestamp": datetime.now().isoformat(),
+            "session_id": session_id,
+            "type": "user",
+            "message": user_message
+        }
+        
+        try:
+            with open(self.log_file, "a", encoding="utf-8") as f:
+                f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+        except Exception as e:
+            logger = logging.getLogger(__name__)
+            logger.error(f"Failed to log user message: {e}")
+    
+    def log_assistant_response(self, session_id: str, response: str) -> None:
+        """
+        Log only an assistant response.
+        
+        Args:
+            session_id: Session identifier
+            response: Assistant's response
+        """
+        entry = {
+            "timestamp": datetime.now().isoformat(),
+            "session_id": session_id,
+            "type": "assistant",
+            "message": response
+        }
+        
+        try:
+            with open(self.log_file, "a", encoding="utf-8") as f:
+                f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+        except Exception as e:
+            logger = logging.getLogger(__name__)
+            logger.error(f"Failed to log assistant response: {e}")
 
 
 class LoggerMixin:

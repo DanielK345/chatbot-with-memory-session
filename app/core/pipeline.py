@@ -14,9 +14,10 @@ from app.core.prompt_builder import PromptBuilder
 from app.llm.client import LLMClient
 from app.llm.ollama_client import OllamaClient
 from app.llm.gemini_client import GeminiClient
-from app.utils.logging import get_logger
+from app.utils.logging import get_logger, ConversationLogger
 
 logger = get_logger(__name__)
+conversation_logger = ConversationLogger()
 
 
 class ChatPipeline:
@@ -31,7 +32,8 @@ class ChatPipeline:
         enable_query_understanding: bool = True,
         skip_llm_ambiguity_if_clear: bool = True,
         max_response_tokens: Optional[int] = 500,
-        response_temperature: float = 0.5
+        response_temperature: float = 0.5,
+        conversation_logger: Optional[ConversationLogger] = None
     ):
         """
         Initialize chat pipeline.
@@ -45,6 +47,7 @@ class ChatPipeline:
             skip_llm_ambiguity_if_clear: Skip LLM call if heuristic says query is clear (default: True)
             max_response_tokens: Maximum tokens for response generation (default: 500, None = no limit)
             response_temperature: Temperature for response generation (default: 0.5, lower = faster)
+            conversation_logger: Optional ConversationLogger instance for recording conversations
         """
         self.session_store = session_store
         self.llm_client = llm_client
@@ -54,6 +57,7 @@ class ChatPipeline:
         self.skip_llm_ambiguity_if_clear = skip_llm_ambiguity_if_clear
         self.max_response_tokens = max_response_tokens
         self.response_temperature = response_temperature
+        self.conversation_logger = conversation_logger or ConversationLogger()
         
         # Initialize components
         self.token_counter = TokenCounter()
@@ -208,6 +212,23 @@ class ChatPipeline:
         
         # Step 6: Add assistant response to session
         self.session_store.add_message(session_id, "assistant", llm_response)
+        
+        # Step 7: Log conversation exchange to conversations.log
+        try:
+            log_metadata = {
+                "is_ambiguous": query_understanding.is_ambiguous,
+                "token_count": token_count,
+                "summarization_triggered": token_count > self.max_context_tokens,
+                "memory_fields_used": query_understanding.needed_context_from_memory
+            }
+            self.conversation_logger.log_exchange(
+                session_id=session_id,
+                user_message=user_query,
+                assistant_response=llm_response,
+                metadata=log_metadata
+            )
+        except Exception as e:
+            logger.warning(f"Failed to log conversation: {e}")
         
         # Return response with metadata
         return {
