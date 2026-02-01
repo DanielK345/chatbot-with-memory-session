@@ -81,10 +81,11 @@ class GeminiClient:
         system: Optional[str] = None,
         temperature: float = 0.7,
         json_mode: bool = False,
-        max_tokens: Optional[int] = None
+        max_tokens: Optional[int] = None,
+        add_suggestions: bool = True
     ) -> str:
         """
-        Generate text using Gemini.
+        Generate text using Gemini with rich, friendly tone and end-of-line suggestions.
         
         Args:
             prompt: User prompt
@@ -92,17 +93,38 @@ class GeminiClient:
             temperature: Sampling temperature
             json_mode: Whether to force JSON output
             max_tokens: Maximum tokens to generate (None = no limit)
+            add_suggestions: Whether to add follow-up suggestions at the end
             
         Returns:
-            Generated text
+            Generated text with optional follow-up suggestions
         """
         self._ensure_configured()
         
         try:
+            # Enhanced system prompt for richer, friendlier responses
+            enhanced_system = system or """You are a warm, engaging, and knowledgeable assistant. 
+Your responses should be:
+- **Friendly and conversational**: Write as if chatting with a colleague
+- **Rich and detailed**: Provide thoughtful examples and explanations
+- **Well-structured**: Use formatting (bold, lists, code blocks) for clarity
+- **Encouraging**: Show enthusiasm for the topic
+- **Practical**: Include actionable insights and tips when relevant
+
+Format your response with clear sections if covering multiple points."""
+            
             # Combine system and user prompt
-            full_prompt = prompt
-            if system:
-                full_prompt = f"{system}\n\n{prompt}"
+            full_prompt = f"{enhanced_system}\n\nUser query: {prompt}"
+            
+            # Add suggestions guidance if enabled
+            if add_suggestions and not json_mode:
+                full_prompt += """\n\n**IMPORTANT**: After your main response, suggest 2-3 follow-up questions 
+the user might find helpful. Format them as:
+
+---
+**You might also want to know:**
+- Question 1?
+- Question 2?
+- Question 3?"""
             
             # Configure generation parameters
             generation_config = {
@@ -111,6 +133,9 @@ class GeminiClient:
             
             if max_tokens:
                 generation_config["max_output_tokens"] = max_tokens
+            else:
+                # Default to a richer response length if not specified
+                generation_config["max_output_tokens"] = 1500
             
             # Note: response_mime_type is not supported in current Gemini SDK
             # JSON mode is handled via prompt engineering instead
@@ -122,7 +147,13 @@ class GeminiClient:
                 generation_config=generation_config
             )
             
-            return self._extract_text(response)
+            text = self._extract_text(response)
+            
+            # Add closing encouragement if suggestions were generated
+            if add_suggestions and not json_mode and "You might also want to know" not in text:
+                text += "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+            
+            return text
         except Exception as e:
             raise RuntimeError(f"Gemini generation failed: {str(e)}")
     
