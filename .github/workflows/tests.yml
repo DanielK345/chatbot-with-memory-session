@@ -62,6 +62,21 @@ jobs:
       env:
         PYTHONPATH: .
 
+    - name: Run Conversation Logging Test
+      run: python tests/test_conversation_logging.py
+      env:
+        PYTHONPATH: .
+
+    - name: Run CLI Demo Initialization Test
+      run: python tests/test_cli_demo.py
+      env:
+        PYTHONPATH: .
+
+    - name: Run Streamlit App Initialization Test
+      run: python tests/test_streamlit_app.py
+      env:
+        PYTHONPATH: .
+
     - name: Run Master Test Suite
       run: python tests/run_tests.py
       env:
@@ -78,9 +93,12 @@ jobs:
         echo "- Session Summarization via Max Token Triggering" >> $GITHUB_STEP_SUMMARY
         echo "- Ambiguous Query Detection" >> $GITHUB_STEP_SUMMARY
         echo "- Query Refinement (Rewriting)" >> $GITHUB_STEP_SUMMARY
+        echo "- Conversation Logging" >> $GITHUB_STEP_SUMMARY
+        echo "- CLI Demo Initialization" >> $GITHUB_STEP_SUMMARY
+        echo "- Streamlit App Initialization" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### Random Query Generation:" >> $GITHUB_STEP_SUMMARY
-        echo "Each test uses random query generation to create diverse test scenarios" >> $GITHUB_STEP_SUMMARY
+        echo "Core tests use random query generation to create diverse test scenarios" >> $GITHUB_STEP_SUMMARY
 
     - name: Upload test logs
       if: always()
