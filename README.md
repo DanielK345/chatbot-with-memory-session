@@ -1,512 +1,454 @@
-# Chat Assistant with Session Memory
+# Chat Bot with Memory
 
-A production-ready chat assistant backend that implements automatic session summarization and intelligent query understanding. Built for the Vulcan Labs AI Engineer Intern take-home test.
+A production-ready conversational AI assistant with advanced memory management, session persistence, query understanding, and real-time deployment capability.
 
 ## Features
 
-### Core Functionality
+### Current Features ✅
 
-1. **Session Memory via Summarization**
-   - Automatically triggers when conversation context exceeds configurable threshold (~10k tokens)
-   - Uses tokenizer-based token counting (tiktoken) for accurate measurement
-   - Generates structured summaries with:
-     - User profile (preferences, constraints)
-     - Key facts
-     - Decisions made
-     - Open questions
-     - Todos/action items
-   - Sliding window approach: summarizes old messages while keeping recent context
+- **Conversation Memory**: Persistent session storage with automatic context retrieval
+- **Session Summarization**: Token-aware summarization when conversations exceed threshold (default 10K tokens)
+- **Query Understanding**: 
+  - Ambiguous query detection
+  - Query rewriting for clarity
+  - Context augmentation
+  - Clarifying question generation
+- **Multi-LLM Support**: 
+  - Google Gemini (primary)
+  - Ollama (local/self-hosted fallback)
+- **Conversation Logging**: Automatic JSON Lines logging with metadata (timestamps, token counts, ambiguity flags)
+- **Rich UI**: Streamlit-based web interface with markdown rendering, styled chat bubbles, orange theme
+- **Comprehensive Testing**: 6 test suites covering core functionality
+- **CI/CD Pipeline**: GitHub Actions with automated testing and deployment hooks
 
-2. **Query Understanding Pipeline**
-   - **Ambiguity Detection**: Hybrid approach using heuristics + LLM classification
-   - **Query Rewriting**: Clarifies ambiguous queries using conversation context
-   - **Context Augmentation**: Selectively injects relevant session memory fields
-   - **Clarifying Questions**: Generates 1-3 actionable questions when queries remain unclear
+### Deployment ✅
 
-3. **Structured Outputs**
-   - All outputs follow Pydantic v2 schemas
-   - Schema-validated LLM responses with automatic retry
-   - JSON extraction and validation utilities
+- **Multi-Platform Ready**:
+  - Railway (via Dockerfile + start.sh)
+  - Render (FastAPI + Streamlit as separate services)
+  - Heroku (via Procfile)
+- **Production Server**: Gunicorn with Uvicorn workers
+- **Environment Variables**: Port and concurrency auto-configuration
+- **Docker Optimization**: Minimal images with build-time dependencies only
+
+### Future Roadmap 🚀
+
+1. **[CI/CD Pipeline Enhancement]**
+   - GitHub Actions workflows for Docker image builds and pushes
+   - Multi-platform deployment automation
+   - Smoke tests and performance benchmarks
+   - Branch protection and secrets scanning
+
+2. **[User Authentication]**
+   - JWT-based authentication
+   - User registration/login endpoints
+   - Role-based access control (RBAC)
+   - Optional OAuth2 (Google, GitHub) and Auth0 integration
+   - Per-user conversation isolation
+
+3. **[PDF Upload & Document Storage]**
+   - PDF upload endpoint with validation
+   - Text extraction from PDFs
+   - S3/MinIO storage integration
+   - Similarity search in documents
+   - Vector embeddings (optional: Pinecone)
+   - Document-based RAG (Retrieval Augmented Generation)
+
+4. **[Agentic Web Search]**
+   - LangChain agent integration
+   - DuckDuckGo/SerpAPI web search
+   - Uncertainty-based search triggering
+   - Factual query detection
+   - Search result caching
+   - Source attribution
 
 ## Architecture
 
 ```
-User Input
-   ↓
-Session Store (messages + summaries)
-   ↓
-Context Size Monitor
-   ↓ (if exceeded)
-Session Summarizer → Structured Memory
-   ↓
-Query Understanding Pipeline
-   ├─ Ambiguity Detection
-   ├─ Query Rewrite
-   ├─ Context Augmentation (memory + recent msgs)
-   └─ Clarifying Question Generator
-   ↓
-Final Prompt Constructor
-   ↓
-LLM Response
+┌─────────────────────┐
+│   Streamlit UI      │ ← Rich markdown, styled bubbles
+│  (Optional Render)  │
+└──────────┬──────────┘
+           │
+           │ HTTP/JSON
+           ↓
+┌──────────────────────┐
+│   FastAPI Backend    │ ← Gunicorn + Uvicorn
+│  (Railway/Render)    │
+│                      │
+│ ┌──────────────────┐ │
+│ │  Chat Pipeline   │ │ ← Orchestrator
+│ │  - Query Understand│
+│ │  - Memory Manage │
+│ │  - LLM Call      │
+│ └──────────────────┘ │
+│                      │
+│ ┌──────────────────┐ │
+│ │ LLM Clients      │ │ ← Gemini, Ollama
+│ │ Token Counter    │ │
+│ │ Summarizer       │ │
+│ └──────────────────┘ │
+└──────────┬───────────┘
+           │
+    ┌──────┴──────────────┬────────────┐
+    ↓                     ↓            ↓
+┌─────────────┐  ┌────────────────┐  ┌──────────────┐
+│Session Store│  │LLM APIs        │  │Logging       │
+│ (JSON Files)│  │(Gemini/Ollama) │  │ (JSON Lines) │
+└─────────────┘  └────────────────┘  └──────────────┘
 ```
 
-## Tech Stack
-
-- **Backend**: FastAPI (async, typed, clean API)
-- **LLM**: **Gemini (default)** with **Ollama (fallback)**
-  - Primary: Google Gemini (requires API key)
-  - Fallback: Ollama (local/hosted, cost-free)
-- **Models**: 
-  - Gemini: gemini-pro, gemini-1.5-pro (configurable)
-  - Ollama: llama3.1, qwen2.5, mistral (configurable)
-- **Data Models**: Pydantic v2 (schema-first)
-- **Token Counting**: tiktoken (accurate token counting)
-- **Session Store**: Redis (optional) or file-based (default)
-- **Persistence**: JSONL files for auditability
-- **Containerization**: Docker + docker-compose
-
-## Project Structure
-
-```
-chat-bot-with-memory/
-│
-├── app/
-│   ├── main.py                # FastAPI entry point
-│   ├── api/
-│   │   └── chat.py            # /chat endpoint
-│   │
-│   ├── core/
-│   │   ├── pipeline.py        # Main orchestrator
-│   │   ├── token_counter.py   # Token counting utilities
-│   │   └── prompt_builder.py  # Prompt construction
-│   │
-│   ├── memory/
-│   │   ├── session_store.py   # Redis/file abstraction
-│   │   ├── summarizer.py      # Session summarization
-│   │   └── schemas.py         # SessionSummary schema
-│   │
-│   ├── query_understanding/
-│   │   ├── ambiguity.py       # Ambiguity detection
-│   │   ├── rewrite.py         # Query rewriting
-│   │   ├── context.py         # Context augmentation
-│   │   ├── clarifier.py       # Clarifying questions
-│   │   └── schemas.py         # QueryUnderstanding schema
-│   │
-│   └── llm/
-│       ├── client.py          # Unified LLM client (Gemini + Ollama)
-│       ├── gemini_client.py   # Gemini client wrapper
-│       └── json_guard.py       # JSON validation/retry
-│   │
-│   └── utils/
-│       └── logging.py          # Centralized logging configuration
-│
-├── data/
-│   └── conversations/
-│       ├── long_session.jsonl      # Demo: memory trigger
-│       ├── ambiguous_queries.jsonl # Demo: ambiguous queries
-│       └── mixed_flow.jsonl        # Demo: mixed scenarios
-│
-├── cli_demo.py                # CLI demo script
-├── streamlit_app.py           # Streamlit web interface
-├── docker-compose.yml
-├── Dockerfile
-├── requirements.txt
-└── README.md
-```
-
-## Setup Instructions
+## Quick Start
 
 ### Prerequisites
-
-1. **Python 3.11+**
-2. **Ollama** installed and running
-   ```bash
-   # Install Ollama from https://ollama.ai
-   # Pull a model:
-   ollama pull llama3.1
-   # Or: ollama pull qwen2.5
-   ```
-
-3. **Redis** (optional, for Redis-based session storage)
-   ```bash
-   # Using Docker:
-   docker run -d -p 6379:6379 redis:7-alpine
-   ```
+- Python 3.10+
+- Docker (for containerized deployment)
+- API Keys: Google Generative AI (Gemini)
 
 ### Installation
 
-1. **Clone and navigate to the project:**
-   ```bash
-   cd chat-bot-with-memory
-   ```
+1. **Clone and Setup**
+```bash
+git clone <repo-url>
+cd chat-bot-with-memory
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
 
-2. **Create virtual environment:**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+2. **Configure Environment**
+```bash
+cp .env.example .env
+# Edit .env with your API keys:
+# - GOOGLE_API_KEY
+# - OLLAMA_HOST (optional, for fallback)
+```
 
-3. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+3. **Run Locally**
 
-4. **Configure LLM (choose one or both):**
-   
-   **Option A: Gemini (recommended)**
-   ```bash
-   export GOOGLE_API_KEY=your_api_key_here
-   ```
-   
-   **Option B: Ollama (fallback)**
-   ```bash
-   # Verify Ollama is running:
-   curl http://localhost:11434/api/tags
-   # Pull a model if needed:
-   ollama pull llama3.1
-   ```
-   
-   **Note**: The system will try Gemini first, then automatically fall back to Ollama if Gemini fails.
-
-## How to Run
-
-### Option 1: CLI Demo (Recommended for Testing)
-
-Run the interactive CLI demo:
-
+**Option A: CLI Demo**
 ```bash
 python cli_demo.py
 ```
 
-This starts an interactive session where you can:
-- Chat with the assistant
-- See query understanding in action
-- Trigger summarization with long conversations
-- Load conversation logs: `load data/conversations/long_session.jsonl`
-
-**Demo Flows:**
-
-To see the two required demo flows:
-
-```bash
-python cli_demo.py flows
-```
-
-This demonstrates:
-1. **Flow 1**: Session memory trigger (long conversation → summarization)
-2. **Flow 2**: Ambiguous query handling (rewrite → context augmentation → clarifying questions)
-
-### Option 2: Streamlit Web Interface (Recommended for Demo)
-
-Launch the Streamlit web interface:
-
+**Option B: Streamlit UI**
 ```bash
 streamlit run streamlit_app.py
 ```
 
-The interface will open in your browser at `http://localhost:8501`
-
-**Features:**
-- Interactive chat interface
-- Real-time session memory visualization
-- Query understanding display
-- Pipeline metadata monitoring
-- Session management
-- Configurable context threshold
-
-### Option 3: FastAPI Server (Development with Auto-Reload)
-
-**For local development with auto-reload:**
-
+**Option C: FastAPI Backend**
 ```bash
-python run_dev.py
+python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Or using uvicorn directly:
+### Docker Deployment (Local)
 
+**API Service**
 ```bash
-uvicorn app.main:app --reload --reload-dir app
+docker build -t chat-bot-api .
+docker run -e PORT=8000 -e GOOGLE_API_KEY=your-key -p 8000:8000 chat-bot-api
 ```
 
-**For production-like local testing with gunicorn:**
-
+**Streamlit UI**
 ```bash
-python run_prod.py
+docker build -f Dockerfile.streamlit -t chat-bot-ui .
+docker run -e PORT=8501 -p 8501:8501 chat-bot-ui
 ```
 
-Or with auto-reload enabled:
+## Deployment Guides
 
+### Railway
+1. Push repo to GitHub
+2. Create new project on https://railway.app
+3. Connect GitHub repo
+4. Choose Docker deployment
+5. Set environment variables (API keys)
+6. Deploy — Railway auto-builds and runs start.sh
+
+### Render
+1. Create two Web Services:
+   - **Service A (API)**: 
+     - Connect repo, choose Docker
+     - Set Dockerfile Path: `Dockerfile`
+     - Set Start Command: `/app/start.sh`
+   - **Service B (UI)**: 
+     - Connect repo, choose Docker
+     - Set Dockerfile Path: `Dockerfile.streamlit`
+2. Set environment variables on each service
+3. Deploy
+
+### Heroku
 ```bash
-RELOAD=true python run_prod.py
+# Install Heroku CLI
+brew tap heroku/brew && brew install heroku-cli
+# or on Windows: choco install heroku-cli
+
+# Login and create app
+heroku login
+heroku create your-app-name
+
+# Set environment variables
+heroku config:set GOOGLE_API_KEY=your-key
+
+# Push to Heroku
+git push heroku main
 ```
 
-API will be available at `http://localhost:8000`
+## File Structure
 
-**Endpoints:**
-- `POST /api/chat` - Send a chat message
-- `GET /api/sessions/{session_id}/messages` - Get session messages
-- `GET /api/sessions/{session_id}/summary` - Get session summary
-- `GET /docs` - Interactive API documentation
-
-**Example request:**
-```bash
-curl -X POST "http://localhost:8000/api/chat" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "session_id": "test_session",
-    "message": "I need help with machine learning"
-  }'
+```
+chat-bot-with-memory/
+├── app/
+│   ├── main.py              # FastAPI entry point
+│   ├── api/                 # API endpoints
+│   │   ├── chat.py
+│   │   ├── docs.py          # Document upload (future)
+│   │   └── auth.py          # Authentication (future)
+│   ├── core/
+│   │   ├── pipeline.py      # Main orchestrator
+│   │   ├── config.py        # Configuration
+│   │   ├── prompt_builder.py
+│   │   └── token_counter.py
+│   ├── llm/
+│   │   ├── client.py        # Base LLM client
+│   │   ├── gemini_client.py
+│   │   ├── ollama_client.py
+│   │   └── json_guard.py    # JSON parsing utilities
+│   ├── memory/
+│   │   ├── session_store.py # Session persistence
+│   │   ├── schemas.py       # Data models
+│   │   ├── summarizer.py    # Token-aware summarization
+│   │   └── schemas.py
+│   ├── query_understanding/
+│   │   ├── ambiguity.py     # Detect ambiguous queries
+│   │   ├── clarifier.py     # Generate clarifying questions
+│   │   ├── context.py       # Context augmentation
+│   │   ├── rewrite.py       # Query rewriting
+│   │   └── schemas.py
+│   ├── utils/
+│   │   ├── logging.py       # ConversationLogger
+│   │   └── __init__.py
+│   └── __init__.py
+├── tests/
+│   ├── test_session_summarization.py
+│   ├── test_ambiguous_query_detection.py
+│   ├── test_query_refinement.py
+│   ├── test_conversation_logging.py
+│   ├── test_cli_demo.py
+│   ├── test_streamlit_app.py
+│   └── run_tests.py
+├── docs/                    # Implementation guides
+│   ├── 01_CI_CD_PIPELINE.md
+│   ├── 02_AUTHENTICATION.md
+│   ├── 03_MONITORING.md
+│   ├── 04_PDF_UPLOAD_S3.md
+│   ├── 05_AGENTIC_WEB_SEARCH.md
+│   └── CONVERSATION_LOGGING.md
+├── data/                    # Persistent data
+│   ├── sessions/            # Session summaries (JSON)
+│   └── conversations/       # Conversation logs (JSONL)
+├── logs/                    # Application logs
+├── cli_demo.py              # CLI interface
+├── streamlit_app.py         # Streamlit web UI
+├── Dockerfile               # API service container
+├── Dockerfile.streamlit     # Streamlit UI container
+├── start.sh                 # Production entrypoint (Gunicorn)
+├── start_streamlit.sh       # Streamlit entrypoint
+├── Procfile                 # Heroku process definition
+├── runtime.txt              # Python runtime version (Heroku)
+├── docker-compose.yml       # Development orchestration
+├── requirements.txt         # Python dependencies
+├── .dockerignore            # Docker build optimization
+├── .env.example             # Environment template
+├── .github/workflows/
+│   └── tests.yml            # GitHub Actions CI/CD
+└── README.md                # This file
 ```
 
-**Environment variables for server:**
-```bash
-PORT=8000          # Server port (default: 8000)
-HOST=127.0.0.1     # Server host (default: 127.0.0.1)
-WORKERS=4          # Gunicorn workers (default: 4, only for run_prod.py)
-RELOAD=true        # Enable auto-reload for gunicorn (default: false)
-```
-
-### Option 4: Docker Compose
+## Environment Variables
 
 ```bash
-docker-compose up --build
+# LLM Configuration
+GOOGLE_API_KEY=your-gemini-api-key
+OLLAMA_HOST=http://localhost:11434  # For fallback
+
+# Session Management
+SESSION_TOKEN_THRESHOLD=10000        # Summarize at this token count
+SESSION_STORAGE_TYPE=file            # or 'redis'
+REDIS_URL=redis://localhost:6379     # If using Redis
+
+# Logging
+LOG_LEVEL=INFO
+LOG_DIR=./logs
+
+# API
+PORT=8000
+WEB_CONCURRENCY=1                    # Gunicorn workers
+
+# Future Features
+ENABLE_AUTHENTICATION=false          # Enable auth (docs/02)
+ENABLE_WEB_SEARCH=false              # Enable web search (docs/05)
+ENABLE_DOCUMENT_UPLOAD=false         # Enable PDF upload (docs/04)
+
+# Monitoring (docs/03)
+ENABLE_PROMETHEUS=false
+PROMETHEUS_PORT=9090
+GRAFANA_PORT=3000
 ```
 
-This starts:
-- Chat assistant API on port 8000
-- Redis on port 6379
+## API Endpoints
 
-**Note**: Ensure Ollama is running on your host machine (accessible at `host.docker.internal:11434`)
+### Chat
+```
+POST /chat
+Body: {
+  "message": "Your question",
+  "session_id": "session-123"
+}
 
-## Test Data
+Response: {
+  "response": "Assistant's answer",
+  "session_id": "session-123",
+  "token_count": 1234,
+  "context_used": true
+}
+```
 
-Three conversation logs are provided in `data/conversations/`:
+### Health
+```
+GET /health
 
-1. **`long_session.jsonl`**: Long conversation that triggers summarization
-   - 20+ messages about building a recommendation system
-   - Demonstrates session memory extraction
+Response: {
+  "status": "ok"
+}
+```
 
-2. **`ambiguous_queries.jsonl`**: Conversations with ambiguous queries
-   - Examples: "Which one should I use?", "What should I do?", "It"
-   - Shows query understanding pipeline in action
+### Metrics (Future)
+```
+GET /metrics        # Prometheus metrics
+```
 
-3. **`mixed_flow.jsonl`**: Mixed scenarios
-   - Combination of normal and ambiguous queries
-   - Tests both flows together
+## Testing
 
-**Load a conversation:**
+Run full test suite:
 ```bash
-# In CLI demo:
-load data/conversations/long_session.jsonl
+python tests/run_tests.py
 ```
 
-## Configuration
-
-### Environment Variables
-
-Create a `.env` file (optional):
-
-```env
-# Gemini (primary, recommended)
-GOOGLE_API_KEY=your_api_key_here
-
-# Ollama (fallback)
-OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_MODEL=llama3.1
-
-# Session storage
-REDIS_URL=redis://localhost:6379
-SESSION_STORAGE_TYPE=file  # or "redis"
-MAX_CONTEXT_TOKENS=10000
-
-# Logging (optional)
-LOG_LEVEL=INFO  # DEBUG, INFO, WARNING, ERROR, CRITICAL
-LOG_FILE=app.log  # Log file name (default: app.log)
-LOG_DIR=logs  # Log directory (default: logs)
-LOG_MAX_BYTES=10485760  # Max log file size in bytes (default: 10MB)
-LOG_BACKUP_COUNT=5  # Number of backup log files (default: 5)
-```
-
-### Logging Configuration
-
-The application uses centralized logging configured via `app/utils/logging.py`. Logs are written to both console and file (if configured).
-
-**Log Files:**
-- Default location: `logs/app.log`
-- Logs are automatically rotated when they exceed the configured size
-- Old log files are kept as backups (e.g., `app.log.1`, `app.log.2`)
-
-**Log Levels:**
-- `DEBUG`: Detailed information for debugging
-- `INFO`: General informational messages (default)
-- `WARNING`: Warning messages
-- `ERROR`: Error messages
-- `CRITICAL`: Critical errors
-
-**View logs:**
+Run specific test:
 ```bash
-# Tail log file
+pytest tests/test_session_summarization.py -v
+```
+
+Test with coverage:
+```bash
+pytest tests/ --cov=app --cov-report=html
+```
+
+## Monitoring & Logs
+
+**Application Logs**
+```bash
 tail -f logs/app.log
-
-# View last 100 lines
-tail -n 100 logs/app.log
 ```
 
-**Usage in code:**
-```python
-from app.utils.logging import get_logger
-
-logger = get_logger(__name__)
-logger.info("Information message")
-logger.debug("Debug message")
-logger.warning("Warning message")
-logger.error("Error message", exc_info=True)  # Include exception traceback
-```
-
-### Pipeline Parameters
-
-In `app/core/pipeline.py`, you can configure:
-
-- `max_context_tokens`: Threshold for triggering summarization (default: 10000)
-- `keep_recent_messages`: Messages to keep after summarization (default: 5)
-
-## High-Level Design Explanation
-
-### Session Memory
-
-When the conversation context exceeds the token threshold:
-
-1. **Token Counting**: Uses tiktoken to accurately count tokens
-2. **Range Selection**: Determines which messages to summarize (sliding window)
-3. **Structured Summarization**: LLM extracts structured information into Pydantic schema
-4. **Storage**: Saves summary to session store (Redis or file)
-5. **Context Pruning**: Removes old messages, keeps recent ones for continuity
-
-### Query Understanding
-
-For each user query:
-
-1. **Ambiguity Detection**:
-   - Heuristic checks (short queries, pronouns, incomplete questions)
-   - LLM-based classification with confidence scores
-
-2. **Query Rewriting** (if ambiguous):
-   - Uses conversation context to clarify intent
-   - Maintains original query for debugging
-
-3. **Context Augmentation**:
-   - Selectively extracts relevant memory fields
-   - Combines with recent messages
-   - Avoids RAG-style dumping
-
-4. **Clarifying Questions** (if still unclear):
-   - Generates 1-3 actionable questions
-   - Only if ambiguity persists after rewrite
-
-### Schema-First Approach
-
-All outputs are validated against Pydantic schemas:
-- `SessionSummary`: Structured memory extraction
-- `QueryUnderstanding`: Complete query analysis
-- Automatic retry on schema violations
-- JSON extraction from LLM responses
-
-## Assumptions and Limitations
-
-### Assumptions
-
-1. **Gemini API key** is set (recommended) OR **Ollama is running locally** on port 11434 (fallback)
-2. **Ollama model is pre-downloaded** if using Ollama (e.g., `ollama pull llama3.1`)
-3. **File-based storage** is used by default (Redis optional)
-4. **Single-threaded processing** per session (no concurrent requests)
-
-### Limitations
-
-1. **Token counting** uses GPT-3.5 tokenizer (may differ slightly for other models)
-2. **Summarization** is triggered only on message send (not real-time)
-3. **Context augmentation** uses simple keyword matching for field selection
-4. **No conversation history** beyond session boundaries
-5. **File-based storage** doesn't handle concurrent writes efficiently (use Redis for production)
-
-### Future Improvements
-
-- [x] Multi-model support with automatic fallback (Gemini + Ollama)
-- [ ] Vector-based memory retrieval for better context selection
-- [ ] Streaming responses for better UX
-- [ ] Conversation history across sessions
-- [ ] Metrics and observability (OpenTelemetry)
-- [ ] LangGraph integration for state machine pipeline
-
-## Testing the Demo Flows
-
-### Flow 1: Session Memory Trigger
-
+**Conversation Logs** (JSONL format)
 ```bash
-python cli_demo.py flows
+cat data/conversations/session_log.jsonl | jq .
 ```
 
-Or manually:
-1. Load `data/conversations/long_session.jsonl`
-2. Continue conversation until token threshold is exceeded
-3. Observe summarization trigger and structured summary output
-
-### Flow 2: Ambiguous Query Handling
-
+**Session Management**
 ```bash
-python cli_demo.py flows
+# View session info
+python session_manager.py -i default_session
+
+# Delete session
+python session_manager.py -d default_session
+
+# Delete all sessions
+python session_manager.py -d
 ```
 
-Or manually:
-1. Start a conversation with some context
-2. Send an ambiguous query like "Which one should I use?"
-3. Observe:
-   - Ambiguity detection
-   - Query rewriting
-   - Context augmentation
-   - Clarifying questions (if applicable)
+## Security Checklist
+
+- [ ] Store API keys securely (environment variables, not in code)
+- [ ] Use HTTPS in production (Railway/Render provide this)
+- [ ] Implement rate limiting on API endpoints (future)
+- [ ] Validate and sanitize all user inputs
+- [ ] Log access to sensitive operations
+- [ ] Regularly update dependencies: `pip list --outdated`
+- [ ] Enable authentication before production deployment
+- [ ] Configure CORS appropriately
+- [ ] Use private S3/MinIO buckets for documents
 
 ## Troubleshooting
 
-### Ollama Connection Issues
-
+### Port Already in Use
 ```bash
-# Check if Ollama is running
-curl http://localhost:11434/api/tags
-
-# Start Ollama if not running
-ollama serve
+# Find process using port 8000
+lsof -i :8000
+kill -9 <PID>
 ```
 
-### Model Not Found
+### Gemini API Errors
+- Verify `GOOGLE_API_KEY` is set correctly
+- Check API quota on Google Cloud Console
+- Ensure billing is enabled
 
-```bash
-# Pull a model
-ollama pull llama3.1
-# Or
-ollama pull qwen2.5
-```
+### Streamlit Not Loading
+- Verify `streamlit_app.py` exists
+- Check port 8501 is accessible
+- Review Streamlit logs: `streamlit run streamlit_app.py --logger.level=debug`
 
-### Redis Connection Issues
+### Docker Build Failures
+- Clear cache: `docker system prune -a`
+- Check `requirements.txt` for invalid packages
+- Verify `start.sh` has execute permissions
 
-If using Redis, ensure it's running:
-```bash
-docker run -d -p 6379:6379 redis:7-alpine
-```
+## Contributing
 
-Or use file-based storage (default):
-```python
-session_store = SessionStore(storage_type="file")
-```
+1. Create feature branch: `git checkout -b feature/my-feature`
+2. Make changes and test: `python tests/run_tests.py`
+3. Commit: `git commit -am "Add my feature"`
+4. Push: `git push origin feature/my-feature`
+5. Open PR on GitHub
+
+## Implementation Roadmap Priority
+
+1. **High Priority** (Next Sprint):
+   - Authentication (enable multi-user support)
+   - Monitoring (production observability)
+   - CI/CD automation (faster deployments)
+
+2. **Medium Priority** (Following Sprint):
+   - PDF upload & document storage
+   - Web search for current information
+
+3. **Low Priority** (Nice-to-have):
+   - Advanced analytics dashboard
+   - Multi-language support
+   - Custom model fine-tuning
+
+## Resources
+
+- [LangChain Docs](https://python.langchain.com/)
+- [FastAPI Docs](https://fastapi.tiangolo.com/)
+- [Streamlit Docs](https://docs.streamlit.io/)
+- [Google Gemini API](https://ai.google.dev/)
+- [Prometheus & Grafana](https://prometheus.io/)
+- [Railway Deploy Docs](https://docs.railway.app/)
+- [Render Deploy Docs](https://render.com/docs)
 
 ## License
 
-This project is created for the Vulcan Labs AI Engineer Intern take-home test.
+MIT
 
-## Author
+## Support
 
-Built with attention to:
-- Clear pipeline design
-- Structured, schema-first outputs
-- Clean code organization
-- Comprehensive documentation
-- Test data for validation
+For issues, questions, or feature requests, open a GitHub issue.
+
+---
+
+**Last Updated**: February 2026
+**Current Version**: 1.0.0
+**Status**: Production Ready (Core Features)
