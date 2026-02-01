@@ -150,6 +150,26 @@ st.markdown("""
         border: 1px solid rgba(15,23,42,0.04);
         border-top-left-radius: 6px;
     }
+    
+    /* Headers in responses - muted colors for readability */
+    .assistant-bubble h1, 
+    .assistant-bubble h2, 
+    .assistant-bubble h3,
+    .assistant-bubble h4,
+    .assistant-bubble h5,
+    .assistant-bubble h6 {
+        color: #1e293b !important;
+        font-weight: 600;
+        margin: 12px 0 8px 0;
+        line-height: 1.3;
+    }
+    
+    .assistant-bubble h1 { font-size: 1.4rem; }
+    .assistant-bubble h2 { font-size: 1.2rem; }
+    .assistant-bubble h3 { font-size: 1.05rem; }
+    .assistant-bubble h4, 
+    .assistant-bubble h5, 
+    .assistant-bubble h6 { font-size: 0.95rem; }
 
     .user-bubble {
         background: #ff8a00; /* orange */

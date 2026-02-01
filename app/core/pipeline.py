@@ -14,10 +14,12 @@ from app.core.prompt_builder import PromptBuilder
 from app.llm.client import LLMClient
 from app.llm.ollama_client import OllamaClient
 from app.llm.gemini_client import GeminiClient
-from app.utils.logging import get_logger, ConversationLogger
+from app.utils.logging import get_logger, ConversationLogger, UserQueryLogger, SessionSummaryLogger
 
 logger = get_logger(__name__)
 conversation_logger = ConversationLogger()
+query_logger = UserQueryLogger()
+session_summary_logger = SessionSummaryLogger()
 
 
 class ChatPipeline:
@@ -104,6 +106,19 @@ class ChatPipeline:
                 session_memory = await self.summarizer.summarize(messages, message_range)
                 self.session_store.save_summary(session_id, session_memory)
                 
+                # Log session summary to session_summaries.log
+                try:
+                    session_summary_logger.log_summary(
+                        session_id=session_id,
+                        session_summary=session_memory.session_summary.model_dump(),
+                        message_range_summarized={
+                            "from": message_range.from_index,
+                            "to": message_range.to_index
+                        }
+                    )
+                except Exception as e:
+                    logger.warning(f"Failed to log session summary: {e}")
+                
                 # Clear old messages, keep recent ones
                 self.session_store.clear_messages(session_id, keep_recent=self.keep_recent_messages)
                 messages = self.session_store.get_messages(session_id)
@@ -131,6 +146,21 @@ class ChatPipeline:
                 clarifying_questions=[],
                 final_augmented_context=augmented_context
             )
+            
+            # Log query understanding to user_queries.log (with defaults since skipped)
+            try:
+                query_logger.log_query(
+                    session_id=session_id,
+                    original_query=user_query,
+                    is_ambiguous=False,
+                    rewritten_query=None,
+                    needed_context_from_memory=fields_used,
+                    clarifying_questions=[],
+                    final_augmented_context=augmented_context
+                )
+            except Exception as e:
+                logger.warning(f"Failed to log query understanding: {e}")
+            
             logger.info("[Pipeline] Query understanding skipped (disabled)")
         else:
             logger.info("[Pipeline] Starting query understanding")
@@ -194,6 +224,20 @@ class ChatPipeline:
                 clarifying_questions=clarifying_questions,
                 final_augmented_context=augmented_context
             )
+            
+            # Log query understanding to user_queries.log
+            try:
+                query_logger.log_query(
+                    session_id=session_id,
+                    original_query=user_query,
+                    is_ambiguous=ambiguity_analysis.is_ambiguous,
+                    rewritten_query=rewritten_query,
+                    needed_context_from_memory=fields_used,
+                    clarifying_questions=clarifying_questions,
+                    final_augmented_context=augmented_context
+                )
+            except Exception as e:
+                logger.warning(f"Failed to log query understanding: {e}")
         
         # Step 4: Build final prompt
         system_prompt, user_prompt = self.prompt_builder.build(

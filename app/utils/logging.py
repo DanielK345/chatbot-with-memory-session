@@ -230,6 +230,131 @@ class ConversationLogger:
             logger.error(f"Failed to log assistant response: {e}")
 
 
+class UserQueryLogger:
+    """Logger for recording user queries with understanding details."""
+    
+    def __init__(
+        self,
+        log_file: str = "user_queries.log",
+        log_dir: str = "logs"
+    ):
+        """
+        Initialize user query logger.
+        
+        Args:
+            log_file: User queries log file name
+            log_dir: Directory for log files
+        """
+        log_path = Path(log_dir)
+        log_path.mkdir(parents=True, exist_ok=True)
+        self.log_file = log_path / log_file
+    
+    def log_query(
+        self,
+        session_id: str,
+        original_query: str,
+        is_ambiguous: bool,
+        rewritten_query: Optional[str] = None,
+        needed_context_from_memory: Optional[list] = None,
+        clarifying_questions: Optional[list] = None,
+        final_augmented_context: Optional[str] = None
+    ) -> None:
+        """
+        Log a user query with query understanding details.
+        
+        Args:
+            session_id: Session identifier
+            original_query: Original user query
+            is_ambiguous: Whether query was detected as ambiguous
+            rewritten_query: Rewritten/paraphrased query (if ambiguous)
+            needed_context_from_memory: List of memory fields used
+            clarifying_questions: List of clarifying questions (if still unclear)
+            final_augmented_context: Final context used for response
+        """
+        query_record = {
+            "timestamp": datetime.now().isoformat(),
+            "session_id": session_id,
+            "original_query": original_query,
+            "is_ambiguous": is_ambiguous,
+            "rewritten_query": rewritten_query,
+            "needed_context_from_memory": needed_context_from_memory or [],
+            "clarifying_questions": clarifying_questions or [],
+            "final_augmented_context": final_augmented_context
+        }
+        
+        try:
+            with open(self.log_file, "a", encoding="utf-8") as f:
+                f.write(json.dumps(query_record, ensure_ascii=False) + "\n")
+        except Exception as e:
+            logger = logging.getLogger(__name__)
+            logger.error(f"Failed to log user query: {e}")
+
+
+class SessionSummaryLogger:
+    """Logger for recording session summaries."""
+    
+    def __init__(
+        self,
+        log_file: str = "session_summaries.log",
+        log_dir: str = "logs"
+    ):
+        """
+        Initialize session summary logger.
+        
+        Args:
+            log_file: Session summaries log file name
+            log_dir: Directory for log files
+        """
+        log_path = Path(log_dir)
+        log_path.mkdir(parents=True, exist_ok=True)
+        self.log_file = log_path / log_file
+    
+    def log_summary(
+        self,
+        session_id: str,
+        session_summary: dict,
+        message_range_summarized: dict
+    ) -> None:
+        """
+        Log a session summary with structured information.
+        
+        Args:
+            session_id: Session identifier
+            session_summary: Dictionary containing:
+                - user_profile: dict with 'prefs' and 'constraints'
+                - key_facts: list of important facts
+                - decisions: list of decisions made
+                - open_questions: list of unresolved questions
+                - todos: list of action items
+            message_range_summarized: dict with 'from' and 'to' indices
+        """
+        summary_record = {
+            "timestamp": datetime.now().isoformat(),
+            "session_id": session_id,
+            "session_summary": {
+                "user_profile": {
+                    "prefs": session_summary.get("user_profile", {}).get("prefs", []),
+                    "constraints": session_summary.get("user_profile", {}).get("constraints", [])
+                },
+                "key_facts": session_summary.get("key_facts", []),
+                "decisions": session_summary.get("decisions", []),
+                "open_questions": session_summary.get("open_questions", []),
+                "todos": session_summary.get("todos", [])
+            },
+            "message_range_summarized": {
+                "from": message_range_summarized.get("from", 0),
+                "to": message_range_summarized.get("to", 0)
+            }
+        }
+        
+        try:
+            with open(self.log_file, "a", encoding="utf-8") as f:
+                f.write(json.dumps(summary_record, ensure_ascii=False) + "\n")
+        except Exception as e:
+            logger = logging.getLogger(__name__)
+            logger.error(f"Failed to log session summary: {e}")
+
+
 class LoggerMixin:
     """Mixin class to add logger to any class."""
     
