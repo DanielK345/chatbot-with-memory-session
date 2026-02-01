@@ -112,8 +112,8 @@ class GeminiClient:
             if max_tokens:
                 generation_config["max_output_tokens"] = max_tokens
             
-            if json_mode:
-                generation_config["response_mime_type"] = "application/json"
+            # Note: response_mime_type is not supported in current Gemini SDK
+            # JSON mode is handled via prompt engineering instead
             
             # Generate response
             model = genai.GenerativeModel(self.model_name)

@@ -6,6 +6,12 @@ when the token count exceeds the threshold.
 
 import asyncio
 import random
+import sys
+from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from app.core.pipeline import ChatPipeline
 from app.memory.session_store import SessionStore
 from app.llm.client import LLMClient
@@ -30,6 +36,11 @@ ML_QUERIES = [
     "What is regularization?",
     "Explain ensemble methods",
     "What is feature engineering?",
+    "How do convolutional neural networks work?",
+    "What is reinforcement learning?",
+    "Explain natural language processing",
+    "What are generative models?",
+    "How do transformers work?"
 ]
 
 DOMAIN_QUERIES = [
@@ -56,6 +67,21 @@ CONSTRAINT_QUERIES = [
     "We need active community support",
 ]
 
+TRIVIA_QUERIES = [
+    "What is the capital of France?",
+    "Who wrote 'To Kill a Mockingbird'?",
+    "What is the largest planet in our solar system?",
+    "Who painted the Mona Lisa?",
+    "What is the chemical symbol for gold?",
+    "Who developed the theory of relativity?",
+    "What is the tallest mountain in the world?",
+    "Who is known as the father of modern computers?",
+    "What is the smallest prime number?",
+    "Who discovered penicillin?"
+]
+
+
+
 
 def generate_random_queries(num_queries: int) -> list:
     """Generate random queries by combining ML, domain, and constraint queries."""
@@ -66,6 +92,8 @@ def generate_random_queries(num_queries: int) -> list:
             query += ". " + random.choice(DOMAIN_QUERIES)
         if random.random() > 0.6:
             query += ". " + random.choice(CONSTRAINT_QUERIES)
+        if random.random() > 0.7:
+            query += ". " + random.choice(TRIVIA_QUERIES)
         queries.append(query)
     return queries
 
@@ -86,7 +114,7 @@ async def test_session_summarization():
         pipeline = ChatPipeline(
             session_store,
             llm_client,
-            max_context_tokens=2000,  # Low threshold to trigger summarization
+            max_context_tokens=1000,  # Low threshold to trigger summarization
             keep_recent_messages=3,
             max_response_tokens=500,
             response_temperature=0.5
@@ -96,7 +124,7 @@ async def test_session_summarization():
         session_store.clear_messages(session_id)
         
         # Generate random queries
-        queries = generate_random_queries(num_queries=8)
+        queries = generate_random_queries(num_queries=20)
         
         print(f"\nGenerating {len(queries)} random queries to trigger summarization...")
         print("-" * 70)

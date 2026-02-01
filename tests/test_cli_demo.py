@@ -6,6 +6,10 @@ Verifies that all components (LLM client, pipeline, session store) initialize co
 import asyncio
 import sys
 from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from app.core.pipeline import ChatPipeline
 from app.memory.session_store import SessionStore
 from app.llm.client import LLMClient
