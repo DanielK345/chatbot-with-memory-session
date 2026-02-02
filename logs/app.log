@@ -1,0 +1,200 @@
+2026-02-02 14:53:21 - app.llm.client - INFO - [client.py:62] - ✓ Gemini client initialized successfully
+2026-02-02 14:53:21 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_summarization_session
+2026-02-02 14:53:21 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 15
+2026-02-02 14:53:21 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:53:21 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:53:21 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:53:21 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:53:24 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_summarization_session
+2026-02-02 14:53:24 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 58
+2026-02-02 14:53:24 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:53:24 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:53:24 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:53:24 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:53:28 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_summarization_session
+2026-02-02 14:53:28 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 100
+2026-02-02 14:53:28 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:53:28 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:53:28 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:53:28 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:53:31 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_summarization_session
+2026-02-02 14:53:31 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 139
+2026-02-02 14:53:31 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:53:31 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:53:31 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:53:31 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:53:34 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_summarization_session
+2026-02-02 14:53:34 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 203
+2026-02-02 14:53:34 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:53:34 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:53:34 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:53:34 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:53:38 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_summarization_session
+2026-02-02 14:53:38 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 261
+2026-02-02 14:53:38 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:53:38 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:53:38 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:53:38 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:53:41 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_summarization_session
+2026-02-02 14:53:41 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 306
+2026-02-02 14:53:41 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:53:41 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:53:41 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:53:41 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:53:44 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_summarization_session
+2026-02-02 14:53:44 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 349
+2026-02-02 14:53:44 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:53:44 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:53:44 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:53:44 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:53:48 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_summarization_session
+2026-02-02 14:53:48 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 407
+2026-02-02 14:53:48 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:53:48 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:53:48 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:53:48 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:53:51 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_summarization_session
+2026-02-02 14:53:51 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 466
+2026-02-02 14:53:51 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:53:51 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:53:51 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:53:51 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:53:55 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_summarization_session
+2026-02-02 14:53:55 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 508
+2026-02-02 14:53:55 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:53:55 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:53:55 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:53:55 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:53:58 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_summarization_session
+2026-02-02 14:53:58 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 547
+2026-02-02 14:53:58 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:53:58 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:53:58 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:53:58 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:54:01 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_summarization_session
+2026-02-02 14:54:01 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 604
+2026-02-02 14:54:01 - app.core.pipeline - INFO - [pipeline.py:106] - [Pipeline] Context exceeded threshold (604 > 600), triggering summarization
+2026-02-02 14:54:06 - app.core.pipeline - INFO - [pipeline.py:131] - [Pipeline] Summarized messages 0-22, kept 3 recent messages
+2026-02-02 14:54:06 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:54:06 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:54:06 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:54:06 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:54:10 - scripts.session_manager - INFO - [session_manager.py:144] - Session test_summarization_session deleted
+2026-02-02 14:56:25 - app.llm.client - INFO - [client.py:62] - ✓ Gemini client initialized successfully
+2026-02-02 14:56:25 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_ambiguity_session
+2026-02-02 14:56:25 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 11
+2026-02-02 14:56:25 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:56:25 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:56:25 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:56:25 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:56:30 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_ambiguity_session
+2026-02-02 14:56:30 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 130
+2026-02-02 14:56:30 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:56:30 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:56:30 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:56:30 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:56:35 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_ambiguity_session
+2026-02-02 14:56:35 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 197
+2026-02-02 14:56:35 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:56:35 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:56:35 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:56:35 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:56:40 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_ambiguity_session
+2026-02-02 14:56:40 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 410
+2026-02-02 14:56:40 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:56:40 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:56:40 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:56:40 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:56:45 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_ambiguity_session
+2026-02-02 14:56:45 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 488
+2026-02-02 14:56:45 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:56:45 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:56:45 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:56:45 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:56:50 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_ambiguity_session
+2026-02-02 14:56:50 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 523
+2026-02-02 14:56:50 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:56:50 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:56:50 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:56:50 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:56:55 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_ambiguity_session
+2026-02-02 14:56:55 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 586
+2026-02-02 14:56:55 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:56:55 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:56:55 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:56:55 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:57:00 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_ambiguity_session
+2026-02-02 14:57:00 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 744
+2026-02-02 14:57:00 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:57:00 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:57:00 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:57:00 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:57:05 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_ambiguity_session
+2026-02-02 14:57:05 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 807
+2026-02-02 14:57:05 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 14:57:05 - app.core.pipeline - INFO - [pipeline.py:189] - [Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection
+2026-02-02 14:57:05 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 14:57:05 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 14:57:10 - scripts.session_manager - INFO - [session_manager.py:144] - Session test_ambiguity_session deleted
+2026-02-02 15:00:00 - app.llm.client - INFO - [client.py:62] - ✓ Gemini client initialized successfully
+2026-02-02 15:00:00 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_refinement_session
+2026-02-02 15:00:00 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 11
+2026-02-02 15:00:00 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 15:00:03 - app.core.pipeline - INFO - [pipeline.py:181] - [Pipeline] Ambiguity detected: False
+2026-02-02 15:00:03 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 15:00:03 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 15:00:06 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_refinement_session
+2026-02-02 15:00:06 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 45
+2026-02-02 15:00:06 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 15:00:09 - app.core.pipeline - INFO - [pipeline.py:181] - [Pipeline] Ambiguity detected: True
+2026-02-02 15:00:15 - app.core.pipeline - INFO - [pipeline.py:199] - [Pipeline] Query rewritten: I am currently working on an image recognition task. What specific phase are you focused on (e.g., model selection, training, evaluation, or integration), and what resources or guidance do you require?
+
+---
+**You might also want to know:**
+- What specific type of image recognition task are you implementing (e.g., image classification, object detection, or segmentation)?
+- How will the results of the image recognition system be used to enhance the existing recommendation system?
+- What are the pros and cons of using popular frameworks like TensorFlow versus PyTorch for this project?
+2026-02-02 15:00:15 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 15:00:15 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 15:00:17 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_refinement_session
+2026-02-02 15:00:17 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 79
+2026-02-02 15:00:17 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 15:00:22 - app.core.pipeline - INFO - [pipeline.py:181] - [Pipeline] Ambiguity detected: True
+2026-02-02 15:00:26 - app.core.pipeline - INFO - [pipeline.py:199] - [Pipeline] Query rewritten: Considering my current image recognition project, what specific strategies or techniques should I use to improve the performance of the system, focusing on key metrics like accuracy, speed, or generalization?
+
+---
+**You might also want to know:**
+- What are the current performance metrics (e.g., accuracy, F1 score) of my existing image recognition model?
+- What common issues, such as overfitting or underfitting, should I check for when trying to improve my model's performance?
+- What are the most effective ways to augment or clean my current image dataset to boost model accuracy?
+2026-02-02 15:00:26 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 15:00:26 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 15:00:28 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_refinement_session
+2026-02-02 15:00:28 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 113
+2026-02-02 15:00:28 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 15:00:31 - app.core.pipeline - INFO - [pipeline.py:181] - [Pipeline] Ambiguity detected: True
+2026-02-02 15:00:36 - app.core.pipeline - INFO - [pipeline.py:199] - [Pipeline] Query rewritten: What specific steps should I take to implement improvements in my image recognition system?
+
+---
+**You might also want to know:**
+- Which performance metrics (e.g., F1 Score, mAP) are most important for evaluating improvements in image recognition models?
+- Should I focus on improving the quality of my training dataset or adjusting the model architecture first?
+- What are the most common pitfalls or errors encountered when trying to optimize an image recognition system?
+2026-02-02 15:00:36 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 15:00:36 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 15:00:38 - app.core.pipeline - INFO - [pipeline.py:94] - [Pipeline] Processing message for session test_refinement_session
+2026-02-02 15:00:38 - app.core.pipeline - INFO - [pipeline.py:102] - [Pipeline] Token count: 146
+2026-02-02 15:00:38 - app.core.pipeline - INFO - [pipeline.py:172] - [Pipeline] Starting query understanding
+2026-02-02 15:00:41 - app.core.pipeline - INFO - [pipeline.py:181] - [Pipeline] Ambiguity detected: True
+2026-02-02 15:00:45 - app.core.pipeline - INFO - [pipeline.py:199] - [Pipeline] Query rewritten: **Rewritten Query:**
+
+To help you decide, please specify the options, strategies, or items you are considering picking or choosing from, in relation to the improvement or execution steps you mentioned earlier.
+
+---
+**You might also want to know:**
+- What criteria are most important for making this selection?
+- Can you list the choices you are currently debating between?
+- What are the potential drawbacks or benefits of each option you are considering?
+2026-02-02 15:00:45 - app.core.pipeline - INFO - [pipeline.py:208] - [Pipeline] Memory fields used: []
+2026-02-02 15:00:45 - app.core.pipeline - INFO - [pipeline.py:255] - [Pipeline] Generating LLM response
+2026-02-02 15:00:48 - scripts.session_manager - INFO - [session_manager.py:144] - Session test_refinement_session deleted

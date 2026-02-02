@@ -314,20 +314,6 @@ Response: {
 }
 ```
 
-### Health
-```
-GET /health
-
-Response: {
-  "status": "ok"
-}
-```
-
-### Metrics (Future)
-```
-GET /metrics        # Prometheus metrics
-```
-
 ## Testing
 
 Run full test suite:
@@ -343,18 +329,6 @@ pytest tests/test_session_summarization.py -v
 Test with coverage:
 ```bash
 pytest tests/ --cov=app --cov-report=html
-```
-
-## Monitoring & Logs
-
-**Application Logs**
-```bash
-tail -f logs/app.log
-```
-
-**Conversation Logs** (JSONL format)
-```bash
-cat data/conversations/session_log.jsonl | jq .
 ```
 
 **Session Management**
@@ -380,8 +354,6 @@ python session_manager.py -d
 - [ ] Enable authentication before production deployment
 - [ ] Configure CORS appropriately
 - [ ] Use private S3/MinIO buckets for documents
-
-## Troubleshooting
 
 ### Port Already in Use
 ```bash
@@ -417,27 +389,11 @@ kill -9 <PID>
 
 1. **High Priority** (Next Sprint):
    - Authentication (enable multi-user support)
-   - Monitoring (production observability)
    - CI/CD automation (faster deployments)
 
 2. **Medium Priority** (Following Sprint):
    - PDF upload & document storage
    - Web search for current information
-
-3. **Low Priority** (Nice-to-have):
-   - Advanced analytics dashboard
-   - Multi-language support
-   - Custom model fine-tuning
-
-## Resources
-
-- [LangChain Docs](https://python.langchain.com/)
-- [FastAPI Docs](https://fastapi.tiangolo.com/)
-- [Streamlit Docs](https://docs.streamlit.io/)
-- [Google Gemini API](https://ai.google.dev/)
-- [Prometheus & Grafana](https://prometheus.io/)
-- [Railway Deploy Docs](https://docs.railway.app/)
-- [Render Deploy Docs](https://render.com/docs)
 
 ## License
 

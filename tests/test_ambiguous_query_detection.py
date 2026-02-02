@@ -16,8 +16,17 @@ from app.core.pipeline import ChatPipeline
 from app.memory.session_store import SessionStore
 from app.llm.client import LLMClient
 from app.utils.logging import get_logger
+from app.utils.logging import ConversationLogger, UserQueryLogger, SessionSummaryLogger
+from scripts.session_manager import delete_session
+import app.core.pipeline as pipeline_module
 
 logger = get_logger(__name__)
+
+# Pre-configure test loggers at module import time
+log_dir = "logs/ambiguous_query_detection"
+pipeline_module.conversation_logger = ConversationLogger(log_file="conversations_test.log", log_dir=log_dir)
+pipeline_module.query_logger = UserQueryLogger(log_file="user_queries_test.log", log_dir=log_dir)
+pipeline_module.session_summary_logger = SessionSummaryLogger(log_file="session_summaries_test.log", log_dir=log_dir)
 
 # Clear queries (should not be ambiguous)
 CLEAR_QUERIES = [
@@ -79,6 +88,12 @@ async def test_ambiguous_query_detection():
     print("TEST: Ambiguous Query Detection")
     print("=" * 70)
     
+    def _cleanup():
+        try:
+            delete_session(session_id)
+        except Exception:
+            pass
+
     try:
         # Initialize pipeline
         session_store = SessionStore(storage_type="file")
@@ -91,8 +106,11 @@ async def test_ambiguous_query_detection():
             llm_client,
             enable_query_understanding=True,
             skip_llm_ambiguity_if_clear=True,
-            max_response_tokens=300,
-            response_temperature=0.5
+            max_response_tokens=800,
+            response_temperature=0.5,
+            conversation_logger=pipeline_module.conversation_logger,
+            query_logger=pipeline_module.query_logger,
+            session_summary_logger=pipeline_module.session_summary_logger
         )
         
         session_id = "test_ambiguity_session"
@@ -156,6 +174,8 @@ async def test_ambiguous_query_detection():
         print(f"\n❌ TEST FAILED: {e}")
         logger.error(f"Ambiguous query detection test failed: {e}", exc_info=True)
         return False
+    finally:
+        _cleanup()
 
 
 if __name__ == "__main__":

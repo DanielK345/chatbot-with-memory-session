@@ -1,0 +1,99 @@
+{
+  "timestamp": "2026-02-02T14:56:25.585176",
+  "session_id": "test_ambiguity_session",
+  "original_query": "How many continents are there?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nuser: How many continents are there?"
+}
+
+{
+  "timestamp": "2026-02-02T14:56:30.635488",
+  "session_id": "test_ambiguity_session",
+  "original_query": "Explain machine learning",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nuser: How many continents are there?\nassistant: The number of continents recognized globally depends on the geographical model used, as conventions vary between regions and educational systems.\n\nHowever, the most widely accepted model, particularly in English-speaking countries, recognizes **seven** continents.\n\n---\n\n## The Seven-Continent Model\n\nThis model is the standard in much of Western Europe, the United States, Canada, Australia, and parts of Asia. The seven continents are:\n\n1.  **Asia**\n2.\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: Explain machine learning"
+}
+
+{
+  "timestamp": "2026-02-02T14:56:35.517933",
+  "session_id": "test_ambiguity_session",
+  "original_query": "What is the speed of light?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nuser: How many continents are there?\nassistant: The number of continents recognized globally depends on the geographical model used, as conventions vary between regions and educational systems.\n\nHowever, the most widely accepted model, particularly in English-speaking countries, recognizes **seven** continents.\n\n---\n\n## The Seven-Continent Model\n\nThis model is the standard in much of Western Europe, the United States, Canada, Australia, and parts of Asia. The seven continents are:\n\n1.  **Asia**\n2.\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: Explain machine learning\nassistant: Machine learning (ML) is a powerful and transformative field of computer science and a core component of Artificial Intelligence (AI). It focuses on building systems that can learn\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: What is the speed of light?"
+}
+
+{
+  "timestamp": "2026-02-02T14:56:40.743742",
+  "session_id": "test_ambiguity_session",
+  "original_query": "I'm building a classification model with Python",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nuser: Explain machine learning\nassistant: Machine learning (ML) is a powerful and transformative field of computer science and a core component of Artificial Intelligence (AI). It focuses on building systems that can learn\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: What is the speed of light?\nassistant: The speed of light in a vacuum, denoted by the symbol $c$, is a fundamental physical constant and represents the fastest speed at which conventional matter, energy, or information can travel.\n\nSince 1983, the speed of light has been defined exactly, and this definition is used to define the meter itself.\n\n---\n\n## The Speed of Light ($c$)\n\n### 1. The Exact Value\n\nThe universally accepted, exact value for the speed of light in a vacuum is:\n\n$$\\mathbf{299,792,458 \\text{ meters per second (m/s)}}$$\n\n### 2. Common Approximations and Conversions\n\nTo provide a more relatable context, here are the approximate values in other common units:\n\n| Unit | Approximate Value | Context |\n| :--- | :--- | :--- |\n| **Kilometers per second (km/s\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: I'm building a classification model with Python"
+}
+
+{
+  "timestamp": "2026-02-02T14:56:45.734860",
+  "session_id": "test_ambiguity_session",
+  "original_query": "Which model should I use?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nuser: What is the speed of light?\nassistant: The speed of light in a vacuum, denoted by the symbol $c$, is a fundamental physical constant and represents the fastest speed at which conventional matter, energy, or information can travel.\n\nSince 1983, the speed of light has been defined exactly, and this definition is used to define the meter itself.\n\n---\n\n## The Speed of Light ($c$)\n\n### 1. The Exact Value\n\nThe universally accepted, exact value for the speed of light in a vacuum is:\n\n$$\\mathbf{299,792,458 \\text{ meters per second (m/s)}}$$\n\n### 2. Common Approximations and Conversions\n\nTo provide a more relatable context, here are the approximate values in other common units:\n\n| Unit | Approximate Value | Context |\n| :--- | :--- | :--- |\n| **Kilometers per second (km/s\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: I'm building a classification model with Python\nassistant: That is an excellent project! Building a classification model is a fundamental task in machine learning, and Python, particularly with the `scikit-learn` library, provides a robust and efficient environment for this work.\n\nSince you\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: Which model should I use?"
+}
+
+{
+  "timestamp": "2026-02-02T14:56:50.827610",
+  "session_id": "test_ambiguity_session",
+  "original_query": "Our team is exploring NLP solutions",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nuser: I'm building a classification model with Python\nassistant: That is an excellent project! Building a classification model is a fundamental task in machine learning, and Python, particularly with the `scikit-learn` library, provides a robust and efficient environment for this work.\n\nSince you\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: Which model should I use?\nassistant: \n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: Our team is exploring NLP solutions"
+}
+
+{
+  "timestamp": "2026-02-02T14:56:55.631479",
+  "session_id": "test_ambiguity_session",
+  "original_query": "Tell me more about that",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nuser: Which model should I use?\nassistant: \n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: Our team is exploring NLP solutions\nassistant: That is an exciting area of exploration. Natural Language Processing (NLP) is one of the fastest-growing fields in machine learning, offering immense potential for\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: Tell me more about that"
+}
+
+{
+  "timestamp": "2026-02-02T14:57:00.513641",
+  "session_id": "test_ambiguity_session",
+  "original_query": "We need real-time prediction capabilities",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nuser: Our team is exploring NLP solutions\nassistant: That is an exciting area of exploration. Natural Language Processing (NLP) is one of the fastest-growing fields in machine learning, offering immense potential for\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: Tell me more about that\nassistant: That is an excellent topic to delve into. Natural Language Processing (NLP) is the field of artificial intelligence that gives machines the ability to read, understand, and derive meaning from human languages.\n\nBecause human language is inherently complex—full of ambiguity, slang, context, and nuance—NLP requires sophisticated techniques to bridge the gap between human communication and computer understanding.\n\nHere is a more detailed look at the core components, key applications, and modern approaches in NLP.\n\n---\n\n## 1. Core Components and Tasks\n\nBefore a machine can understand the meaning of a sentence, the raw text must be processed and structured.\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: We need real-time prediction capabilities"
+}
+
+{
+  "timestamp": "2026-02-02T14:57:05.322590",
+  "session_id": "test_ambiguity_session",
+  "original_query": "Which model should I use?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nuser: Tell me more about that\nassistant: That is an excellent topic to delve into. Natural Language Processing (NLP) is the field of artificial intelligence that gives machines the ability to read, understand, and derive meaning from human languages.\n\nBecause human language is inherently complex—full of ambiguity, slang, context, and nuance—NLP requires sophisticated techniques to bridge the gap between human communication and computer understanding.\n\nHere is a more detailed look at the core components, key applications, and modern approaches in NLP.\n\n---\n\n## 1. Core Components and Tasks\n\nBefore a machine can understand the meaning of a sentence, the raw text must be processed and structured.\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: We need real-time prediction capabilities\nassistant: That is a critical requirement for deploying successful NLP solutions, especially those that interact directly with users or require immediate decision-making.\n\nMoving from offline model\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: Which model should I use?"
+}
+

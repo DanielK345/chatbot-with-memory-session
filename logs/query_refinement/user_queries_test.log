@@ -1,0 +1,55 @@
+{
+  "timestamp": "2026-02-02T15:00:03.866892",
+  "session_id": "test_refinement_session",
+  "original_query": "We're creating a recommendation system",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nuser: We're creating a recommendation system"
+}
+
+{
+  "timestamp": "2026-02-02T15:00:15.124077",
+  "session_id": "test_refinement_session",
+  "original_query": "I'm working on image recognition",
+  "is_ambiguous": true,
+  "rewritten_query": "I am currently working on an image recognition task. What specific phase are you focused on (e.g., model selection, training, evaluation, or integration), and what resources or guidance do you require?\n\n---\n**You might also want to know:**\n- What specific type of image recognition task are you implementing (e.g., image classification, object detection, or segmentation)?\n- How will the results of the image recognition system be used to enhance the existing recommendation system?\n- What are the pros and cons of using popular frameworks like TensorFlow versus PyTorch for this project?",
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nuser: We're creating a recommendation system\nassistant: \n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: I'm working on image recognition"
+}
+
+{
+  "timestamp": "2026-02-02T15:00:26.069602",
+  "session_id": "test_refinement_session",
+  "original_query": "How can I improve it?",
+  "is_ambiguous": true,
+  "rewritten_query": "Considering my current image recognition project, what specific strategies or techniques should I use to improve the performance of the system, focusing on key metrics like accuracy, speed, or generalization?\n\n---\n**You might also want to know:**\n- What are the current performance metrics (e.g., accuracy, F1 score) of my existing image recognition model?\n- What common issues, such as overfitting or underfitting, should I check for when trying to improve my model's performance?\n- What are the most effective ways to augment or clean my current image dataset to boost model accuracy?",
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nuser: We're creating a recommendation system\nassistant: \n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: I'm working on image recognition\nassistant: \n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: How can I improve it?"
+}
+
+{
+  "timestamp": "2026-02-02T15:00:36.066994",
+  "session_id": "test_refinement_session",
+  "original_query": "How do I do it?",
+  "is_ambiguous": true,
+  "rewritten_query": "What specific steps should I take to implement improvements in my image recognition system?\n\n---\n**You might also want to know:**\n- Which performance metrics (e.g., F1 Score, mAP) are most important for evaluating improvements in image recognition models?\n- Should I focus on improving the quality of my training dataset or adjusting the model architecture first?\n- What are the most common pitfalls or errors encountered when trying to optimize an image recognition system?",
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nuser: I'm working on image recognition\nassistant: \n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: How can I improve it?\nassistant: \n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: How do I do it?"
+}
+
+{
+  "timestamp": "2026-02-02T15:00:45.883025",
+  "session_id": "test_refinement_session",
+  "original_query": "What should I pick?",
+  "is_ambiguous": true,
+  "rewritten_query": "**Rewritten Query:**\n\nTo help you decide, please specify the options, strategies, or items you are considering picking or choosing from, in relation to the improvement or execution steps you mentioned earlier.\n\n---\n**You might also want to know:**\n- What criteria are most important for making this selection?\n- Can you list the choices you are currently debating between?\n- What are the potential drawbacks or benefits of each option you are considering?",
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nuser: How can I improve it?\nassistant: \n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: How do I do it?\nassistant: \n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*\nuser: What should I pick?"
+}
+

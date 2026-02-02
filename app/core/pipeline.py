@@ -35,7 +35,9 @@ class ChatPipeline:
         skip_llm_ambiguity_if_clear: bool = True,
         max_response_tokens: Optional[int] = 500,
         response_temperature: float = 0.5,
-        conversation_logger: Optional[ConversationLogger] = None
+        conversation_logger: Optional[ConversationLogger] = None,
+        query_logger: Optional[UserQueryLogger] = None,
+        session_summary_logger: Optional[SessionSummaryLogger] = None
     ):
         """
         Initialize chat pipeline.
@@ -50,6 +52,8 @@ class ChatPipeline:
             max_response_tokens: Maximum tokens for response generation (default: 500, None = no limit)
             response_temperature: Temperature for response generation (default: 0.5, lower = faster)
             conversation_logger: Optional ConversationLogger instance for recording conversations
+            query_logger: Optional UserQueryLogger instance for query understanding logs
+            session_summary_logger: Optional SessionSummaryLogger instance for summary logs
         """
         self.session_store = session_store
         self.llm_client = llm_client
@@ -60,6 +64,8 @@ class ChatPipeline:
         self.max_response_tokens = max_response_tokens
         self.response_temperature = response_temperature
         self.conversation_logger = conversation_logger or ConversationLogger()
+        self.query_logger = query_logger or globals().get('query_logger') or UserQueryLogger()
+        self.session_summary_logger = session_summary_logger or globals().get('session_summary_logger') or SessionSummaryLogger()
         
         # Initialize components
         self.token_counter = TokenCounter()
@@ -108,7 +114,7 @@ class ChatPipeline:
                 
                 # Log session summary to session_summaries.log
                 try:
-                    session_summary_logger.log_summary(
+                    self.session_summary_logger.log_summary(
                         session_id=session_id,
                         session_summary=session_memory.session_summary.model_dump(),
                         message_range_summarized={
@@ -149,7 +155,7 @@ class ChatPipeline:
             
             # Log query understanding to user_queries.log (with defaults since skipped)
             try:
-                query_logger.log_query(
+                self.query_logger.log_query(
                     session_id=session_id,
                     original_query=user_query,
                     is_ambiguous=False,
@@ -227,7 +233,7 @@ class ChatPipeline:
             
             # Log query understanding to user_queries.log
             try:
-                query_logger.log_query(
+                self.query_logger.log_query(
                     session_id=session_id,
                     original_query=user_query,
                     is_ambiguous=ambiguity_analysis.is_ambiguous,

@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-02-02T15:00:06.075171",
+  "session_id": "test_refinement_session",
+  "user": "We're creating a recommendation system",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 11,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T15:00:17.643060",
+  "session_id": "test_refinement_session",
+  "user": "I'm working on image recognition",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": true,
+    "token_count": 45,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T15:00:28.494854",
+  "session_id": "test_refinement_session",
+  "user": "How can I improve it?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": true,
+    "token_count": 79,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T15:00:38.577762",
+  "session_id": "test_refinement_session",
+  "user": "How do I do it?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": true,
+    "token_count": 113,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T15:00:48.191910",
+  "session_id": "test_refinement_session",
+  "user": "What should I pick?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": true,
+    "token_count": 146,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+

@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-02-02T14:54:06.683641",
+  "session_id": "test_summarization_session",
+  "session_summary": {
+    "user_profile": {
+      "prefs": [],
+      "constraints": []
+    },
+    "key_facts": [
+      "The user is building a classification model for customer churn prediction.",
+      "The dataset contains 50,000 customer records.",
+      "Features include age, tenure, and spending."
+    ],
+    "decisions": [],
+    "open_questions": [
+      "Should logistic regression or a more complex model like random forest be used?",
+      "How should features be preprocessed and normalized before training?",
+      "Is handling missing values necessary, and what is the best approach?",
+      "Should one-hot encoding be used for categorical variables?",
+      "What is the best way to split the data for training, validation, and testing?",
+      "How should the model performance be evaluated on the test set?",
+      "What metrics should be focused on for imbalanced classification data?",
+      "Should cross-validation or a simple train-test split be used?",
+      "How should class imbalance be handled if one class has much fewer samples?"
+    ],
+    "todos": []
+  },
+  "message_range_summarized": {
+    "from": 0,
+    "to": 22
+  }
+}
+

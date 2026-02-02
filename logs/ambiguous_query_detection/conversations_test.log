@@ -1,0 +1,117 @@
+{
+  "timestamp": "2026-02-02T14:56:30.626914",
+  "session_id": "test_ambiguity_session",
+  "user": "How many continents are there?",
+  "assistant": "The number of continents recognized globally depends on the geographical model used, as conventions vary between regions and educational systems.\n\nHowever, the most widely accepted model, particularly in English-speaking countries, recognizes **seven** continents.\n\n---\n\n## The Seven-Continent Model\n\nThis model is the standard in much of Western Europe, the United States, Canada, Australia, and parts of Asia. The seven continents are:\n\n1.  **Asia**\n2.\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 11,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:56:35.513806",
+  "session_id": "test_ambiguity_session",
+  "user": "Explain machine learning",
+  "assistant": "Machine learning (ML) is a powerful and transformative field of computer science and a core component of Artificial Intelligence (AI). It focuses on building systems that can learn\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 130,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:56:40.730196",
+  "session_id": "test_ambiguity_session",
+  "user": "What is the speed of light?",
+  "assistant": "The speed of light in a vacuum, denoted by the symbol $c$, is a fundamental physical constant and represents the fastest speed at which conventional matter, energy, or information can travel.\n\nSince 1983, the speed of light has been defined exactly, and this definition is used to define the meter itself.\n\n---\n\n## The Speed of Light ($c$)\n\n### 1. The Exact Value\n\nThe universally accepted, exact value for the speed of light in a vacuum is:\n\n$$\\mathbf{299,792,458 \\text{ meters per second (m/s)}}$$\n\n### 2. Common Approximations and Conversions\n\nTo provide a more relatable context, here are the approximate values in other common units:\n\n| Unit | Approximate Value | Context |\n| :--- | :--- | :--- |\n| **Kilometers per second (km/s\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 197,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:56:45.718790",
+  "session_id": "test_ambiguity_session",
+  "user": "I'm building a classification model with Python",
+  "assistant": "That is an excellent project! Building a classification model is a fundamental task in machine learning, and Python, particularly with the `scikit-learn` library, provides a robust and efficient environment for this work.\n\nSince you\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 410,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:56:50.816456",
+  "session_id": "test_ambiguity_session",
+  "user": "Which model should I use?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 488,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:56:55.615340",
+  "session_id": "test_ambiguity_session",
+  "user": "Our team is exploring NLP solutions",
+  "assistant": "That is an exciting area of exploration. Natural Language Processing (NLP) is one of the fastest-growing fields in machine learning, offering immense potential for\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 523,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:57:00.503037",
+  "session_id": "test_ambiguity_session",
+  "user": "Tell me more about that",
+  "assistant": "That is an excellent topic to delve into. Natural Language Processing (NLP) is the field of artificial intelligence that gives machines the ability to read, understand, and derive meaning from human languages.\n\nBecause human language is inherently complex—full of ambiguity, slang, context, and nuance—NLP requires sophisticated techniques to bridge the gap between human communication and computer understanding.\n\nHere is a more detailed look at the core components, key applications, and modern approaches in NLP.\n\n---\n\n## 1. Core Components and Tasks\n\nBefore a machine can understand the meaning of a sentence, the raw text must be processed and structured.\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 586,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:57:05.308610",
+  "session_id": "test_ambiguity_session",
+  "user": "We need real-time prediction capabilities",
+  "assistant": "That is a critical requirement for deploying successful NLP solutions, especially those that interact directly with users or require immediate decision-making.\n\nMoving from offline model\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 744,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:57:10.776239",
+  "session_id": "test_ambiguity_session",
+  "user": "Which model should I use?",
+  "assistant": "That is the central question in deploying any machine learning system. The choice of model is not just about achieving the highest accuracy; it is a complex balancing act between\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 807,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+

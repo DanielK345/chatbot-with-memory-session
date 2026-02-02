@@ -25,11 +25,6 @@ data/conversations/session_log.jsonl
 .env
 .env.local
 
-# Logs
-*.log
-logs/
-app.log*
-
 # OS
 .DS_Store
 Thumbs.db

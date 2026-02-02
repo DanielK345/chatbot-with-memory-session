@@ -1,0 +1,169 @@
+{
+  "timestamp": "2026-02-02T14:53:24.962217",
+  "session_id": "test_summarization_session",
+  "user": "I'm building a classification model for customer churn prediction",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 15,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:53:28.201425",
+  "session_id": "test_summarization_session",
+  "user": "We have 50k customer records with features like age, tenure, spending",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 58,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:53:31.439309",
+  "session_id": "test_summarization_session",
+  "user": "Should I use logistic regression or a more complex model like random forest?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 100,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:53:34.546008",
+  "session_id": "test_summarization_session",
+  "user": "How should I preprocess and normalize the features before training?",
+  "assistant": "This is an excellent and crucial question. Proper preprocessing and normalization are foundational steps that significantly impact the\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 139,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:53:38.449952",
+  "session_id": "test_summarization_session",
+  "user": "Do I need to handle missing values and if so, what's the best approach?",
+  "assistant": "This is a critical step in the data preparation pipeline. The short answer is **yes, you almost\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 203,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:53:41.545618",
+  "session_id": "test_summarization_session",
+  "user": "Should I use one-hot encoding for categorical variables?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 261,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:53:44.986749",
+  "session_id": "test_summarization_session",
+  "user": "What's the best way to split my data for training, validation, and testing?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 306,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:53:48.436219",
+  "session_id": "test_summarization_session",
+  "user": "How do I evaluate if my model is performing well on the test set?",
+  "assistant": "This is an excellent and crucial question. Evaluating performance on the test set is the definitive\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 349,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:53:51.862544",
+  "session_id": "test_summarization_session",
+  "user": "What metrics should I focus on for imbalanced classification data?",
+  "assistant": "This is a critical question. When dealing with imbalanced classification data (where one class significantly\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 407,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:53:55.071110",
+  "session_id": "test_summarization_session",
+  "user": "Should I use cross-validation or just a simple train-test split?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 466,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:53:58.307161",
+  "session_id": "test_summarization_session",
+  "user": "How do I handle class imbalance if one class has much fewer samples?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 508,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:54:01.559455",
+  "session_id": "test_summarization_session",
+  "user": "What's the right class distribution for good model training?",
+  "assistant": "That is an excellent and fundamental question. The class distribution in your training data significantly impacts\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 547,
+    "summarization_triggered": false,
+    "memory_fields_used": []
+  }
+}
+
+{
+  "timestamp": "2026-02-02T14:54:10.159993",
+  "session_id": "test_summarization_session",
+  "user": "How many samples do I need to train a reliable model?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_ambiguous": false,
+    "token_count": 604,
+    "summarization_triggered": true,
+    "memory_fields_used": []
+  }
+}
+

@@ -180,7 +180,8 @@ class ConversationLogger:
         
         try:
             with open(self.log_file, "a", encoding="utf-8") as f:
-                f.write(json.dumps(exchange, ensure_ascii=False) + "\n")
+                # Pretty-print JSON with indentation for readability; add an extra newline between records
+                f.write(json.dumps(exchange, ensure_ascii=False, indent=2) + "\n\n")
         except Exception as e:
             logger = logging.getLogger(__name__)
             logger.error(f"Failed to log conversation exchange: {e}")
@@ -202,7 +203,7 @@ class ConversationLogger:
         
         try:
             with open(self.log_file, "a", encoding="utf-8") as f:
-                f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+                f.write(json.dumps(entry, ensure_ascii=False, indent=2) + "\n\n")
         except Exception as e:
             logger = logging.getLogger(__name__)
             logger.error(f"Failed to log user message: {e}")
@@ -224,7 +225,7 @@ class ConversationLogger:
         
         try:
             with open(self.log_file, "a", encoding="utf-8") as f:
-                f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+                f.write(json.dumps(entry, ensure_ascii=False, indent=2) + "\n\n")
         except Exception as e:
             logger = logging.getLogger(__name__)
             logger.error(f"Failed to log assistant response: {e}")
@@ -284,7 +285,7 @@ class UserQueryLogger:
         
         try:
             with open(self.log_file, "a", encoding="utf-8") as f:
-                f.write(json.dumps(query_record, ensure_ascii=False) + "\n")
+                f.write(json.dumps(query_record, ensure_ascii=False, indent=2) + "\n\n")
         except Exception as e:
             logger = logging.getLogger(__name__)
             logger.error(f"Failed to log user query: {e}")
@@ -349,7 +350,7 @@ class SessionSummaryLogger:
         
         try:
             with open(self.log_file, "a", encoding="utf-8") as f:
-                f.write(json.dumps(summary_record, ensure_ascii=False) + "\n")
+                f.write(json.dumps(summary_record, ensure_ascii=False, indent=2) + "\n\n")
         except Exception as e:
             logger = logging.getLogger(__name__)
             logger.error(f"Failed to log session summary: {e}")

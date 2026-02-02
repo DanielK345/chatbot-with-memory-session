@@ -1,7 +1,7 @@
 """Session summarization using LLM with structured output."""
 
 from typing import List, Dict, Any
-from app.memory.schemas import SessionSummary, SessionMemory, MessageRange
+from app.memory.schemas import SessionSummary, SessionMemory, MessageRange, UserProfile
 from app.llm.ollama_client import OllamaClient
 
 
@@ -62,16 +62,42 @@ Output a structured summary with:
 
 Only include information that is clearly present in the conversation."""
         
-        summary = await self.llm_client.generate_structured(
-            prompt=user_prompt,
-            schema=SessionSummary,
-            system=system_prompt
-        )
-        
-        return SessionMemory(
-            session_summary=summary,
-            message_range_summarized=message_range
-        )
+        try:
+            summary = await self.llm_client.generate_structured(
+                prompt=user_prompt,
+                schema=SessionSummary,
+                system=system_prompt
+            )
+            return SessionMemory(
+                session_summary=summary,
+                message_range_summarized=message_range
+            )
+        except Exception as e:
+            # Fallback: if structured generation fails (JSON extraction issues),
+            # generate an unstructured textual summary and store it as a raw fact.
+            fallback_text = await self.llm_client.generate(
+                prompt=(user_prompt + "\n\nPlease provide a concise textual summary if you cannot produce JSON."),
+                system=system_prompt,
+                temperature=0.3
+            )
+            # Keep a short excerpt to avoid overly large files
+            excerpt = (fallback_text or "").strip()
+            if len(excerpt) > 1000:
+                excerpt = excerpt[:1000] + "..."
+
+            # Create minimal structured summary with raw text captured in key_facts
+            fallback_summary = SessionSummary(
+                user_profile=UserProfile(),
+                key_facts=[f"[raw_summary] {excerpt}"],
+                decisions=[],
+                open_questions=[],
+                todos=[]
+            )
+
+            return SessionMemory(
+                session_summary=fallback_summary,
+                message_range_summarized=message_range
+            )
     
     def _format_messages(self, messages: List[Dict[str, Any]]) -> str:
         """Format messages into readable text."""
