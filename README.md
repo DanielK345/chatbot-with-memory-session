@@ -34,55 +34,49 @@ The query understanding pipeline processes every user query through 6 sequential
 
 ```mermaid
 graph TD
-    A["🔤 User Query"] --> B["<b>STEP 1: Spelling Check</b><br/>Rule-based | No LLM<br/>Correct typos & grammar"]
-    
-    style B fill:#f0f0f0,stroke:#666,stroke-width:2px
-    
-    B --> C["<b>STEP 2: Ambiguity Detection</b><br/>🤖 Gemini Fallback<br/>6 heuristic rules first"]
-    
-    style C fill:#fff3e0,stroke:#ff8a00,stroke-width:2px
-    
-    C -->|CLEAR| D["Continue ✓"]
-    C -->|AMBIGUOUS| E["Fixable with Context?"]
-    
-    style D fill:#c8e6c9,stroke:#4caf50,stroke-width:2px
-    style E fill:#ffe0b2,stroke:#ff8a00,stroke-width:2px
-    
+    A["🔤 USER QUERY"]
+    B["STEP 1: SPELLING CHECK<br/>Rule-based | No LLM<br/>Correct typos & grammar"]
+    C["STEP 2: AMBIGUITY DETECTION<br/>🤖 Gemini fallback<br/>6 heuristic rules first"]
+    D["CONTINUE ✓"]
+    E["Fixable with context?"]
+    F["STEP 6b: CLARIFYING QUESTIONS<br/>🤖 Gemini<br/>Ask user for clarity"]
+    G["STEP 3: ANSWERABILITY CHECK<br/>🤖 MiniLM<br/>Similarity matching"]
+    H["CONTINUE ✓"]
+    I["CLARIFYING QUESTIONS"]
+    J["STEP 4: CONTEXT RETRIEVAL<br/>Rule-based | No LLM<br/>Memory augmentation"]
+    K["STEP 5: QUERY REFINEMENT<br/>🤖 Qwen 2.5-1.5B<br/>Pronoun → Entity"]
+    L["STEP 6: LLM RESPONSE GENERATION<br/>🤖 Gemini<br/>Generate + log"]
+    M["✅ RESPONSE + METADATA<br/>Answer | Tokens | Refinement"]
+
+    A --> B --> C
+    C -->|CLEAR| D
+    C -->|AMBIGUOUS| E
     E -->|YES| D
-    E -->|NO| F["<b>STEP 6b: Clarifying Questions</b><br/>🤖 Gemini<br/>Ask user for clarity"]
-    
-    style F fill:#ffccbc,stroke:#d84315,stroke-width:2px
-    
-    D --> G["<b>STEP 3: Answerability Check</b><br/>🤖 Sentence-Transformers MiniLM<br/>Similarity matching"]
-    
-    style G fill:#e8d5f2,stroke:#7b1fa2,stroke-width:2px
-    
-    G -->|ANSWERABLE| H["Continue ✓"]
-    G -->|NOT ANSWERABLE| I["Clarifying Questions"]
-    
-    style H fill:#c8e6c9,stroke:#4caf50,stroke-width:2px
-    style I fill:#ffccbc,stroke:#d84315,stroke-width:2px
-    
-    H --> J["<b>STEP 4: Context Retrieval</b><br/>Rule-based | No LLM<br/>Memory augmentation"]
-    
-    style J fill:#f0f0f0,stroke:#666,stroke-width:2px
-    
-    J --> K["<b>STEP 5: Query Refinement</b><br/>🤖 Qwen 2.5-1.5B<br/>Pronoun → Entity replacement"]
-    
-    style K fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    
-    K --> L["<b>STEP 6: LLM Response Generation</b><br/>🤖 Google Gemini<br/>Generate + Log"]
-    
-    style L fill:#fff3e0,stroke:#ff8a00,stroke-width:2px
-    
-    L --> M["✅ Response + Metadata<br/>Answer | Token Usage | Refinement Details"]
-    
-    style M fill:#c8e6c9,stroke:#4caf50,stroke-width:2px
-    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    
+    E -->|NO| F
+    D --> G
+    G -->|ANSWERABLE| H
+    G -->|NOT ANSWERABLE| I
+    H --> J --> K --> L --> M
     F --> M
     I --> M
-```
+
+    class A input
+    class B,J stepNeutral
+    class C,L stepOrange
+    class D,H success
+    class E decision
+    class F,I danger
+    class G,K stepPurple
+    class M success
+
+    classDef input fill:#e3f2fd,stroke:#0d47a1,stroke-width:3px,color:#0d47a1,font-weight:bold
+    classDef stepNeutral fill:#eeeeee,stroke:#424242,stroke-width:3px,color:#212121,font-weight:bold
+    classDef stepOrange fill:#ffe0b2,stroke:#e65100,stroke-width:3px,color:#bf360c,font-weight:bold
+    classDef stepPurple fill:#e1bee7,stroke:#6a1b9a,stroke-width:3px,color:#4a148c,font-weight:bold
+    classDef success fill:#c8e6c9,stroke:#1b5e20,stroke-width:3px,color:#1b5e20,font-weight:bold
+    classDef danger fill:#ffccbc,stroke:#bf360c,stroke-width:3px,color:#bf360c,font-weight:bold
+    classDef decision fill:#fff3e0,stroke:#ef6c00,stroke-width:3px,color:#e65100,font-weight:bold
+  ```
 
 ### Key Design Principles
 
