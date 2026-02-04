@@ -28,100 +28,57 @@ pipeline_module.conversation_logger = ConversationLogger(log_file="conversations
 pipeline_module.query_logger = UserQueryLogger(log_file="user_queries_test.log", log_dir=log_dir)
 pipeline_module.session_summary_logger = SessionSummaryLogger(log_file="session_summaries_test.log", log_dir=log_dir)
 
-# Coherent query sets instead of isolated random questions
-# Set 1: Learning Machine Learning Fundamentals
-LEARNING_ML_SET = [
-    "What is machine learning and how does it differ from traditional programming?",
-    "Can you explain supervised vs unsupervised learning with examples?",
-    "What are the main types of algorithms in supervised learning?",
-    "How do decision trees work and when should I use them instead of other models?",
-    "What is a neural network and how does it learn through backpropagation?",
-    "Explain gradient descent and why it's fundamental to training models",
-    "What are hyperparameters and how do I know which ones to tune?",
-    "How do I prevent overfitting in my models and what are the warning signs?",
-    "What's the difference between model complexity and model performance?",
-    "Can you explain regularization techniques like L1 and L2?",
-    "How do ensemble methods like random forests improve predictions?",
-    "What's the bias-variance tradeoff and why does it matter?",
-    "How do I measure model performance and which metrics should I use?",
-    "What's the importance of train-validation-test split?",
-    "How do I know if my model is underfitting or overfitting?",
-]
+# Ensure log folder exists and truncate existing test logs so each run starts fresh
+try:
+    log_path = Path(log_dir)
+    log_path.mkdir(parents=True, exist_ok=True)
+    # Refresh all test logs so each run starts fresh
+    for lf in ["conversations_test.log", "user_queries_test.log", "session_summaries_test.log"]:
+        f = log_path / lf
+        try:
+            f.write_text("")
+        except Exception:
+            pass
+except Exception:
+    pass
 
-# Set 2: Building a Classification Project
-BUILDING_PROJECT_SET = [
-    "I'm building a classification model for customer churn prediction",
-    "We have 50k customer records with features like age, tenure, spending",
-    "Should I use logistic regression or a more complex model like random forest?",
-    "How should I preprocess and normalize the features before training?",
-    "Do I need to handle missing values and if so, what's the best approach?",
-    "Should I use one-hot encoding for categorical variables?",
-    "What's the best way to split my data for training, validation, and testing?",
-    "How do I evaluate if my model is performing well on the test set?",
-    "What metrics should I focus on for imbalanced classification data?",
-    "Should I use cross-validation or just a simple train-test split?",
-    "How do I handle class imbalance if one class has much fewer samples?",
-    "What's the right class distribution for good model training?",
-    "How many samples do I need to train a reliable model?",
-    "Should I do any feature engineering or feature selection?",
-    "What are some common mistakes to avoid in classification projects?",
-]
-
-# Set 3: Troubleshooting Model Performance
-TROUBLESHOOTING_SET = [
-    "My model has surprisingly low accuracy on the test set",
-    "The training accuracy is 95% but test accuracy is only 60%",
-    "What could be causing this huge gap between train and test?",
-    "Is this overfitting or underfitting or something else entirely?",
-    "How can I diagnose what's going wrong with my model?",
-    "Should I try collecting more training data?",
-    "Could it be that my features don't have enough signal?",
-    "How can I collect more relevant features?",
-    "Should I try data augmentation to increase training examples?",
-    "What if I increase the model complexity to fit the data better?",
-    "Can regularization help reduce the gap between train and test?",
-    "How do I know if the issue is with my training process or the data?",
-    "Should I try different algorithms or optimize the current one?",
-    "What role does the learning rate play in this situation?",
-    "Are there any data quality issues I should investigate?",
-]
-
-# Set 4: Deep Learning for Image Recognition
-DEEP_LEARNING_SET = [
-    "I want to build an image classification model for medical imaging",
-    "Should I use a pre-trained model or train from scratch?",
-    "What are convolutional neural networks and why are they good for images?",
-    "How do transfer learning and fine-tuning work in practice?",
-    "What's the difference between ResNet, VGG, and Inception architectures?",
-    "How many labeled images do I need for decent model performance?",
-    "What's the fastest way to get a working image classification model?",
-    "Can I use data augmentation to increase my effective training data?",
-    "What augmentation techniques work best for medical images?",
-    "How do I handle the small dataset problem in deep learning?",
-    "What's the right batch size for training neural networks?",
-    "How many epochs should I train before stopping?",
-    "What's the difference between dropout and batch normalization?",
-    "How do I debug if my neural network isn't learning?",
-    "Should I use GPU acceleration and how does it help?",
-]
-
-# Set 5: Production Deployment Concerns
-PRODUCTION_SET = [
-    "We're ready to deploy our ML model to production",
-    "What are the key considerations for model deployment?",
-    "How do I handle model versioning and keep track of changes?",
-    "What should I do about data drift that occurs over time?",
-    "How often should I retrain the model with new data?",
-    "What's the difference between batch predictions and real-time predictions?",
-    "How do I ensure the model stays fair and doesn't have bias?",
-    "What are the latency requirements for serving predictions?",
-    "How do I monitor model performance in production?",
-    "What's the fallback strategy if the model fails?",
-    "How do I ensure the model is reproducible across environments?",
-    "What security considerations should I keep in mind?",
-    "How do I handle model rollback if something goes wrong?",
-    "What's the infrastructure needed for model serving at scale?",
-    "How do I measure the business impact of the deployed model?",
+# Unified conversation set: building a chatbot system (long, coherent multi-turn)
+CHATBOT_DEV_SET = [
+    "We're building a production chatbot — what core components should the architecture include?",
+    "Which model family should we pick: instruction-tuned LLM, chat-optimized model, or a smaller distilled model?",
+    "Should we host models ourselves or use a managed LLM API, considering latency and cost?",
+    "How do we design retrieval-augmented generation (RAG) for this system?",
+    "What's the best vector database for embeddings and fast nearest-neighbor search?",
+    "How should we store session state and memory for multi-turn conversations?",
+    "What memory design works best: short-term recent messages plus distilled long-term summary?",
+    "How do we trigger session summarization reliably to keep context within token windows?",
+    "What embedding model should we use for semantic search and why?",
+    "How do we handle user personalization while respecting privacy and data retention policies?",
+    "Should we fine-tune a base model or rely on prompt engineering with retrieval?",
+    "How do we evaluate hallucination risk and put safeguards in place?",
+    "What are effective prompt templates for instruction-following chat assistants?",
+    "How should we do conversational slot-filling and entity extraction across turns?",
+    "What latency targets are reasonable for interactive chat (ms) and how to meet them?",
+    "How do we stream partial model outputs to the frontend for better UX?",
+    "What caching strategies reduce repeated LLM calls for the same queries?",
+    "How do we instrument and monitor LLM usage, token costs, and performance?",
+    "What's a recommended approach for handling sensitive user data and redaction?",
+    "How do we design clarifying question flows when the intent is ambiguous?",
+    "What metrics should we track for conversational quality and user satisfaction?",
+    "How to implement fallback behavior if the model fails or times out?",
+    "Should we implement few-shot examples in the prompt or use retrieval only?",
+    "How do we batch or pipeline requests to improve throughput on inference servers?",
+    "What are pros and cons of on-device vs cloud inference for privacy-sensitive apps?",
+    "How to handle multi-lingual support and language detection within conversations?",
+    "What's the recommended way to run A/B experiments and collect human feedback?",
+    "How do we generate and maintain a knowledge base from user interactions and documents?",
+    "What are practical cost controls for LLM consumption and budget alerts?",
+    "How should the system manage user permissions and role-based responses?",
+    "When should we use supervised fine-tuning or RLHF to shape assistant behavior?",
+    "How do we design graceful degradation when external services are down?",
+    "What are the tradeoffs of using open-source LLMs versus proprietary models?",
+    "How to set token limits, truncate context, and preserve important facts long-term?",
+    "What tooling is useful for prompt debugging, evaluation, and reproducibility?",
 ]
 
 
@@ -129,21 +86,9 @@ PRODUCTION_SET = [
 
 def generate_random_queries(num_queries: int) -> list:
     """
-    Generate a coherent set of related queries instead of random isolated ones.
-    Selects one query set to simulate a realistic conversation flow.
+    Return a coherent multi-turn conversation about building a chatbot system.
     """
-    query_sets = [
-        LEARNING_ML_SET,
-        BUILDING_PROJECT_SET,
-        TROUBLESHOOTING_SET,
-        DEEP_LEARNING_SET,
-        PRODUCTION_SET,
-    ]
-    
-    # Pick a random query set for this test
-    selected_set = random.choice(query_sets)
-    
-    # Return the first num_queries from the selected set (or all if fewer requested)
+    selected_set = CHATBOT_DEV_SET
     return selected_set[:num_queries]
 
 
@@ -164,12 +109,12 @@ async def test_session_summarization():
         session_store = SessionStore(storage_type="file")
         llm_client = LLMClient(primary="gemini")
         provider = llm_client.get_active_provider().upper()
-        print(f"\n✓ Initialized with {provider} as LLM provider")
+        print(f"\n[OK] Initialized with {provider} as LLM provider")
         
         pipeline = ChatPipeline(
             session_store,
             llm_client,
-            max_context_tokens=600,  # Low threshold to trigger summarization
+            max_context_tokens=700,  # Threshold adjusted to 700 tokens per request
             keep_recent_messages=3,
             max_response_tokens=500,
             response_temperature=0.5,
@@ -205,27 +150,27 @@ async def test_session_summarization():
             if is_summarized:
                 summarization_triggered = True
                 summarization_turn = i
-                print(f"  ✓ SUMMARIZATION TRIGGERED at turn {i}!")
+                print(f"  [OK] SUMMARIZATION TRIGGERED at turn {i}!")
                 
                 # Verify session memory exists
                 session_memory = session_store.get_summary(session_id)
                 if session_memory:
-                    print(f"  ✓ Session summary created")
+                    print(f"  [OK] Session summary created")
                     print(f"    - Key facts: {len(session_memory.session_summary.key_facts)}")
                     print(f"    - Decisions: {len(session_memory.session_summary.decisions)}")
                 break
         
         print("\n" + "-" * 70)
         if summarization_triggered:
-            print(f"✅ TEST PASSED: Summarization triggered at turn {summarization_turn}")
+            print(f"[PASS] TEST PASSED: Summarization triggered at turn {summarization_turn}")
             return True
         else:
-            print("⚠️  TEST INCONCLUSIVE: Summarization not triggered within 8 queries")
+            print("[INFO] TEST INCONCLUSIVE: Summarization not triggered within 8 queries")
             print("    (This may be expected if token threshold is high or LLM responses are short)")
             return True  # Not a failure, just didn't reach threshold
             
     except Exception as e:
-        print(f"\n❌ TEST FAILED: {e}")
+        print(f"\n[FAIL] TEST FAILED: {e}")
         logger.error(f"Session summarization test failed: {e}", exc_info=True)
         return False
     finally:

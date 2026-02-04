@@ -91,7 +91,7 @@ class ChatPipeline:
         self.ambiguity_detector = AmbiguityDetector(llm_client)
         self.answerability_checker = AnswerabilityChecker()
         self.context_augmenter = ContextAugmenter()
-        self.query_refiner = QueryRefiner()
+        self.query_refiner = QueryRefiner(llm_client=llm_client)
         self.clarifier = ClarifyingQuestionGenerator(llm_client)
         self.prompt_builder = PromptBuilder()
         
@@ -150,6 +150,13 @@ class ChatPipeline:
                 message_range = MessageRange(from_index=0, to_index=summarize_to)
                 session_memory = await self.summarizer.summarize(messages, message_range)
                 self.session_store.save_summary(session_id, session_memory)
+                # Mark in pipeline metadata that summarization occurred and record details
+                pipeline_metadata["summarization_triggered"] = True
+                pipeline_metadata["summarization_token_count"] = token_count
+                pipeline_metadata["summarization_range"] = {
+                    "from": message_range.from_index,
+                    "to": message_range.to_index,
+                }
                 
                 try:
                     self.session_summary_logger.log_summary(
@@ -257,72 +264,13 @@ class ChatPipeline:
                 max_context_turns=max_turns
             )
             logger.info(f"[Pipeline] Memory fields used: {fields_used}")
-
-            # Build a concise augmented context: summary of the previous 3 user queries
-            # plus the session summary (if any). This uses the LLM once and is intended
-            # to produce a short 1-2 sentence context block for downstream prompt use.
-            try:
-                # collect up to 3 previous user queries (exclude the current last user query)
-                prev_user_queries = []
-                # messages include the current user message we added earlier; skip it
-                for m in reversed(messages[:-1]):
-                    if m.get("role") == "user":
-                        prev_user_queries.append(m.get("text") or m.get("message") or m.get("content"))
-                    if len(prev_user_queries) >= 3:
-                        break
-                prev_user_queries = list(reversed(prev_user_queries))
-
-                session_summary_text = None
-                if session_memory:
-                    # session_memory may be a dataclass or object with session_summary
-                    session_summary_text = getattr(session_memory, "session_summary", None)
-                    if session_summary_text and hasattr(session_summary_text, "model_dump"):
-                        # model_dump may return dict
-                        try:
-                            session_summary_text = session_summary_text.model_dump()
-                        except Exception:
-                            pass
-
-                summary_prompt_parts = ["Please write a concise (1-2 sentence) summary of the recent user queries: "]
-                for i, q in enumerate(prev_user_queries, start=1):
-                    summary_prompt_parts.append(f"{i}. {q}")
-
-                if session_summary_text:
-                    summary_prompt_parts.append("Session summary:")
-                    # If session_summary_text is a dict, convert to short string
-                    if isinstance(session_summary_text, dict):
-                        summary_prompt_parts.append("; ".join([f"{k}: {v}" for k, v in list(session_summary_text.items())[:5]]))
-                    else:
-                        summary_prompt_parts.append(str(session_summary_text))
-
-                summary_prompt_parts.append("Respond with a single concise context sentence suitable for including in an assistant prompt.")
-                summary_prompt = "\n".join(summary_prompt_parts)
-
-                # Only call the LLM to build the final augmented context when there
-                # is meaningful prior context to summarize (>=3 prior user queries)
-                # or when an existing session summary is present. This keeps LLM
-                # usage lower while still providing concise context when it matters.
-                if len(prev_user_queries) >= 3 or session_summary_text:
-                    final_augmented_context = await self.llm_client.generate(
-                        prompt=summary_prompt,
-                        system="You are a concise summarizer.",
-                        temperature=0.0,
-                        max_tokens=150
-                    )
-                    pipeline_metadata["llm_call_made"] = True
-                    self.llm_calls_made += 1
-                    logger.info("[Pipeline] Generated concise final_augmented_context via LLM")
-                else:
-                    # Not enough prior queries — reuse the augmented context (cheaper)
-                    final_augmented_context = augmented_context
-            except Exception as e:
-                logger.warning(f"Failed to generate final_augmented_context via LLM: {e}")
-                # fallback to using the verbose augmented_context
-                final_augmented_context = augmented_context
             
-            # STEP 5: Query Refinement (RULE-BASED, no LLM)
-            logger.info("[Pipeline] Step 5: Query refinement (rule-based entity replacement)")
-            refined_query = self.query_refiner.refine(user_query, session_memory, messages)
+            # Use the augmented context directly from context_augmenter (not LLM-summarized)
+            final_augmented_context = augmented_context
+            
+            # STEP 5: Query Refinement (LLM-assisted lightweight entity replacement)
+            logger.info("[Pipeline] Step 5: Query refinement (LLM-assisted pronouns replacement)")
+            refined_query = await self.query_refiner.refine(user_query, session_memory, messages)
 
             if refined_query and refined_query != user_query:
                 pipeline_metadata["refinement_applied"] = True
@@ -392,19 +340,18 @@ class ChatPipeline:
             }
             
             if self.enable_query_understanding:
-                # Extract actual values from session memory instead of field names
+                # Extract actual values from session memory (prefs, constraints, decisions, open_questions only)
                 context_values = []
                 if session_memory:
                     summary = session_memory.session_summary
-                    if "user_profile.prefs" in fields_used and summary.user_profile.prefs:
+                    # Only include: user_profile.prefs, user_profile.constraints, decisions, open_questions
+                    if summary.user_profile and summary.user_profile.prefs:
                         context_values.extend(summary.user_profile.prefs)
-                    if "user_profile.constraints" in fields_used and summary.user_profile.constraints:
+                    if summary.user_profile and summary.user_profile.constraints:
                         context_values.extend(summary.user_profile.constraints)
-                    if "key_facts" in fields_used and summary.key_facts:
-                        context_values.extend(summary.key_facts)
-                    if "decisions" in fields_used and summary.decisions:
+                    if summary.decisions:
                         context_values.extend(summary.decisions)
-                    if "open_questions" in fields_used and summary.open_questions:
+                    if summary.open_questions:
                         context_values.extend(summary.open_questions)
                 
                 self.query_logger.log_query(
@@ -431,6 +378,12 @@ class ChatPipeline:
             "response": llm_response,
             "session_memory": session_memory.model_dump() if session_memory else None,
             "pipeline_metadata": pipeline_metadata,
+            "query_understanding": {
+                "is_ambiguous": ambiguity_analysis.is_ambiguous if self.enable_query_understanding else False,
+                "ambiguity_reason": ambiguity_analysis.ambiguity_reason if self.enable_query_understanding else None,
+                "rewritten_query": refined_query if self.enable_query_understanding and refined_query != user_query else None,
+                "clarifying_questions": clarifying_qs if self.enable_query_understanding else []
+            },
             "llm_usage_stats": {
                 "total_queries": self.total_queries_processed,
                 "llm_calls": self.llm_calls_made,

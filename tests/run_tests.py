@@ -149,12 +149,24 @@ SUMMARIZATION_THRESHOLD = 2000  # Tokens before summarization
 def setup_test_environment():
     """Create test folders and initialize loggers."""
     TEST_LOG_FOLDER.mkdir(parents=True, exist_ok=True)
-    
+
+    # Truncate any existing logs so each run starts with fresh files
+    # Refresh all test logs so each run starts fresh
+    try:
+        for lf in ["conversations_test.log", "user_queries_test.log", "session_summaries_test.log"]:
+            f = TEST_LOG_FOLDER / lf
+            try:
+                f.write_text("")
+            except Exception:
+                pass
+    except Exception:
+        pass
+
     # Create specialized loggers for this test
     conversation_logger = ConversationLogger()
     query_logger = UserQueryLogger()
     session_logger = SessionSummaryLogger()
-    
+
     # Redirect logs to test folder
     conversation_logger.log_file = TEST_LOG_FOLDER / "conversations_test.log"
     query_logger.log_file = TEST_LOG_FOLDER / "user_queries_test.log"

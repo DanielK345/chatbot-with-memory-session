@@ -1,33 +1,46 @@
 {
-  "timestamp": "2026-02-02T14:54:06.683641",
+  "timestamp": "2026-02-04T10:29:53.970779",
   "session_id": "test_summarization_session",
   "session_summary": {
     "user_profile": {
-      "prefs": [],
-      "constraints": []
+      "prefs": [
+        "Building a production chatbot",
+        "Focus on core architectural components",
+        "Designing effective multi-turn memory (short-term plus distilled long-term summary)"
+      ],
+      "constraints": [
+        "Must consider latency",
+        "Must consider cost",
+        "Must respect privacy and data retention policies",
+        "Must manage context within token windows"
+      ]
     },
     "key_facts": [
-      "The user is building a classification model for customer churn prediction.",
-      "The dataset contains 50,000 customer records.",
-      "Features include age, tenure, and spending."
+      "The user is building a production chatbot",
+      "The architecture includes Retrieval-Augmented Generation (RAG)"
     ],
     "decisions": [],
     "open_questions": [
-      "Should logistic regression or a more complex model like random forest be used?",
-      "How should features be preprocessed and normalized before training?",
-      "Is handling missing values necessary, and what is the best approach?",
-      "Should one-hot encoding be used for categorical variables?",
-      "What is the best way to split the data for training, validation, and testing?",
-      "How should the model performance be evaluated on the test set?",
-      "What metrics should be focused on for imbalanced classification data?",
-      "Should cross-validation or a simple train-test split be used?",
-      "How should class imbalance be handled if one class has much fewer samples?"
+      "What core components should the chatbot architecture include?",
+      "Which model family should be picked (instruction-tuned LLM, chat-optimized model, or smaller distilled model)?",
+      "Should models be self-hosted or use a managed LLM API (considering latency and cost)?",
+      "How should RAG be designed for this system?",
+      "Is the main RAG goal simple factual Question Answering, or more complex tasks like multi-document summarization or creative generation?",
+      "What is the primary format of the source material (e.g., long documents, short articles, structured data) for RAG?",
+      "Should RAG prioritize high-recall retrieval (HyDE/RAG fusion) or speed (basic vector similarity search)?",
+      "What is the best vector database for embeddings and fast nearest-neighbor search?",
+      "How should session state and memory be stored for multi-turn conversations?",
+      "How do we trigger session summarization reliably to keep context within token windows?",
+      "What embedding model should be used for semantic search and why?",
+      "How do we handle user personalization while respecting privacy and data retention policies?",
+      "Should we fine-tune a base model or rely on prompt engineering with retrieval?",
+      "How do we evaluate hallucination risk and put safeguards in place?"
     ],
     "todos": []
   },
   "message_range_summarized": {
     "from": 0,
-    "to": 22
+    "to": 24
   }
 }
 

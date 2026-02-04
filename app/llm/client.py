@@ -29,7 +29,8 @@ class LLMClient:
         gemini_api_key: Optional[str] = None,
         gemini_model: str = "gemini-flash-latest",
         ollama_base_url: str = "http://localhost:11434",
-        ollama_model: str = "llama3.1"
+        ollama_model: str = "llama3.1",
+        lightweight_ollama_model: str = "qwen2.5:1.5b"
     ):
         """
         Initialize unified LLM client.
@@ -40,12 +41,15 @@ class LLMClient:
             gemini_model: Gemini model name
             ollama_base_url: Ollama API base URL
             ollama_model: Ollama model name
+            lightweight_ollama_model: Lightweight model for fast inference (default: qwen2.5:1.5b)
         """
         self.primary = primary.lower()
         self.gemini_client = None
         self.ollama_client = None
+        self.lightweight_ollama_client = None
         self.active_client = None
         self.active_provider = None
+        self.lightweight_model = lightweight_ollama_model
         
         # Initialize Gemini if requested
         if self.primary == "gemini" or primary is None:
@@ -87,6 +91,17 @@ class LLMClient:
                         "For Gemini: Set GOOGLE_API_KEY environment variable\n"
                         "For Ollama: Ensure Ollama is running (ollama serve) and model is pulled (ollama pull llama3.1)"
                     )
+        
+        # Initialize lightweight Ollama client for fast inference tasks (e.g., query refinement)
+        try:
+            self.lightweight_ollama_client = OllamaClient(
+                base_url=ollama_base_url,
+                model=lightweight_ollama_model
+            )
+            logger.info(f"✓ Lightweight Ollama client initialized ({lightweight_ollama_model})")
+        except Exception as e:
+            logger.warning(f"⚠ Lightweight Ollama client initialization failed: {e}")
+            logger.info(f"  Lightweight inference will fall back to active client")
         
         if self.active_client is None:
             raise RuntimeError("No LLM client available")
@@ -222,6 +237,52 @@ Do not include any text outside the JSON. Do not use markdown code blocks."""
         
         raise ValueError("Unexpected error in generate_structured")
     
+    async def generate_lightweight(
+        self,
+        prompt: str,
+        system: Optional[str] = None,
+        temperature: float = 0.3,
+        max_tokens: Optional[int] = 20
+    ) -> str:
+        """
+        Generate text using lightweight model for fast inference.
+        Used for simple tasks like query refinement (pronoun replacement).
+        Falls back to active client if lightweight model unavailable.
+        
+        Args:
+            prompt: User prompt
+            system: System prompt (optional)
+            temperature: Sampling temperature (default 0.3 for deterministic output)
+            max_tokens: Maximum tokens (default 20 for concise responses)
+            
+        Returns:
+            Generated text
+        """
+        # Try lightweight client first
+        if self.lightweight_ollama_client:
+            try:
+                return await self.lightweight_ollama_client.generate(
+                    prompt=prompt,
+                    system=system,
+                    temperature=temperature,
+                    max_tokens=max_tokens
+                )
+            except Exception as e:
+                logger.warning(f"⚠ Lightweight model inference failed: {e}")
+                logger.info(f"Falling back to {self.active_provider}...")
+        
+        # Fall back to active client
+        return await self.generate(
+            prompt=prompt,
+            system=system,
+            temperature=temperature,
+            max_tokens=max_tokens
+        )
+    
     def get_active_provider(self) -> str:
         """Get the currently active LLM provider."""
         return self.active_provider or "unknown"
+    
+    def get_lightweight_model_name(self) -> str:
+        """Get the lightweight model name."""
+        return self.lightweight_model

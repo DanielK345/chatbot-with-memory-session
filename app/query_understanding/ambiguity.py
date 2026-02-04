@@ -48,21 +48,46 @@ class AmbiguityDetector:
         
         ambiguity_signals = []
         
+        # Precompute recent context text and candidate entities used by multiple rules
+        context_text = ' '.join([m.get('content', '') for m in (context or [])[-3:]]).lower()
+        stopwords = set(['the', 'and', 'for', 'with', 'from', 'that', 'this', 'these', 'those', 'your', 'you', 'we', 'i', 'it', 'they', 'he', 'she', 'their', 'are', 'is', 'was', 'were', 'a', 'an', 'in', 'on', 'at', 'by', 'to', 'of', 'as', 'be'])
+        ctx_tokens = [w for w in re.findall(r"\w+", context_text)]
+        candidate_entities = [t for t in ctx_tokens if len(t) > 3 and t not in stopwords]
+        unique_candidates = set(candidate_entities)
+
         # RULE 1: Check for unclear reference (pronouns)
         pronouns = ['it', 'they', 'this', 'that', 'he', 'she', 'them', 'these', 'those']
-        has_pronoun = any(f' {p} ' in f' {query_lower} ' or query_lower.startswith(p + ' ') or query_lower.endswith(f' {p}') for p in pronouns)
-        
+        has_pronoun = any(re.search(rf"\b{p}\b", query_lower) for p in pronouns)
+
         if has_pronoun:
-            # Pronoun is ambiguous only if we have multiple candidate entities in context
-            if context and len(context) >= 2:
-                # Count entities in recent context (very simple heuristic)
-                context_text = ' '.join([m.get('content', '') for m in context[-2:]])
-                entity_count = len(set(word for word in context_text.lower().split() if len(word) > 3))
-                if entity_count > 1:
-                    ambiguity_signals.append("Unclear reference (pronoun with multiple possible entities)")
-            elif not context:
-                # No context to resolve pronouns
-                ambiguity_signals.append("Unclear reference (pronoun without prior context)")
+            # If there is no context or no clear antecedent, mark pronoun as ambiguous
+            if not context or len(unique_candidates) == 0:
+                ambiguity_signals.append("Unclear reference (pronoun without prior context or no clear antecedent)")
+            elif len(unique_candidates) == 1:
+                # Single likely antecedent -> pronoun probably resolvable, do not add a signal
+                pass
+            else:
+                ambiguity_signals.append("Unclear reference (pronoun with multiple possible entities)")
+
+        # RULE 1b: Anaphoric determiners (e.g., "the same principles") that refer back to prior concepts
+        anaphors = ['same', 'similar', 'such', 'previous', 'aforementioned']
+        if any(re.search(rf"\b{a}\b", query_lower) for a in anaphors):
+            # detect pattern like "same <noun>" or "the same <noun>"
+            match = re.search(r"\b(?:the\s+)?(?:" + '|'.join(anaphors) + r")\b\s+(\w+)", query_lower)
+            if match:
+                noun = match.group(1)
+                if noun not in context_text:
+                    ambiguity_signals.append(f"Unclear reference (anaphoric '{match.group(0)}' without antecedent)")
+
+        # RULE 1c: 'Which one(s)' / selection questions without antecedent or without criteria
+        which_one_pattern = re.search(r"\bwhich\b(?:[^\n\w]{0,6}\s+\w+){0,5}?\b(one|ones)\b", query_lower) or re.search(r"\bwhich one\b|\bwhich ones\b", query_lower)
+        if which_one_pattern:
+            # If there are no clear candidate entities in context, this is ambiguous
+            if not context or len(unique_candidates) == 0:
+                ambiguity_signals.append("Unclear reference ('which one' without antecedent)")
+            else:
+                # Even with candidates, a bare 'which one' without selection criteria is underspecified
+                ambiguity_signals.append("Choice underspecified ('which one' without selection criteria)")
         
         # RULE 2: Check for unclear question (< 4 tokens or no verb or no WH-word)
         wh_words = ['what', 'which', 'who', 'when', 'where', 'why', 'how']
@@ -79,6 +104,13 @@ class AmbiguityDetector:
         
         if has_wh and not has_verb and num_tokens < 5:
             ambiguity_signals.append("Incomplete question (WH-word but no complete structure)")
+
+        # RULE 2b: WH 'what/which' + choose/pick/select but missing object (e.g., "What should I choose?")
+        choose_pattern = re.search(r"^\s*(what|which)\b.*\b(choose|pick|select)\b(\s+(\w+))?\s*\?*$", query_lower)
+        if choose_pattern:
+            # If no object noun follows choose/pick/select, flag as ambiguous
+            if choose_pattern.group(4) is None:
+                ambiguity_signals.append("Unclear question (missing object for 'choose/pick/select')")
         
         # RULE 3: Check for unclear intent (not question or imperative)
         is_question = query.rstrip().endswith('?') or has_wh
