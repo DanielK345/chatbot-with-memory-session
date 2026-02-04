@@ -1,0 +1,1092 @@
+{
+  "timestamp": "2026-02-03T22:04:23.282076",
+  "session_id": "comprehensive_test_session",
+  "user": "I'm building a machine learning system for image classification.",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- What is the current accuracy or chosen performance metric of your model on the validation set?\n- Which specific model architecture (e.g., ResNet-50, custom CNN) are you currently using for classification?\n- Have you identified if the model is primarily suffering from overfitting, underfitting, or issues with specific classes (e.g., via confusion matrix analysis)?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 260,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "200.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:04:29.337879",
+  "session_id": "comprehensive_test_session",
+  "user": "We're using FastAPI as the backend framework.",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- Does your question about improving accuracy relate to how the model is currently being served or managed within the FastAPI application?\n- Are you experiencing any specific performance issues (e.g., latency, memory usage) within FastAPI that you suspect are hindering your model testing or deployment process?\n- What specific step in the ML pipeline (e.g., data preprocessing, inference execution, or result handling) are you implementing using FastAPI?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 368,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "200.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:04:34.059747",
+  "session_id": "comprehensive_test_session",
+  "user": "How can we improve its accuracy?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 484,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "200.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:04:38.876970",
+  "session_id": "comprehensive_test_session",
+  "user": "What data augmentation techniques are best for them?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 521,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "200.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:04:43.385830",
+  "session_id": "comprehensive_test_session",
+  "user": "Should we deploy using it?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 555,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "200.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:04:48.666252",
+  "session_id": "comprehensive_test_session",
+  "user": "How long does this take?",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- Are you asking about the time required for the deployment process itself?\n- Are you asking about the latency or inference time for a single request once the system is deployed?\n- Are you referring to the estimated time for the entire development cycle, from start to deployment?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 589,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "200.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:04:53.312012",
+  "session_id": "comprehensive_test_session",
+  "user": "Comparing FastAPI and Django, which one is better for our use case?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 681,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "200.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:04:57.913749",
+  "session_id": "comprehensive_test_session",
+  "user": "But what about performance differences during inference?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 717,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "200.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:05:02.822624",
+  "session_id": "comprehensive_test_session",
+  "user": "How do we handle model versioning with it?",
+  "assistant": "This is an excellent and critical question. Model versioning is the cornerstone of reproducible and reliable M\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 755,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "200.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:05:08.204833",
+  "session_id": "comprehensive_test_session",
+  "user": "What's the best way to integrate them together?",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- Which two specific models, pipelines, or systems are you referring to when you say \"them\"?\n- Are you focused on integrating them during the model serving/inference stage, or earlier in the training or data preprocessing pipeline?\n- What specific platform or framework are you using for deployment (e.g., Kubernetes, AWS SageMaker, MLflow, or a custom stack)?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 813,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "200.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:05:13.128050",
+  "session_id": "comprehensive_test_session",
+  "user": "Should we use transfer learning or train from scratch?",
+  "assistant": "This is one of the most fundamental decisions in applied machine learning, and the optimal choice—Transfer Learning\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 921,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "200.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:05:17.720660",
+  "session_id": "comprehensive_test_session",
+  "user": "What about fine-tuning pre-trained models like ResNet or EfficientNet?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 984,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "200.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:05:23.036576",
+  "session_id": "comprehensive_test_session",
+  "user": "How do we optimize it for mobile devices?",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- Is the primary goal reducing model size, improving inference speed, or minimizing power consumption?\n- What specific mobile deployment framework are you planning to use (e.g., TensorFlow Lite, Core ML, PyTorch Mobile)?\n- Are you looking for optimization techniques like model quantization, pruning, or knowledge distillation?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 1021,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": true,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "200.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:05:27.826722",
+  "session_id": "comprehensive_test_session",
+  "user": "Can we reduce there size significantly?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 1114,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": true,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "200.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:05:34.364274",
+  "session_id": "comprehensive_test_session",
+  "user": "Is this approach scalable?",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- Are you asking if the optimization approach remains effective when applied to significantly larger or more complex models?\n- Does scalability refer to the infrastructure's ability to handle a massive increase in deployed endpoints or user traffic?\n- Are you concerned about whether the performance benefits scale consistently across low-end, mid-range, and high-end mobile devices?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 1147,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "200.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:05:39.569390",
+  "session_id": "comprehensive_test_session",
+  "user": "How much improvement can we expect from it?",
+  "assistant": "This is an excellent and crucial question. Determining the expected level of improvement is essential for effective planning,\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 1244,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "200.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:05:46.422300",
+  "session_id": "comprehensive_test_session",
+  "user": "We prefer lightweight models, but they seem insufficient.",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- At what specific performance metric (e.g., latency, accuracy, memory footprint) are the current lightweight models failing to meet your requirements?\n- When you say they are insufficient, are you comparing them to the performance of larger, heavier models, or are they failing to meet a minimum production threshold?\n- Does the insufficiency stem from an inability to handle specific complex features or edge cases that are critical for your application?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 1302,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": true,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "205.9%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:05:51.514755",
+  "session_id": "comprehensive_test_session",
+  "user": "Rather than investing in GPU infrastructure, what are alternatives?",
+  "assistant": "That is an excellent question. The decision to forgo significant capital investment (CapEx)\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 1421,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "205.6%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:05:57.859493",
+  "session_id": "comprehensive_test_session",
+  "user": "Given all these constraints, what would be you're recommendation?",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- Should the recommendation focus on specific model architectures, deployment strategies (like quantization), or alternative non-GPU infrastructure solutions?\n- What is the single most critical factor the recommendation must optimize: achieving required performance (accuracy/latency) or minimizing dependency on GPU infrastructure?\n- Are you interested in purely CPU-based solutions, or are specialized accelerators like FPGAs or TPUs acceptable alternatives to traditional GPU infrastructure?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 1477,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": true,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "205.3%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:06:04.420358",
+  "session_id": "comprehensive_test_session",
+  "user": "Should we proceed with this architecture or iterate?",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- Which specific architecture, deployment strategy, or infrastructure solution are you currently evaluating for the proceed/iterate decision?\n- What is the single most critical factor (e.g., cost ceiling, required latency, development timeline) that determines if the current plan is acceptable?\n- If we iterate, should the focus be on optimizing the existing model structure, changing the deployment strategy, or exploring a fundamentally different hardware path?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 1592,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "205.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:06:13.184191",
+  "session_id": "ambiguity_test_1",
+  "user": "What is the capital?",
+  "assistant": "That is an excellent question. However, the term \"capital\" refers to the seat of government\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 10,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:06:16.487124",
+  "session_id": "ambiguity_test_2",
+  "user": "Tell me about it.",
+  "assistant": "That is a fascinating phrase, as \"Tell me about it\" can be used in two very distinct\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 10,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:06:19.723038",
+  "session_id": "ambiguity_test_3",
+  "user": "How does photosynthesis work?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 11,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": false,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:06:23.621303",
+  "session_id": "ambiguity_test_4",
+  "user": "They said it was important.",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 11,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:06:24.778970",
+  "session_id": "ambiguity_test_5",
+  "user": "The current approach has issues, but we think we have a solution.",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- What specific issues are you currently encountering with the existing approach?\n- What is the nature of the proposed solution (e.g., technical change, process adjustment, resource reallocation)?\n- What is the immediate next step you need assistance with regarding the issues or the proposed solution?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 19,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:06:33.038680",
+  "session_id": "context_test_session",
+  "user": "I prefer FastAPI for backend development.",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- What specific task or project related to FastAPI are you needing assistance or information about right now?\n- Are you looking for resources on specific FastAPI features, such as authentication, database integration, or deployment?\n- Are you looking for a comparison between FastAPI and another framework, or are you explaining your choice for an existing project?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 13,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": false,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:06:37.744842",
+  "session_id": "context_test_session",
+  "user": "Given our current architecture, is this approach scalable?",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- What specific technical implementation (e.g., database solution, caching strategy, or worker configuration) are you referring to as \"this approach\"?\n- Could you briefly describe the key non-FastAPI components, such as the database technology and deployment environment, that define \"our current architecture\"?\n- Is your primary concern about scaling for high concurrent user load (throughput) or scaling for large data volume (storage/query complexity)?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 113,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:06:42.438567",
+  "session_id": "context_test_session",
+  "user": "But we decided to use Redis instead.",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- What specific function is Redis intended to serve (e.g., caching, message queue, session store) within your FastAPI application?\n- What specific component or database technology is Redis replacing that was previously part of the architecture you asked about?\n- Are you still seeking confirmation on the scalability of the architecture, or assistance with the technical implementation of Redis?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 230,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:06:48.241674",
+  "session_id": "context_test_session",
+  "user": "What about the open questions regarding deployment?",
+  "assistant": "This is an excellent and important question. The term \"deployment\" covers a vast range of activities,\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 331,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "125.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:06:57.412975",
+  "session_id": "pronoun_test_session",
+  "user": "We're building a FastAPI service with Redis cache.",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- What specific part of the development process (setup, integration, deployment, or optimization) are you currently focused on?\n- Which specific Python library are you using to interface FastAPI with Redis (e.g., aioredis, redis-py, fastapi-cache)?\n- What is the primary function of the cache (e.g., storing API responses, managing user sessions, or caching heavy computation results)?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 16,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:07:01.255331",
+  "session_id": "pronoun_test_session",
+  "user": "How can I optimize it for performance?",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- What specific performance metric (e.g., latency, throughput, or memory usage) are you primarily focused on improving?\n- What is the current specific bottleneck or performance issue you are observing in the service (e.g., slow response times, high CPU load, or cache misses)?\n- Are you looking to optimize the FastAPI application code, the Redis configuration settings, or the caching strategy itself?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 128,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": true,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:07:04.731262",
+  "session_id": "pronoun_test_session",
+  "user": "What are the best practices for them?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 238,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:07:10.312378",
+  "session_id": "pronoun_test_session",
+  "user": "Can we combine these with that?",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- Which specific optimization techniques or configuration settings are you referring to as \"these\" and \"that?\"\n- Is the goal to integrate two different systems, merge two strategies, or use two features simultaneously?\n- Is this combination related to the FastAPI application, the Redis setup, or a different component entirely?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 273,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "125.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:07:15.460070",
+  "session_id": "pronoun_test_session",
+  "user": "Should we deploy it on AWS or GCP?",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- Is the deployment decision focused on the entire application stack, or specifically on the database/Redis component?\n- What is the primary decision factor for choosing the cloud provider (e.g., cost, compliance requirements, or performance)?\n- Does the team already have existing infrastructure, established accounts, or prior operational expertise on either AWS or GCP?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 367,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": true,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "140.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:07:23.817495",
+  "session_id": "tracking_test_session",
+  "user": "This is a clear question about machine learning.",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- Are you asking about deep learning architectures, specific algorithms (like SVM or k-means), or model deployment?\n- Are you looking for a conceptual explanation, help debugging code, or guidance on choosing a specific model?\n- What is the desired level of detail for the answer, such as a high-level overview or a technical deep dive with equations?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 14,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:07:27.778341",
+  "session_id": "tracking_test_session",
+  "user": "What does it mean?",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- Are you asking about the meaning of a specific term I used, such as \"SVM\" or \"deep learning architectures\"?\n- Are you asking for a general, high-level explanation of your original machine learning question instead of narrowing the scope?\n- What specific kind of information or output are you hoping to get from me right now?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 112,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": true,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:07:31.151566",
+  "session_id": "tracking_test_session",
+  "user": "Explain how neural networks work.",
+  "assistant": "This is an excellent question. Neural networks (NNs) are the foundational technology behind modern\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 210,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:07:35.969976",
+  "session_id": "tracking_test_session",
+  "user": "Can we do that?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 261,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "125.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:07:41.047067",
+  "session_id": "tracking_test_session",
+  "user": "Show me examples of CNN architectures.",
+  "assistant": "This is a great question. Convolutional Neural Networks (CNNs) have evolved significantly since\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 296,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "140.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:07:46.810064",
+  "session_id": "tracking_test_session",
+  "user": "Why is it faster?",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- Which specific neural network architecture or optimization technique are you referring to when you say \"it\"?\n- Are you referring to the speed of training, the speed of inference (prediction), or the speed of data loading?\n- Are you comparing CNNs generally to other model types (like RNNs), or comparing two specific CNN models?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 348,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": true,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "150.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:07:51.621203",
+  "session_id": "tracking_test_session",
+  "user": "How to implement attention mechanisms?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 445,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "157.1%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:07:56.321325",
+  "session_id": "tracking_test_session",
+  "user": "Should we use them?",
+  "assistant": "This is an excellent and crucial question, but to provide an accurate and thoughtful recommendation on whether you\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 478,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "162.5%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:08:03.045059",
+  "session_id": "summarization_test_session",
+  "user": "We're building a recommendation engine using collaborative filtering.",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- Are you looking for help with selecting a specific collaborative filtering algorithm (e.g., matrix factorization, neighborhood-based) or general implementation guidance?\n- What stage of development are you currently at (e.g., data preparation, model training, deployment/scaling)?\n- What is the specific type of content or item you are recommending (e.g., movies, products, articles)?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 15,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": false,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:08:06.680784",
+  "session_id": "summarization_test_session",
+  "user": "The system needs to handle 1 million+ users efficiently.",
+  "assistant": "I'd like to understand your question better. Could you clarify:\n\n- What is the maximum acceptable latency (in milliseconds) for generating a set of recommendations for a single user?\n- Is your primary scaling concern related to the computational time required for training the model or the throughput of serving real-time recommendations?\n- What are the expected peak concurrent requests per second (RPS) that the recommendation serving layer must sustain?",
+  "metadata": {
+    "is_answerable": false,
+    "token_count": 125,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": false,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:08:10.003186",
+  "session_id": "summarization_test_session",
+  "user": "Should we use matrix factorization or deep learning models?",
+  "assistant": "This is an excellent and critical question. The choice between Matrix Factorization (MF) and Deep Learning\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 228,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "100.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:08:15.102975",
+  "session_id": "summarization_test_session",
+  "user": "How do we scale the feature engineering pipeline?",
+  "assistant": "This is an excellent and critical question. Scaling the feature engineering (FE) pipeline is often\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 285,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "125.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:08:20.326457",
+  "session_id": "summarization_test_session",
+  "user": "What database should we use for storing embeddings?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 340,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "140.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:08:25.348638",
+  "session_id": "summarization_test_session",
+  "user": "How can we optimize the inference latency to under 100ms?",
+  "assistant": "This is an excellent and challenging goal. Achieving an inference latency consistently under 100\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 381,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "150.0%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:08:30.261926",
+  "session_id": "summarization_test_session",
+  "user": "Should we implement A/B testing for model evaluation?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 436,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "157.1%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:08:35.065337",
+  "session_id": "summarization_test_session",
+  "user": "What monitoring and alerting should we set up?",
+  "assistant": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 474,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "162.5%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:08:40.171838",
+  "session_id": "summarization_test_session",
+  "user": "How do we handle cold start problems for new users?",
+  "assistant": "The cold start problem for new users is a critical challenge in recommender systems. It\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 513,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": false,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "166.7%"
+  }
+}
+
+{
+  "timestamp": "2026-02-03T22:08:44.874648",
+  "session_id": "summarization_test_session",
+  "user": "What are the privacy considerations for user data?",
+  "assistant": "This is an excellent and critically important question in the modern digital landscape. Privacy considerations for user\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*",
+  "metadata": {
+    "is_answerable": true,
+    "token_count": 567,
+    "summarization_triggered": false,
+    "pipeline_metadata": {
+      "spelling_check_used": false,
+      "ambiguity_llm_used": false,
+      "answerability_check_passed": true,
+      "context_expanded": true,
+      "refinement_applied": false,
+      "llm_call_made": true
+    },
+    "llm_usage_percentage": "170.0%"
+  }
+}
+

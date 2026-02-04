@@ -1,0 +1,660 @@
+{
+  "timestamp": "2026-02-03T22:04:23.279522",
+  "session_id": "comprehensive_test_session",
+  "original_query": "I'm building a machine learning system for image classification.",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "What is the current accuracy or chosen performance metric of your model on the validation set?",
+    "Which specific model architecture (e.g., ResNet-50, custom CNN) are you currently using for classification?",
+    "Have you identified if the model is primarily suffering from overfitting, underfitting, or issues with specific classes (e.g., via confusion matrix analysis)?"
+  ],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:04:29.336887",
+  "session_id": "comprehensive_test_session",
+  "original_query": "We're using FastAPI as the backend framework.",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "Does your question about improving accuracy relate to how the model is currently being served or managed within the FastAPI application?",
+    "Are you experiencing any specific performance issues (e.g., latency, memory usage) within FastAPI that you suspect are hindering your model testing or deployment process?",
+    "What specific step in the ML pipeline (e.g., data preprocessing, inference execution, or result handling) are you implementing using FastAPI?"
+  ],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:04:34.059747",
+  "session_id": "comprehensive_test_session",
+  "original_query": "How can we improve its accuracy?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:04:38.876970",
+  "session_id": "comprehensive_test_session",
+  "original_query": "What data augmentation techniques are best for them?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "The user is\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:04:43.384826",
+  "session_id": "comprehensive_test_session",
+  "original_query": "Should we deploy using it?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:04:48.665252",
+  "session_id": "comprehensive_test_session",
+  "original_query": "How long does this take?",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "Are you asking about the time required for the deployment process itself?",
+    "Are you asking about the latency or inference time for a single request once the system is deployed?",
+    "Are you referring to the estimated time for the entire development cycle, from start to deployment?"
+  ],
+  "final_augmented_context": "The user is\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:04:53.310769",
+  "session_id": "comprehensive_test_session",
+  "original_query": "Comparing FastAPI and Django, which one is better for our use case?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:04:57.912800",
+  "session_id": "comprehensive_test_session",
+  "original_query": "But what about performance differences during inference?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:05:02.821685",
+  "session_id": "comprehensive_test_session",
+  "original_query": "How do we handle model versioning with it?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:05:08.203835",
+  "session_id": "comprehensive_test_session",
+  "original_query": "What's the best way to integrate them together?",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "Which two specific models, pipelines, or systems are you referring to when you say \"them\"?",
+    "Are you focused on integrating them during the model serving/inference stage, or earlier in the training or data preprocessing pipeline?",
+    "What specific platform or framework are you using for deployment (e.g., Kubernetes, AWS SageMaker, MLflow, or a custom stack)?"
+  ],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:05:13.127077",
+  "session_id": "comprehensive_test_session",
+  "original_query": "Should we use transfer learning or train from scratch?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:05:17.719072",
+  "session_id": "comprehensive_test_session",
+  "original_query": "What about fine-tuning pre-trained models like ResNet or EfficientNet?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:05:23.034463",
+  "session_id": "comprehensive_test_session",
+  "original_query": "How do we optimize it for mobile devices?",
+  "is_ambiguous": true,
+  "rewritten_query": "How do we optimize This for mobile devices?",
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "Is the primary goal reducing model size, improving inference speed, or minimizing power consumption?",
+    "What specific mobile deployment framework are you planning to use (e.g., TensorFlow Lite, Core ML, PyTorch Mobile)?",
+    "Are you looking for optimization techniques like model quantization, pruning, or knowledge distillation?"
+  ],
+  "final_augmented_context": "The user is seeking strategic\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:05:27.825704",
+  "session_id": "comprehensive_test_session",
+  "original_query": "Can we reduce there size significantly?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:05:34.362645",
+  "session_id": "comprehensive_test_session",
+  "original_query": "Is this approach scalable?",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "Are you asking if the optimization approach remains effective when applied to significantly larger or more complex models?",
+    "Does scalability refer to the infrastructure's ability to handle a massive increase in deployed endpoints or user traffic?",
+    "Are you concerned about whether the performance benefits scale consistently across low-end, mid-range, and high-end mobile devices?"
+  ],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:05:39.568389",
+  "session_id": "comprehensive_test_session",
+  "original_query": "How much improvement can we expect from it?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent user queries center on\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:05:46.422300",
+  "session_id": "comprehensive_test_session",
+  "original_query": "We prefer lightweight models, but they seem insufficient.",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "At what specific performance metric (e.g., latency, accuracy, memory footprint) are the current lightweight models failing to meet your requirements?",
+    "When you say they are insufficient, are you comparing them to the performance of larger, heavier models, or are they failing to meet a minimum production threshold?",
+    "Does the insufficiency stem from an inability to handle specific complex features or edge cases that are critical for your application?"
+  ],
+  "final_augmented_context": "The user is primarily concerned\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:05:51.514755",
+  "session_id": "comprehensive_test_session",
+  "original_query": "Rather than investing in GPU infrastructure, what are alternatives?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "The user is evaluating\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:05:57.858480",
+  "session_id": "comprehensive_test_session",
+  "original_query": "Given all these constraints, what would be you're recommendation?",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "Should the recommendation focus on specific model architectures, deployment strategies (like quantization), or alternative non-GPU infrastructure solutions?",
+    "What is the single most critical factor the recommendation must optimize: achieving required performance (accuracy/latency) or minimizing dependency on GPU infrastructure?",
+    "Are you interested in purely CPU-based solutions, or are specialized accelerators like FPGAs or TPUs acceptable alternatives to traditional GPU infrastructure?"
+  ],
+  "final_augmented_context": "The user is seeking strategies to\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:06:04.419323",
+  "session_id": "comprehensive_test_session",
+  "original_query": "Should we proceed with this architecture or iterate?",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "Which specific architecture, deployment strategy, or infrastructure solution are you currently evaluating for the proceed/iterate decision?",
+    "What is the single most critical factor (e.g., cost ceiling, required latency, development timeline) that determines if the current plan is acceptable?",
+    "If we iterate, should the focus be on optimizing the existing model structure, changing the deployment strategy, or exploring a fundamentally different hardware path?"
+  ],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:06:13.182514",
+  "session_id": "ambiguity_test_1",
+  "original_query": "What is the capital?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nUser: What is the capital?"
+}
+
+{
+  "timestamp": "2026-02-03T22:06:16.487124",
+  "session_id": "ambiguity_test_2",
+  "original_query": "Tell me about it.",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nUser: Tell me about it."
+}
+
+{
+  "timestamp": "2026-02-03T22:06:19.722459",
+  "session_id": "ambiguity_test_3",
+  "original_query": "How does photosynthesis work?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nUser: How does photosynthesis work?"
+}
+
+{
+  "timestamp": "2026-02-03T22:06:23.620270",
+  "session_id": "ambiguity_test_4",
+  "original_query": "They said it was important.",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nUser: They said it was important."
+}
+
+{
+  "timestamp": "2026-02-03T22:06:24.777980",
+  "session_id": "ambiguity_test_5",
+  "original_query": "The current approach has issues, but we think we have a solution.",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "What specific issues are you currently encountering with the existing approach?",
+    "What is the nature of the proposed solution (e.g., technical change, process adjustment, resource reallocation)?",
+    "What is the immediate next step you need assistance with regarding the issues or the proposed solution?"
+  ],
+  "final_augmented_context": "Recent conversation:\nUser: The current approach has issues, but we think we have a solution."
+}
+
+{
+  "timestamp": "2026-02-03T22:06:33.037495",
+  "session_id": "context_test_session",
+  "original_query": "I prefer FastAPI for backend development.",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "What specific task or project related to FastAPI are you needing assistance or information about right now?",
+    "Are you looking for resources on specific FastAPI features, such as authentication, database integration, or deployment?",
+    "Are you looking for a comparison between FastAPI and another framework, or are you explaining your choice for an existing project?"
+  ],
+  "final_augmented_context": "Recent conversation:\nUser: I prefer FastAPI for backend development."
+}
+
+{
+  "timestamp": "2026-02-03T22:06:37.743843",
+  "session_id": "context_test_session",
+  "original_query": "Given our current architecture, is this approach scalable?",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "What specific technical implementation (e.g., database solution, caching strategy, or worker configuration) are you referring to as \"this approach\"?",
+    "Could you briefly describe the key non-FastAPI components, such as the database technology and deployment environment, that define \"our current architecture\"?",
+    "Is your primary concern about scaling for high concurrent user load (throughput) or scaling for large data volume (storage/query complexity)?"
+  ],
+  "final_augmented_context": "Recent conversation:\nAssistant: I'd like to understand your question better. Could you clarify:\n\n- What specific task or project related to FastAPI are you needing assistance or information about right now?\n- Are you looking for resources on specific FastAPI features, such as authentication, database integration, or deployment?\n- Are you looking for a comparison between FastAPI and another framework, or are you explaining your choice for an existing project?\nUser: Given our current architecture, is this approach scalable?"
+}
+
+{
+  "timestamp": "2026-02-03T22:06:42.437487",
+  "session_id": "context_test_session",
+  "original_query": "But we decided to use Redis instead.",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "What specific function is Redis intended to serve (e.g., caching, message queue, session store) within your FastAPI application?",
+    "What specific component or database technology is Redis replacing that was previously part of the architecture you asked about?",
+    "Are you still seeking confirmation on the scalability of the architecture, or assistance with the technical implementation of Redis?"
+  ],
+  "final_augmented_context": "Recent conversation:\nAssistant: I'd like to understand your question better. Could you clarify:\n\n- What specific task or project related to FastAPI are you needing assistance or information about right now?\n- Are you looking for resources on specific FastAPI features, such as authentication, database integration, or deployment?\n- Are you looking for a comparison between FastAPI and another framework, or are you explaining your choice for an existing project?\nUser: Given our current architecture, is this approach scalable?\nAssistant: I'd like to understand your question better. Could you clarify:\n\n- What specific technical implementation (e.g., database solution, caching strategy, or worker configuration) are you referring to as \"this approach\"?\n- Could you briefly describe the key non-FastAPI components, such as the database technology and deployment environment, that define \"our current architecture\"?\n- Is your primary concern about scaling for high concurrent user load (throughput) or scaling for large data volume (storage/query complexity)?\nUser: But we decided to use Redis instead."
+}
+
+{
+  "timestamp": "2026-02-03T22:06:48.240650",
+  "session_id": "context_test_session",
+  "original_query": "What about the open questions regarding deployment?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:06:57.412975",
+  "session_id": "pronoun_test_session",
+  "original_query": "We're building a FastAPI service with Redis cache.",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "What specific part of the development process (setup, integration, deployment, or optimization) are you currently focused on?",
+    "Which specific Python library are you using to interface FastAPI with Redis (e.g., aioredis, redis-py, fastapi-cache)?",
+    "What is the primary function of the cache (e.g., storing API responses, managing user sessions, or caching heavy computation results)?"
+  ],
+  "final_augmented_context": "Recent conversation:\nUser: We're building a FastAPI service with Redis cache."
+}
+
+{
+  "timestamp": "2026-02-03T22:07:01.253847",
+  "session_id": "pronoun_test_session",
+  "original_query": "How can I optimize it for performance?",
+  "is_ambiguous": true,
+  "rewritten_query": "How can I optimize I'd for performance?",
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "What specific performance metric (e.g., latency, throughput, or memory usage) are you primarily focused on improving?",
+    "What is the current specific bottleneck or performance issue you are observing in the service (e.g., slow response times, high CPU load, or cache misses)?",
+    "Are you looking to optimize the FastAPI application code, the Redis configuration settings, or the caching strategy itself?"
+  ],
+  "final_augmented_context": "Recent conversation:\nAssistant: I'd like to understand your question better. Could you clarify:\n\n- What specific part of the development process (setup, integration, deployment, or optimization) are you currently focused on?\n- Which specific Python library are you using to interface FastAPI with Redis (e.g., aioredis, redis-py, fastapi-cache)?\n- What is the primary function of the cache (e.g., storing API responses, managing user sessions, or caching heavy computation results)?\nUser: How can I optimize it for performance?"
+}
+
+{
+  "timestamp": "2026-02-03T22:07:04.731262",
+  "session_id": "pronoun_test_session",
+  "original_query": "What are the best practices for them?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nAssistant: I'd like to understand your question better. Could you clarify:\n\n- What specific part of the development process (setup, integration, deployment, or optimization) are you currently focused on?\n- Which specific Python library are you using to interface FastAPI with Redis (e.g., aioredis, redis-py, fastapi-cache)?\n- What is the primary function of the cache (e.g., storing API responses, managing user sessions, or caching heavy computation results)?\nUser: How can I optimize it for performance?\nAssistant: I'd like to understand your question better. Could you clarify:\n\n- What specific performance metric (e.g., latency, throughput, or memory usage) are you primarily focused on improving?\n- What is the current specific bottleneck or performance issue you are observing in the service (e.g., slow response times, high CPU load, or cache misses)?\n- Are you looking to optimize the FastAPI application code, the Redis configuration settings, or the caching strategy itself?\nUser: What are the best practices for them?"
+}
+
+{
+  "timestamp": "2026-02-03T22:07:10.312378",
+  "session_id": "pronoun_test_session",
+  "original_query": "Can we combine these with that?",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "Which specific optimization techniques or configuration settings are you referring to as \"these\" and \"that?\"",
+    "Is the goal to integrate two different systems, merge two strategies, or use two features simultaneously?",
+    "Is this combination related to the FastAPI application, the Redis setup, or a different component entirely?"
+  ],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:07:15.459070",
+  "session_id": "pronoun_test_session",
+  "original_query": "Should we deploy it on AWS or GCP?",
+  "is_ambiguous": true,
+  "rewritten_query": "Should we deploy I'd on AWS or GCP?",
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "Is the deployment decision focused on the entire application stack, or specifically on the database/Redis component?",
+    "What is the primary decision factor for choosing the cloud provider (e.g., cost, compliance requirements, or performance)?",
+    "Does the team already have existing infrastructure, established accounts, or prior operational expertise on either AWS or GCP?"
+  ],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:07:23.817495",
+  "session_id": "tracking_test_session",
+  "original_query": "This is a clear question about machine learning.",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "Are you asking about deep learning architectures, specific algorithms (like SVM or k-means), or model deployment?",
+    "Are you looking for a conceptual explanation, help debugging code, or guidance on choosing a specific model?",
+    "What is the desired level of detail for the answer, such as a high-level overview or a technical deep dive with equations?"
+  ],
+  "final_augmented_context": "Recent conversation:\nUser: This is a clear question about machine learning."
+}
+
+{
+  "timestamp": "2026-02-03T22:07:27.776856",
+  "session_id": "tracking_test_session",
+  "original_query": "What does it mean?",
+  "is_ambiguous": true,
+  "rewritten_query": "What does I'd mean?",
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "Are you asking about the meaning of a specific term I used, such as \"SVM\" or \"deep learning architectures\"?",
+    "Are you asking for a general, high-level explanation of your original machine learning question instead of narrowing the scope?",
+    "What specific kind of information or output are you hoping to get from me right now?"
+  ],
+  "final_augmented_context": "Recent conversation:\nAssistant: I'd like to understand your question better. Could you clarify:\n\n- Are you asking about deep learning architectures, specific algorithms (like SVM or k-means), or model deployment?\n- Are you looking for a conceptual explanation, help debugging code, or guidance on choosing a specific model?\n- What is the desired level of detail for the answer, such as a high-level overview or a technical deep dive with equations?\nUser: What does it mean?"
+}
+
+{
+  "timestamp": "2026-02-03T22:07:31.151566",
+  "session_id": "tracking_test_session",
+  "original_query": "Explain how neural networks work.",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nAssistant: I'd like to understand your question better. Could you clarify:\n\n- Are you asking about deep learning architectures, specific algorithms (like SVM or k-means), or model deployment?\n- Are you looking for a conceptual explanation, help debugging code, or guidance on choosing a specific model?\n- What is the desired level of detail for the answer, such as a high-level overview or a technical deep dive with equations?\nUser: What does it mean?\nAssistant: I'd like to understand your question better. Could you clarify:\n\n- Are you asking about the meaning of a specific term I used, such as \"SVM\" or \"deep learning architectures\"?\n- Are you asking for a general, high-level explanation of your original machine learning question instead of narrowing the scope?\n- What specific kind of information or output are you hoping to get from me right now?\nUser: Explain how neural networks work."
+}
+
+{
+  "timestamp": "2026-02-03T22:07:35.969976",
+  "session_id": "tracking_test_session",
+  "original_query": "Can we do that?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:07:41.045822",
+  "session_id": "tracking_test_session",
+  "original_query": "Show me examples of CNN architectures.",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:07:46.808067",
+  "session_id": "tracking_test_session",
+  "original_query": "Why is it faster?",
+  "is_ambiguous": true,
+  "rewritten_query": "Why is This faster?",
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "Which specific neural network architecture or optimization technique are you referring to when you say \"it\"?",
+    "Are you referring to the speed of training, the speed of inference (prediction), or the speed of data loading?",
+    "Are you comparing CNNs generally to other model types (like RNNs), or comparing two specific CNN models?"
+  ],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:07:51.620149",
+  "session_id": "tracking_test_session",
+  "original_query": "How to implement attention mechanisms?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "The recent queries involve general feasibility\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:07:56.321325",
+  "session_id": "tracking_test_session",
+  "original_query": "Should we use them?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "The user is seeking\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:08:03.045059",
+  "session_id": "summarization_test_session",
+  "original_query": "We're building a recommendation engine using collaborative filtering.",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "Are you looking for help with selecting a specific collaborative filtering algorithm (e.g., matrix factorization, neighborhood-based) or general implementation guidance?",
+    "What stage of development are you currently at (e.g., data preparation, model training, deployment/scaling)?",
+    "What is the specific type of content or item you are recommending (e.g., movies, products, articles)?"
+  ],
+  "final_augmented_context": "Recent conversation:\nUser: We're building a recommendation engine using collaborative filtering."
+}
+
+{
+  "timestamp": "2026-02-03T22:08:06.679330",
+  "session_id": "summarization_test_session",
+  "original_query": "The system needs to handle 1 million+ users efficiently.",
+  "is_ambiguous": true,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [
+    "What is the maximum acceptable latency (in milliseconds) for generating a set of recommendations for a single user?",
+    "Is your primary scaling concern related to the computational time required for training the model or the throughput of serving real-time recommendations?",
+    "What are the expected peak concurrent requests per second (RPS) that the recommendation serving layer must sustain?"
+  ],
+  "final_augmented_context": "Recent conversation:\nAssistant: I'd like to understand your question better. Could you clarify:\n\n- Are you looking for help with selecting a specific collaborative filtering algorithm (e.g., matrix factorization, neighborhood-based) or general implementation guidance?\n- What stage of development are you currently at (e.g., data preparation, model training, deployment/scaling)?\n- What is the specific type of content or item you are recommending (e.g., movies, products, articles)?\nUser: The system needs to handle 1 million+ users efficiently."
+}
+
+{
+  "timestamp": "2026-02-03T22:08:10.002165",
+  "session_id": "summarization_test_session",
+  "original_query": "Should we use matrix factorization or deep learning models?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nAssistant: I'd like to understand your question better. Could you clarify:\n\n- Are you looking for help with selecting a specific collaborative filtering algorithm (e.g., matrix factorization, neighborhood-based) or general implementation guidance?\n- What stage of development are you currently at (e.g., data preparation, model training, deployment/scaling)?\n- What is the specific type of content or item you are recommending (e.g., movies, products, articles)?\nUser: The system needs to handle 1 million+ users efficiently.\nAssistant: I'd like to understand your question better. Could you clarify:\n\n- What is the maximum acceptable latency (in milliseconds) for generating a set of recommendations for a single user?\n- Is your primary scaling concern related to the computational time required for training the model or the throughput of serving real-time recommendations?\n- What are the expected peak concurrent requests per second (RPS) that the recommendation serving layer must sustain?\nUser: Should we use matrix factorization or deep learning models?"
+}
+
+{
+  "timestamp": "2026-02-03T22:08:15.102975",
+  "session_id": "summarization_test_session",
+  "original_query": "How do we scale the feature engineering pipeline?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:08:20.325394",
+  "session_id": "summarization_test_session",
+  "original_query": "What database should we use for storing embeddings?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "The user is seeking guidance on\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:08:25.347637",
+  "session_id": "summarization_test_session",
+  "original_query": "How can we optimize the inference latency to under 100ms?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:08:30.261393",
+  "session_id": "summarization_test_session",
+  "original_query": "Should we implement A/B testing for model evaluation?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "The user is currently focused\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:08:35.064292",
+  "session_id": "summarization_test_session",
+  "original_query": "What monitoring and alerting should we set up?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent user queries center on\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:08:40.170849",
+  "session_id": "summarization_test_session",
+  "original_query": "How do we handle cold start problems for new users?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+
+{
+  "timestamp": "2026-02-03T22:08:44.873687",
+  "session_id": "summarization_test_session",
+  "original_query": "What are the privacy considerations for user data?",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "\n\n---\n💡 *Feel free to ask me anything else you'd like to explore!*"
+}
+

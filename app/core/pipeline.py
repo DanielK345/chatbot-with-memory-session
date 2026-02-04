@@ -1,15 +1,34 @@
-"""Main pipeline orchestrator for chat assistant."""
+"""
+Main pipeline orchestrator for chat assistant per fix.txt principles.
+
+PIPELINE FLOW:
+1. SPELLING CHECK (rule-based, NO LLM)
+2. AMBIGUITY CHECK (rule-first, LLM fallback)
+3. ANSWERABILITY CHECK (similarity-based, NO LLM)
+4. CONTEXT RETRIEVAL (selective, aggressive filtering)
+5. QUERY REFINEMENT (rule-based entity replacement)
+6. LLM (ONLY if answerable)
+
+DESIGN PRINCIPLES:
+- Prefer early exits
+- Never guess silently
+- Limit context size aggressively
+- LLM is last resort, not default
+- Target: LLM usage in < 30% of queries
+"""
 
 from typing import List, Dict, Any, Optional, Union
 from app.memory.session_store import SessionStore
 from app.memory.summarizer import SessionSummarizer
 from app.memory.schemas import MessageRange
 from app.core.token_counter import TokenCounter
+from app.query_understanding.spelling_check import SpellingChecker
 from app.query_understanding.ambiguity import AmbiguityDetector
-from app.query_understanding.rewrite import QueryRewriter
+from app.query_understanding.answerability_check import AnswerabilityChecker
 from app.query_understanding.context import ContextAugmenter
+from app.query_understanding.query_refiner import QueryRefiner
 from app.query_understanding.clarifier import ClarifyingQuestionGenerator
-from app.query_understanding.schemas import QueryUnderstanding, AmbiguityAnalysis
+from app.query_understanding.schemas import QueryUnderstanding, AmbiguityAnalysis, AnswerabilityAnalysis
 from app.core.prompt_builder import PromptBuilder
 from app.llm.client import LLMClient
 from app.llm.ollama_client import OllamaClient
@@ -17,13 +36,14 @@ from app.llm.gemini_client import GeminiClient
 from app.utils.logging import get_logger, ConversationLogger, UserQueryLogger, SessionSummaryLogger
 
 logger = get_logger(__name__)
-conversation_logger = ConversationLogger()
-query_logger = UserQueryLogger()
-session_summary_logger = SessionSummaryLogger()
 
 
 class ChatPipeline:
-    """Main pipeline for processing chat messages."""
+    """
+    Main pipeline for processing chat messages following fix.txt principles.
+    
+    Fast, low-latency, minimal LLM usage.
+    """
     
     def __init__(
         self,
@@ -32,7 +52,6 @@ class ChatPipeline:
         max_context_tokens: int = 10000,
         keep_recent_messages: int = 5,
         enable_query_understanding: bool = True,
-        skip_llm_ambiguity_if_clear: bool = True,
         max_response_tokens: Optional[int] = 500,
         response_temperature: float = 0.5,
         conversation_logger: Optional[ConversationLogger] = None,
@@ -44,37 +63,41 @@ class ChatPipeline:
         
         Args:
             session_store: Session store instance
-            llm_client: LLM client instance (LLMClient or OllamaClient)
+            llm_client: LLM client instance
             max_context_tokens: Maximum tokens before triggering summarization
             keep_recent_messages: Number of recent messages to keep after summarization
             enable_query_understanding: Enable query understanding pipeline (default: True)
-            skip_llm_ambiguity_if_clear: Skip LLM call if heuristic says query is clear (default: True)
-            max_response_tokens: Maximum tokens for response generation (default: 500, None = no limit)
-            response_temperature: Temperature for response generation (default: 0.5, lower = faster)
-            conversation_logger: Optional ConversationLogger instance for recording conversations
-            query_logger: Optional UserQueryLogger instance for query understanding logs
-            session_summary_logger: Optional SessionSummaryLogger instance for summary logs
+            max_response_tokens: Maximum tokens for response generation
+            response_temperature: Temperature for response generation
+            conversation_logger: Optional ConversationLogger instance
+            query_logger: Optional UserQueryLogger instance
+            session_summary_logger: Optional SessionSummaryLogger instance
         """
         self.session_store = session_store
         self.llm_client = llm_client
         self.max_context_tokens = max_context_tokens
         self.keep_recent_messages = keep_recent_messages
         self.enable_query_understanding = enable_query_understanding
-        self.skip_llm_ambiguity_if_clear = skip_llm_ambiguity_if_clear
         self.max_response_tokens = max_response_tokens
         self.response_temperature = response_temperature
         self.conversation_logger = conversation_logger or ConversationLogger()
-        self.query_logger = query_logger or globals().get('query_logger') or UserQueryLogger()
-        self.session_summary_logger = session_summary_logger or globals().get('session_summary_logger') or SessionSummaryLogger()
+        self.query_logger = query_logger or UserQueryLogger()
+        self.session_summary_logger = session_summary_logger or SessionSummaryLogger()
         
-        # Initialize components
+        # Initialize components per fix.txt pipeline
         self.token_counter = TokenCounter()
         self.summarizer = SessionSummarizer(llm_client)
+        self.spelling_checker = SpellingChecker()
         self.ambiguity_detector = AmbiguityDetector(llm_client)
-        self.query_rewriter = QueryRewriter(llm_client)
+        self.answerability_checker = AnswerabilityChecker()
         self.context_augmenter = ContextAugmenter()
+        self.query_refiner = QueryRefiner()
         self.clarifier = ClarifyingQuestionGenerator(llm_client)
         self.prompt_builder = PromptBuilder()
+        
+        # Tracking for LLM usage percentage
+        self.total_queries_processed = 0
+        self.llm_calls_made = 0
     
     async def process_message(
         self,
@@ -82,7 +105,15 @@ class ChatPipeline:
         user_query: str
     ) -> Dict[str, Any]:
         """
-        Process a user message through the full pipeline.
+        Process a user message through the full fix.txt pipeline.
+        
+        Pipeline:
+        1. Spelling check (rule-based)
+        2. Ambiguity check (rule-first, LLM fallback)
+        3. Answerability check (similarity-based)
+        4. Context retrieval (selective)
+        5. Query refinement (rule-based)
+        6. LLM response generation (if answerable)
         
         Args:
             session_id: Session identifier
@@ -91,186 +122,301 @@ class ChatPipeline:
         Returns:
             Dict with response and pipeline metadata
         """
-        logger.info(f"[Pipeline] Processing message for session {session_id}")
+        self.total_queries_processed += 1
+        logger.info(f"[Pipeline] Processing message #{self.total_queries_processed} for session {session_id}")
         
-        # Step 1: Add user message to session
+        pipeline_metadata = {
+            "spelling_check_used": False,
+            "ambiguity_llm_used": False,
+            "answerability_check_passed": False,
+            "context_expanded": False,
+            "refinement_applied": False,
+            "llm_call_made": False
+        }
+        
+        # Step 0: Session setup
         self.session_store.add_message(session_id, "user", user_query)
         messages = self.session_store.get_messages(session_id)
         
-        # Step 2: Check context size and summarize if needed
+        # Step 0b: Check context size and summarize if needed
         token_count = self.token_counter.count_messages(messages)
         logger.info(f"[Pipeline] Token count: {token_count}")
         
         session_memory = None
         if token_count > self.max_context_tokens:
-            logger.info(f"[Pipeline] Context exceeded threshold ({token_count} > {self.max_context_tokens}), triggering summarization")
-            
-            # Determine range to summarize (all except recent messages)
+            logger.info(f"[Pipeline] Context exceeded ({token_count} > {self.max_context_tokens}), summarizing")
             summarize_to = len(messages) - self.keep_recent_messages
             if summarize_to > 0:
                 message_range = MessageRange(from_index=0, to_index=summarize_to)
                 session_memory = await self.summarizer.summarize(messages, message_range)
                 self.session_store.save_summary(session_id, session_memory)
                 
-                # Log session summary to session_summaries.log
                 try:
                     self.session_summary_logger.log_summary(
                         session_id=session_id,
                         session_summary=session_memory.session_summary.model_dump(),
-                        message_range_summarized={
-                            "from": message_range.from_index,
-                            "to": message_range.to_index
-                        }
+                        message_range_summarized={"from": message_range.from_index, "to": message_range.to_index}
                     )
                 except Exception as e:
                     logger.warning(f"Failed to log session summary: {e}")
                 
-                # Clear old messages, keep recent ones
                 self.session_store.clear_messages(session_id, keep_recent=self.keep_recent_messages)
                 messages = self.session_store.get_messages(session_id)
-                logger.info(f"[Pipeline] Summarized messages 0-{summarize_to}, kept {self.keep_recent_messages} recent messages")
         
-        # Get existing summary if available
         if not session_memory:
             session_memory = self.session_store.get_summary(session_id)
         
-        # Step 3: Query Understanding Pipeline (optional for performance)
+        # ========================================
+        # QUERY UNDERSTANDING PIPELINE (optional)
+        # ========================================
         if not self.enable_query_understanding:
-            # Fast path: skip query understanding entirely
-            query_to_use = user_query
-            augmented_context, fields_used = self.context_augmenter.augment(
-                query_to_use,
-                messages,
-                session_memory
-            )
-            query_understanding = QueryUnderstanding(
-                original_query=user_query,
-                is_ambiguous=False,
-                rewritten_query=None,
-                ambiguity_reason=None,
-                needed_context_from_memory=fields_used,
-                clarifying_questions=[],
-                final_augmented_context=augmented_context
-            )
+            # Fast path: skip all query understanding
+            logger.info("[Pipeline] Query understanding disabled - fast path")
+            final_query = user_query
+            needed_fields = ["user_profile.prefs", "key_facts", "decisions"]
+            ambiguity_analysis = AmbiguityAnalysis(is_ambiguous=False, ambiguity_reason=None, confidence=1.0)
+            answerability = True
+            augmented_context = "(Query understanding disabled)"
+            final_augmented_context = augmented_context
+            fields_used = needed_fields
             
-            # Log query understanding to user_queries.log (with defaults since skipped)
-            try:
-                self.query_logger.log_query(
-                    session_id=session_id,
-                    original_query=user_query,
-                    is_ambiguous=False,
-                    rewritten_query=None,
-                    needed_context_from_memory=fields_used,
-                    clarifying_questions=[],
-                    final_augmented_context=augmented_context
-                )
-            except Exception as e:
-                logger.warning(f"Failed to log query understanding: {e}")
-            
-            logger.info("[Pipeline] Query understanding skipped (disabled)")
         else:
-            logger.info("[Pipeline] Starting query understanding")
+            # Full query understanding pipeline
+            logger.info("[Pipeline] === QUERY UNDERSTANDING PIPELINE ===")
             
-            # 3a. Ambiguity detection (optimized: use heuristic first, skip LLM if clearly unambiguous)
-            # Quick heuristic check first
-            heuristic_check = self.ambiguity_detector._heuristic_check(user_query)
+            # STEP 1: Spelling Check (NO LLM)
+            logger.info("[Pipeline] Step 1: Spelling check (rule-based)")
+            spelling_result = self.spelling_checker.check(user_query)
+            if spelling_result["has_spelling_error"]:
+                user_query = spelling_result["rewritten_query"]
+                pipeline_metadata["spelling_check_used"] = True
+                logger.info(f"[Pipeline] Spelling corrected: {spelling_result['rewritten_query']}")
             
-            if heuristic_check["is_ambiguous"] or not self.skip_llm_ambiguity_if_clear:
-                # Only call LLM if heuristic suggests ambiguity OR if skip is disabled
-                ambiguity_analysis = await self.ambiguity_detector.detect(user_query, messages)
-                logger.info(f"[Pipeline] Ambiguity detected: {ambiguity_analysis.is_ambiguous}")
+            # STEP 2: Ambiguity Check (RULE-FIRST, LLM fallback)
+            logger.info("[Pipeline] Step 2: Ambiguity check (rule-first, LLM fallback)")
+            ambiguity_analysis = await self.ambiguity_detector.detect(user_query, messages)
+            # Mark whether ambiguity detection used the LLM
+            try:
+                llm_used_flag = getattr(ambiguity_analysis, "llm_used", None)
+                if llm_used_flag is None:
+                    llm_used_flag = getattr(ambiguity_analysis, "used_llm", None)
+                if llm_used_flag is None:
+                    # fallback to heuristic on confidence
+                    llm_used_flag = ambiguity_analysis.confidence < 0.85
+                if llm_used_flag:
+                    pipeline_metadata["ambiguity_llm_used"] = True
+                    # increment LLM call counter only if we haven't already marked an LLM call
+                    self.llm_calls_made += 1
+                    logger.info(f"[Pipeline] Ambiguity: {ambiguity_analysis.is_ambiguous} (LLM used, confidence: {ambiguity_analysis.confidence})")
+                else:
+                    logger.info(f"[Pipeline] Ambiguity: {ambiguity_analysis.is_ambiguous} (heuristic only, confidence: {ambiguity_analysis.confidence})")
+            except Exception:
+                logger.info(f"[Pipeline] Ambiguity: {ambiguity_analysis.is_ambiguous} (confidence: {ambiguity_analysis.confidence})")
+            
+            # STEP 3: Answerability Check (NO LLM - similarity-based)
+            logger.info("[Pipeline] Step 3: Answerability check (similarity-based, NO LLM)")
+            answerability_result = self.answerability_checker.check(
+                user_query,
+                ambiguity_analysis.is_ambiguous,
+                previous_queries=None,  # Could pass from memory if tracked
+                session_memory=session_memory
+            )
+            answerability = answerability_result["is_answerable"]
+            logger.info(f"[Pipeline] Answerable: {answerability} (confidence: {answerability_result['confidence']})")
+            
+            if not answerability:
+                # Query not answerable - generate clarifying questions instead of LLM response
+                logger.info("[Pipeline] Query not answerable - will return clarifying questions")
+                pipeline_metadata["answerability_check_passed"] = False
             else:
-                # Skip LLM call if heuristic says query is clear
-                ambiguity_analysis = AmbiguityAnalysis(
-                    is_ambiguous=False,
-                    ambiguity_reason=None,
-                    confidence=0.9  # High confidence in heuristic for clear queries
-                )
-                logger.info("[Pipeline] Query is clear (heuristic check), skipping LLM ambiguity detection")
+                pipeline_metadata["answerability_check_passed"] = True
             
-            # 3b. Query rewrite (if ambiguous)
-            rewritten_query = None
-            if ambiguity_analysis.is_ambiguous:
-                rewritten_query = await self.query_rewriter.rewrite(
-                    user_query,
-                    messages,
-                    ambiguity_analysis.ambiguity_reason
-                )
-                logger.info(f"[Pipeline] Query rewritten: {rewritten_query}")
+            # STEP 4: Context Retrieval (SELECTIVE, aggressive filtering)
+            logger.info("[Pipeline] Step 4: Context retrieval (selective)")
             
-            # 3c. Context augmentation
-            query_to_use = rewritten_query or user_query
+            # Determine if we should expand context
+            should_expand = self.context_augmenter.should_expand_context(user_query, messages)
+            max_turns = 3 if should_expand else 1
+            
+            if should_expand:
+                pipeline_metadata["context_expanded"] = True
+                logger.info(f"[Pipeline] Expanding context to {max_turns} turns (pronoun/contrast detected)")
+            
+            # Determine needed memory fields
+            needed_fields = ["user_profile.prefs", "key_facts", "decisions"]
+            pronouns = ['it ', ' it', 'they', 'this ', 'that ', 'he ', 'she ']
+            if any(p in user_query.lower() for p in pronouns):
+                needed_fields.append("open_questions")
+                logger.info("[Pipeline] Pronouns detected - including open_questions")
+            
             augmented_context, fields_used = self.context_augmenter.augment(
-                query_to_use,
+                user_query,
                 messages,
-                session_memory
+                session_memory,
+                needed_fields=needed_fields,
+                max_context_turns=max_turns
             )
             logger.info(f"[Pipeline] Memory fields used: {fields_used}")
+
+            # Build a concise augmented context: summary of the previous 3 user queries
+            # plus the session summary (if any). This uses the LLM once and is intended
+            # to produce a short 1-2 sentence context block for downstream prompt use.
+            try:
+                # collect up to 3 previous user queries (exclude the current last user query)
+                prev_user_queries = []
+                # messages include the current user message we added earlier; skip it
+                for m in reversed(messages[:-1]):
+                    if m.get("role") == "user":
+                        prev_user_queries.append(m.get("text") or m.get("message") or m.get("content"))
+                    if len(prev_user_queries) >= 3:
+                        break
+                prev_user_queries = list(reversed(prev_user_queries))
+
+                session_summary_text = None
+                if session_memory:
+                    # session_memory may be a dataclass or object with session_summary
+                    session_summary_text = getattr(session_memory, "session_summary", None)
+                    if session_summary_text and hasattr(session_summary_text, "model_dump"):
+                        # model_dump may return dict
+                        try:
+                            session_summary_text = session_summary_text.model_dump()
+                        except Exception:
+                            pass
+
+                summary_prompt_parts = ["Please write a concise (1-2 sentence) summary of the recent user queries: "]
+                for i, q in enumerate(prev_user_queries, start=1):
+                    summary_prompt_parts.append(f"{i}. {q}")
+
+                if session_summary_text:
+                    summary_prompt_parts.append("Session summary:")
+                    # If session_summary_text is a dict, convert to short string
+                    if isinstance(session_summary_text, dict):
+                        summary_prompt_parts.append("; ".join([f"{k}: {v}" for k, v in list(session_summary_text.items())[:5]]))
+                    else:
+                        summary_prompt_parts.append(str(session_summary_text))
+
+                summary_prompt_parts.append("Respond with a single concise context sentence suitable for including in an assistant prompt.")
+                summary_prompt = "\n".join(summary_prompt_parts)
+
+                # Only call the LLM to build the final augmented context when there
+                # is meaningful prior context to summarize (>=3 prior user queries)
+                # or when an existing session summary is present. This keeps LLM
+                # usage lower while still providing concise context when it matters.
+                if len(prev_user_queries) >= 3 or session_summary_text:
+                    final_augmented_context = await self.llm_client.generate(
+                        prompt=summary_prompt,
+                        system="You are a concise summarizer.",
+                        temperature=0.0,
+                        max_tokens=150
+                    )
+                    pipeline_metadata["llm_call_made"] = True
+                    self.llm_calls_made += 1
+                    logger.info("[Pipeline] Generated concise final_augmented_context via LLM")
+                else:
+                    # Not enough prior queries — reuse the augmented context (cheaper)
+                    final_augmented_context = augmented_context
+            except Exception as e:
+                logger.warning(f"Failed to generate final_augmented_context via LLM: {e}")
+                # fallback to using the verbose augmented_context
+                final_augmented_context = augmented_context
             
-            # 3d. Generate clarifying questions (disabled by default for performance)
-            # Skip clarifying questions to reduce LLM calls - they're optional
-            clarifying_questions = []
-            # Uncomment below if you want clarifying questions (adds another LLM call)
-            # if ambiguity_analysis.is_ambiguous and not rewritten_query:
-            #     clarifying_questions = await self.clarifier.generate(
-            #         user_query,
-            #         rewritten_query,
-            #         messages
-            #     )
-            #     if clarifying_questions:
-            #         logger.info(f"[Pipeline] Generated {len(clarifying_questions)} clarifying questions")
+            # STEP 5: Query Refinement (RULE-BASED, no LLM)
+            logger.info("[Pipeline] Step 5: Query refinement (rule-based entity replacement)")
+            refined_query = self.query_refiner.refine(user_query, session_memory, messages)
+
+            if refined_query and refined_query != user_query:
+                pipeline_metadata["refinement_applied"] = True
+                logger.info(f"[Pipeline] Query refined: {refined_query}")
+
+            final_query = refined_query or user_query
+        
+        # ========================================
+        # STEP 6: LLM RESPONSE GENERATION
+        # ========================================
+        clarifying_qs = []
+        if not answerability:
+            # Generate clarifying questions instead of LLM response
+            logger.info("[Pipeline] Step 6: Generating clarifying questions (not answerable)")
             
-            # Build query understanding output
-            query_understanding = QueryUnderstanding(
-                original_query=user_query,
-                is_ambiguous=ambiguity_analysis.is_ambiguous,
-                rewritten_query=rewritten_query,
-                ambiguity_reason=ambiguity_analysis.ambiguity_reason,
-                needed_context_from_memory=fields_used,
-                clarifying_questions=clarifying_questions,
-                final_augmented_context=augmented_context
+            try:
+                clarifying_qs = await self.clarifier.generate(
+                    user_query,
+                    None,
+                    messages,
+                    max_questions=3
+                )
+                llm_response = (
+                    "I'd like to understand your question better. Could you clarify:\n\n" +
+                    "\n".join([f"- {q}" for q in clarifying_qs]) if clarifying_qs
+                    else "Could you provide more details about your question?"
+                )
+                pipeline_metadata["llm_call_made"] = True
+                self.llm_calls_made += 1
+                logger.info("[Pipeline] Generated clarifying questions (LLM call made)")
+            except Exception as e:
+                logger.warning(f"Failed to generate clarifying questions: {e}")
+                llm_response = "Could you provide more details or rephrase your question?"
+        else:
+            # Query is answerable - generate response
+            logger.info("[Pipeline] Step 6: Generating LLM response (answerable)")
+            
+            # Build final prompt
+            system_prompt, user_prompt = self.prompt_builder.build(
+                final_query,
+                final_augmented_context if self.enable_query_understanding else ""
             )
             
-            # Log query understanding to user_queries.log
-            try:
+            # Generate response
+            llm_response = await self.llm_client.generate(
+                prompt=user_prompt,
+                system=system_prompt,
+                temperature=self.response_temperature,
+                max_tokens=self.max_response_tokens
+            )
+            
+            pipeline_metadata["llm_call_made"] = True
+            self.llm_calls_made += 1
+            logger.info("[Pipeline] Generated LLM response")
+        
+        # Step 7: Add response to session
+        self.session_store.add_message(session_id, "assistant", llm_response)
+        
+        # Step 8: Logging
+        try:
+            log_metadata = {
+                "is_answerable": answerability,
+                "token_count": token_count,
+                "summarization_triggered": token_count > self.max_context_tokens,
+                "pipeline_metadata": pipeline_metadata,
+                "llm_usage_percentage": f"{(self.llm_calls_made / self.total_queries_processed * 100):.1f}%"
+            }
+            
+            if self.enable_query_understanding:
+                # Extract actual values from session memory instead of field names
+                context_values = []
+                if session_memory:
+                    summary = session_memory.session_summary
+                    if "user_profile.prefs" in fields_used and summary.user_profile.prefs:
+                        context_values.extend(summary.user_profile.prefs)
+                    if "user_profile.constraints" in fields_used and summary.user_profile.constraints:
+                        context_values.extend(summary.user_profile.constraints)
+                    if "key_facts" in fields_used and summary.key_facts:
+                        context_values.extend(summary.key_facts)
+                    if "decisions" in fields_used and summary.decisions:
+                        context_values.extend(summary.decisions)
+                    if "open_questions" in fields_used and summary.open_questions:
+                        context_values.extend(summary.open_questions)
+                
                 self.query_logger.log_query(
                     session_id=session_id,
                     original_query=user_query,
                     is_ambiguous=ambiguity_analysis.is_ambiguous,
-                    rewritten_query=rewritten_query,
-                    needed_context_from_memory=fields_used,
-                    clarifying_questions=clarifying_questions,
-                    final_augmented_context=augmented_context
+                    rewritten_query=refined_query if refined_query != user_query else None,
+                    needed_context_from_memory=context_values,
+                    clarifying_questions=clarifying_qs,
+                    final_augmented_context=final_augmented_context
                 )
-            except Exception as e:
-                logger.warning(f"Failed to log query understanding: {e}")
-        
-        # Step 4: Build final prompt
-        system_prompt, user_prompt = self.prompt_builder.build(
-            query_to_use,
-            augmented_context
-        )
-        
-        # Step 5: Generate LLM response (optimized for speed)
-        logger.info("[Pipeline] Generating LLM response")
-        llm_response = await self.llm_client.generate(
-            prompt=user_prompt,
-            system=system_prompt,
-            temperature=self.response_temperature,  # Lower temperature for faster, more deterministic responses
-            max_tokens=self.max_response_tokens  # Limit response length for faster generation
-        )
-        
-        # Step 6: Add assistant response to session
-        self.session_store.add_message(session_id, "assistant", llm_response)
-        
-        # Step 7: Log conversation exchange to conversations.log
-        try:
-            log_metadata = {
-                "is_ambiguous": query_understanding.is_ambiguous,
-                "token_count": token_count,
-                "summarization_triggered": token_count > self.max_context_tokens,
-                "memory_fields_used": query_understanding.needed_context_from_memory
-            }
+            
             self.conversation_logger.log_exchange(
                 session_id=session_id,
                 user_message=user_query,
@@ -278,16 +424,16 @@ class ChatPipeline:
                 metadata=log_metadata
             )
         except Exception as e:
-            logger.warning(f"Failed to log conversation: {e}")
+            logger.warning(f"Failed to log: {e}")
         
-        # Return response with metadata
+        # Return response with full metadata
         return {
             "response": llm_response,
-            "query_understanding": query_understanding.model_dump(),
             "session_memory": session_memory.model_dump() if session_memory else None,
-            "pipeline_metadata": {
-                "token_count": token_count,
-                "summarization_triggered": token_count > self.max_context_tokens,
-                "fields_used_from_memory": fields_used
+            "pipeline_metadata": pipeline_metadata,
+            "llm_usage_stats": {
+                "total_queries": self.total_queries_processed,
+                "llm_calls": self.llm_calls_made,
+                "usage_percentage": f"{(self.llm_calls_made / self.total_queries_processed * 100):.1f}%"
             }
         }

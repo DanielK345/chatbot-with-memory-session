@@ -135,7 +135,107 @@ class SessionStore:
             key = f"session:{session_id}:messages"
             self.redis_client.set(key, json.dumps(messages))
         else:
-            # For file-based, we'd need to rewrite the JSONL
-            # For simplicity, we'll just track in memory and rewrite
-            # In production, use a proper database
-            pass
+            # For file-based storage, rewrite the JSONL file excluding old messages
+            if self.jsonl_path.exists():
+                new_lines: List[str] = []
+                with open(self.jsonl_path, 'r', encoding='utf-8') as f:
+                    for line in f:
+                        try:
+                            entry = json.loads(line)
+                        except Exception:
+                            continue
+                        if entry.get("session_id") != session_id:
+                            new_lines.append(line)
+
+                # If keeping recent messages, append them back
+                if keep_recent > 0 and messages:
+                    for msg in messages:
+                        entry = {
+                            "session_id": session_id,
+                            "timestamp": datetime.now().isoformat(),
+                            "message": msg,
+                        }
+                        new_lines.append(json.dumps(entry) + "\n")
+
+                with open(self.jsonl_path, 'w', encoding='utf-8') as f:
+                    f.writelines(new_lines)
+
+            # Ensure data directory exists
+            self.data_dir.mkdir(parents=True, exist_ok=True)
+
+    def delete_session(self, session_id: Optional[str] = None) -> None:
+        """
+        Delete a specific session or all sessions.
+
+        Args:
+            session_id: If provided, delete only that session; otherwise delete all sessions.
+        """
+        if self.storage_type == "redis":
+            if session_id:
+                # Remove specific keys
+                try:
+                    self.redis_client.delete(f"session:{session_id}:messages")
+                    self.redis_client.delete(f"session:{session_id}:summary")
+                except Exception:
+                    pass
+            else:
+                # Remove all session-related keys
+                try:
+                    for key in self.redis_client.keys("session:*"):
+                        self.redis_client.delete(key)
+                except Exception:
+                    pass
+            return
+
+        # File-based deletion
+        if session_id:
+            # Delete summary file if exists
+            summary_path = self.data_dir / f"{session_id}_summary.json"
+            if summary_path.exists():
+                try:
+                    summary_path.unlink()
+                except Exception:
+                    pass
+
+            # Rewrite JSONL excluding entries for this session
+            if self.jsonl_path.exists():
+                kept_lines: List[str] = []
+                with open(self.jsonl_path, 'r', encoding='utf-8') as f:
+                    for line in f:
+                        try:
+                            entry = json.loads(line)
+                        except Exception:
+                            continue
+                        if entry.get("session_id") != session_id:
+                            kept_lines.append(line)
+
+                with open(self.jsonl_path, 'w', encoding='utf-8') as f:
+                    f.writelines(kept_lines)
+        else:
+            # Delete all session summary files
+            if self.data_dir.exists():
+                for p in self.data_dir.glob("*_summary.json"):
+                    try:
+                        p.unlink()
+                    except Exception:
+                        pass
+
+            # Remove all files in data_dir
+            if self.data_dir.exists():
+                for child in self.data_dir.iterdir():
+                    try:
+                        if child.is_file():
+                            child.unlink()
+                    except Exception:
+                        pass
+
+            # Remove JSONL file
+            if self.jsonl_path.exists():
+                try:
+                    self.jsonl_path.unlink()
+                except Exception:
+                    pass
+
+            # Recreate directories
+            self.data_dir.mkdir(parents=True, exist_ok=True)
+            self.jsonl_path.parent.mkdir(parents=True, exist_ok=True)

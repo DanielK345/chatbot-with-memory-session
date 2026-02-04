@@ -26,7 +26,6 @@ logger = get_logger(__name__)
 log_dir = "logs/ambiguous_query_detection"
 pipeline_module.conversation_logger = ConversationLogger(log_file="conversations_test.log", log_dir=log_dir)
 pipeline_module.query_logger = UserQueryLogger(log_file="user_queries_test.log", log_dir=log_dir)
-pipeline_module.session_summary_logger = SessionSummaryLogger(log_file="session_summaries_test.log", log_dir=log_dir)
 
 # Clear queries (should not be ambiguous)
 CLEAR_QUERIES = [
