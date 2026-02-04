@@ -270,6 +270,12 @@ def main():
             else:
                 st.stop()
     
+    # Load persisted messages from session store (restores chat history after refresh)
+    if st.session_state.pipeline and not st.session_state.messages:
+        persisted_messages = st.session_state.pipeline.session_store.get_messages(st.session_state.session_id)
+        if persisted_messages:
+            st.session_state.messages = persisted_messages
+    
     # Sidebar configuration
     with st.sidebar:
         st.header("⚙️ Configuration")
@@ -280,7 +286,15 @@ def main():
             value=st.session_state.get('session_id', 'default_session'),
             help="Unique identifier for this conversation session"
         )
-        st.session_state.session_id = session_id
+        
+        # Load messages from new session if ID changed
+        if session_id != st.session_state.session_id:
+            st.session_state.session_id = session_id
+            persisted_messages = st.session_state.pipeline.session_store.get_messages(session_id)
+            st.session_state.messages = persisted_messages if persisted_messages else []
+            st.rerun()
+        else:
+            st.session_state.session_id = session_id
         
         # Max context tokens
         max_tokens = st.slider(

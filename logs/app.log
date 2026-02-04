@@ -4149,3 +4149,77 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2026-02-04 11:52:15 - app.core.pipeline - INFO - [pipeline.py:272] - [Pipeline] Step 5: Query refinement (LLM-assisted pronouns replacement)
 2026-02-04 11:52:15 - app.core.pipeline - INFO - [pipeline.py:309] - [Pipeline] Step 6: Generating LLM response (answerable)
 2026-02-04 11:52:21 - app.core.pipeline - INFO - [pipeline.py:327] - [Pipeline] Generated LLM response
+2026-02-04 16:29:33 - app.llm.client - INFO - [client.py:66] - ✓ Gemini client initialized successfully
+2026-02-04 16:29:33 - app.llm.client - INFO - [client.py:101] - ✓ Lightweight Ollama client initialized (qwen2.5:1.5b)
+2026-02-04 16:30:09 - sentence_transformers.SentenceTransformer - INFO - [SentenceTransformer.py:219] - Use pytorch device_name: cpu
+2026-02-04 16:30:09 - sentence_transformers.SentenceTransformer - INFO - [SentenceTransformer.py:227] - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-04 16:30:09 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 16:30:09 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-02-04 16:30:10 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 16:30:10 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-02-04 16:30:10 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 16:30:10 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-02-04 16:30:10 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 16:30:10 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
+2026-02-04 16:30:11 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 16:30:11 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-02-04 16:30:11 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 16:30:11 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
+2026-02-04 16:30:11 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-02-04 16:30:12 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 16:30:12 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-02-04 16:30:14 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 16:30:14 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-02-04 16:30:14 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 16:30:14 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-02-04 16:30:15 - httpx - INFO - [_client.py:1013] - HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-02-04 16:30:15 - httpx - INFO - [_client.py:1013] - HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-02-04 16:30:16 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 16:30:16 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+2026-02-04 16:30:16 - httpx - INFO - [_client.py:1013] - HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+2026-02-04 16:31:33 - app.core.pipeline - INFO - [pipeline.py:126] - [Pipeline] Processing message #1 for session default_session
+2026-02-04 16:31:33 - app.core.pipeline - INFO - [pipeline.py:143] - [Pipeline] Token count: 17
+2026-02-04 16:31:33 - app.core.pipeline - INFO - [pipeline.py:192] - [Pipeline] === QUERY UNDERSTANDING PIPELINE ===
+2026-02-04 16:31:33 - app.core.pipeline - INFO - [pipeline.py:195] - [Pipeline] Step 1: Spelling check (rule-based)
+2026-02-04 16:31:33 - app.core.pipeline - INFO - [pipeline.py:203] - [Pipeline] Step 2: Ambiguity check (rule-first, LLM fallback)
+2026-02-04 16:31:33 - app.core.pipeline - INFO - [pipeline.py:219] - [Pipeline] Ambiguity: False (heuristic only, confidence: 0.95)
+2026-02-04 16:31:33 - app.core.pipeline - INFO - [pipeline.py:224] - [Pipeline] Step 3: Answerability check (similarity-based, NO LLM)
+2026-02-04 16:31:33 - app.core.pipeline - INFO - [pipeline.py:232] - [Pipeline] Answerable: True (confidence: 0.9)
+2026-02-04 16:31:33 - app.core.pipeline - INFO - [pipeline.py:242] - [Pipeline] Step 4: Context retrieval (selective)
+2026-02-04 16:31:33 - app.core.pipeline - INFO - [pipeline.py:250] - [Pipeline] Expanding context to 3 turns (pronoun/contrast detected)
+2026-02-04 16:31:33 - app.core.pipeline - INFO - [pipeline.py:266] - [Pipeline] Memory fields used: []
+2026-02-04 16:31:33 - app.core.pipeline - INFO - [pipeline.py:272] - [Pipeline] Step 5: Query refinement (LLM-assisted pronouns replacement)
+2026-02-04 16:31:33 - app.core.pipeline - INFO - [pipeline.py:309] - [Pipeline] Step 6: Generating LLM response (answerable)
+2026-02-04 16:31:42 - app.core.pipeline - INFO - [pipeline.py:327] - [Pipeline] Generated LLM response
+2026-02-04 16:31:51 - app.core.pipeline - INFO - [pipeline.py:126] - [Pipeline] Processing message #2 for session default_session
+2026-02-04 16:31:51 - app.core.pipeline - INFO - [pipeline.py:143] - [Pipeline] Token count: 746
+2026-02-04 16:31:51 - app.core.pipeline - INFO - [pipeline.py:192] - [Pipeline] === QUERY UNDERSTANDING PIPELINE ===
+2026-02-04 16:31:51 - app.core.pipeline - INFO - [pipeline.py:195] - [Pipeline] Step 1: Spelling check (rule-based)
+2026-02-04 16:31:51 - app.core.pipeline - INFO - [pipeline.py:203] - [Pipeline] Step 2: Ambiguity check (rule-first, LLM fallback)
+2026-02-04 16:31:51 - app.core.pipeline - INFO - [pipeline.py:219] - [Pipeline] Ambiguity: True (heuristic only, confidence: 0.85)
+2026-02-04 16:31:51 - app.core.pipeline - INFO - [pipeline.py:224] - [Pipeline] Step 3: Answerability check (similarity-based, NO LLM)
+2026-02-04 16:31:51 - app.core.pipeline - INFO - [pipeline.py:232] - [Pipeline] Answerable: False (confidence: 0.0)
+2026-02-04 16:31:51 - app.core.pipeline - INFO - [pipeline.py:236] - [Pipeline] Query not answerable - will return clarifying questions
+2026-02-04 16:31:51 - app.core.pipeline - INFO - [pipeline.py:242] - [Pipeline] Step 4: Context retrieval (selective)
+2026-02-04 16:31:51 - app.core.pipeline - INFO - [pipeline.py:250] - [Pipeline] Expanding context to 3 turns (pronoun/contrast detected)
+2026-02-04 16:31:51 - app.core.pipeline - INFO - [pipeline.py:257] - [Pipeline] Pronouns detected - including open_questions
+2026-02-04 16:31:51 - app.core.pipeline - INFO - [pipeline.py:266] - [Pipeline] Memory fields used: []
+2026-02-04 16:31:51 - app.core.pipeline - INFO - [pipeline.py:272] - [Pipeline] Step 5: Query refinement (LLM-assisted pronouns replacement)
+2026-02-04 16:31:51 - app.core.pipeline - INFO - [pipeline.py:287] - [Pipeline] Step 6: Generating clarifying questions (not answerable)
+2026-02-04 16:31:55 - app.core.pipeline - INFO - [pipeline.py:303] - [Pipeline] Generated clarifying questions (LLM call made)
+2026-02-04 16:32:38 - app.core.pipeline - INFO - [pipeline.py:126] - [Pipeline] Processing message #3 for session default_session
+2026-02-04 16:32:38 - app.core.pipeline - INFO - [pipeline.py:143] - [Pipeline] Token count: 844
+2026-02-04 16:32:38 - app.core.pipeline - INFO - [pipeline.py:192] - [Pipeline] === QUERY UNDERSTANDING PIPELINE ===
+2026-02-04 16:32:38 - app.core.pipeline - INFO - [pipeline.py:195] - [Pipeline] Step 1: Spelling check (rule-based)
+2026-02-04 16:32:38 - app.core.pipeline - INFO - [pipeline.py:203] - [Pipeline] Step 2: Ambiguity check (rule-first, LLM fallback)
+2026-02-04 16:32:38 - app.core.pipeline - INFO - [pipeline.py:219] - [Pipeline] Ambiguity: True (heuristic only, confidence: 0.85)
+2026-02-04 16:32:38 - app.core.pipeline - INFO - [pipeline.py:224] - [Pipeline] Step 3: Answerability check (similarity-based, NO LLM)
+2026-02-04 16:32:38 - app.core.pipeline - INFO - [pipeline.py:232] - [Pipeline] Answerable: False (confidence: 0.0)
+2026-02-04 16:32:38 - app.core.pipeline - INFO - [pipeline.py:236] - [Pipeline] Query not answerable - will return clarifying questions
+2026-02-04 16:32:38 - app.core.pipeline - INFO - [pipeline.py:242] - [Pipeline] Step 4: Context retrieval (selective)
+2026-02-04 16:32:38 - app.core.pipeline - INFO - [pipeline.py:250] - [Pipeline] Expanding context to 3 turns (pronoun/contrast detected)
+2026-02-04 16:32:38 - app.core.pipeline - INFO - [pipeline.py:257] - [Pipeline] Pronouns detected - including open_questions
+2026-02-04 16:32:38 - app.core.pipeline - INFO - [pipeline.py:266] - [Pipeline] Memory fields used: []
+2026-02-04 16:32:38 - app.core.pipeline - INFO - [pipeline.py:272] - [Pipeline] Step 5: Query refinement (LLM-assisted pronouns replacement)
+2026-02-04 16:32:38 - app.core.pipeline - INFO - [pipeline.py:287] - [Pipeline] Step 6: Generating clarifying questions (not answerable)
+2026-02-04 16:32:41 - app.core.pipeline - INFO - [pipeline.py:303] - [Pipeline] Generated clarifying questions (LLM call made)

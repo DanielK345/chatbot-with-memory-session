@@ -19,377 +19,58 @@ A production-ready conversational AI assistant with advanced memory management, 
 - **Conversation Logging**: Automatic JSON Lines logging with metadata (timestamps, token counts, ambiguity flags)
 - **Rich UI**: Streamlit-based web interface with markdown rendering, styled chat bubbles, orange theme
 - **Comprehensive Testing**: 6 test suites covering core functionality
+- **CI/CD Pipeline**: GitHub Actions with automated testing and deployment hooks
 
-## Query Understanding Pipeline
+## App Interface
 
-### 🔄 New Workflow (v1.0+)
+![Chat Bot UI](assets/UI.png)
 
-The query understanding pipeline processes every user query through 6 sequential steps to ensure clarity before LLM response generation:
+*Streamlit-based web interface with rich markdown support, styled chat bubbles, and orange theme for an intuitive conversational experience.*
+
+### Deployment ✅
+
+- **Multi-Platform Ready**:
+  - Railway (via Dockerfile + start.sh)
+  - Render (FastAPI + Streamlit as separate services)
+  - Heroku (via Procfile)
+- **Production Server**: Gunicorn with Uvicorn workers
+- **Environment Variables**: Port and concurrency auto-configuration
+- **Docker Optimization**: Minimal images with build-time dependencies only
+
+## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    INCOMING USER QUERY                          │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ↓
-         ┌───────────────────────────────────────┐
-         │  STEP 1: SPELLING CHECK               │
-         │  ✓ Rule-based (NO LLM)               │
-         │  ✓ Corrects typos & grammar          │
-         │  ✓ Fast, deterministic               │
-         └────────────┬────────────────────────┘
-                      │
-                      ↓
-         ┌───────────────────────────────────────┐
-         │  STEP 2: AMBIGUITY DETECTION          │
-         │  ✓ Rule-first (heuristics)           │
-         │  ✓ 6 ambiguity rules:               │
-         │    - RULE 1: Pronouns (it, they)    │
-         │    - RULE 1b: Anaphoric (same, like)│
-         │    - RULE 1c: Which-one patterns    │
-         │    - RULE 2: Very short questions   │
-         │    - RULE 2b: Choose without object│
-         │    - RULE 3: Unclear intent         │
-         │  ✓ LLM fallback if uncertain        │
-         │  ✓ Logs confidence score            │
-         └────────────┬────────────────────────┘
-                      │
-           ┌──────────┴──────────┐
-           │                     │
-        CLEAR            AMBIGUOUS
-           │                     │
-           ↓                     ↓
-      CONTINUE         ┌──────────────────────┐
-                       │ RULE 3b: Is it still │
-                       │ fixable with context?│
-                       └──┬──────────────┬────┘
-                          │              │
-                       YES│              │NO
-                          ↓              ↓
-                      CONTINUE       UNCLEAR
-                                         │
-                                         ↓
-                      ┌──────────────────────────┐
-                      │ STEP 6b: Generate        │
-                      │ Clarifying Questions     │
-                      │ + Return instead of LLM  │
-                      └──────────────────────────┘
+┌─────────────────────┐
+│   Streamlit UI      │ ← Rich markdown, styled bubbles
+│  (Optional Render)  │
+└──────────┬──────────┘
            │
+           │ HTTP/JSON
            ↓
-         ┌───────────────────────────────────────┐
-         │  STEP 3: ANSWERABILITY CHECK          │
-         │  ✓ Similarity-based (NO LLM)         │
-         │  ✓ Compares to known patterns       │
-         │  ✓ Checks if answerable by system   │
-         │  ✓ Falls back to clarifying Qs      │
-         └────────────┬────────────────────────┘
-                      │
-           ┌──────────┴──────────┐
-           │                     │
-       ANSWERABLE         NOT ANSWERABLE
-           │                     │
-           ↓                     ↓
-       CONTINUE          (Clarifying Qs)
-                                 │
+┌──────────────────────┐
+│   FastAPI Backend    │ ← Gunicorn + Uvicorn
+│  (Railway/Render)    │
+│                      │
+│ ┌──────────────────┐ │
+│ │  Chat Pipeline   │ │ ← Orchestrator
+│ │  - Query Understand│
+│ │  - Memory Manage │
+│ │  - LLM Call      │
+│ └──────────────────┘ │
+│                      │
+│ ┌──────────────────┐ │
+│ │ LLM Clients      │ │ ← Gemini, Ollama
+│ │ Token Counter    │ │
+│ │ Summarizer       │ │
+│ └──────────────────┘ │
+└──────────┬───────────┘
            │
-           ↓
-         ┌───────────────────────────────────────┐
-         │  STEP 4: CONTEXT RETRIEVAL            │
-         │  ✓ Selective memory augmentation     │
-         │  ✓ Detects pronouns → get history   │
-         │  ✓ Extracts key facts, decisions    │
-         │  ✓ Aggressive filtering (no bloat)  │
-         │  ✓ Max 3-turn lookback              │
-         └────────────┬────────────────────────┘
-                      │
-                      ↓
-         ┌───────────────────────────────────────┐
-         │  STEP 5: QUERY REFINEMENT             │
-         │  ✓ Pronoun detection (regex)         │
-         │  ✓ Entity extraction from cache:     │
-         │    - Last 3 queries (lightweight)    │
-         │    - Capitalized word extraction    │
-         │  ✓ LLM rewriting (Qwen2.5-1.5B):    │
-         │    - "Replace [pronouns] with       │
-         │      [entities] in query"           │
-         │    - Max 20 tokens response         │
-         │    - 2-3x faster than llama3.1      │
-         └────────────┬────────────────────────┘
-                      │
-                      ↓
-         ┌───────────────────────────────────────┐
-         │  STEP 6: LLM RESPONSE GENERATION      │
-         │  ✓ Build system + user prompt       │
-         │  ✓ Include augmented context        │
-         │  ✓ Generate response               │
-         │  ✓ Log everything                   │
-         └────────────┬────────────────────────┘
-                      │
-                      ↓
-         ┌───────────────────────────────────────┐
-         │        RESPONSE + METADATA            │
-         │  ✓ Answer text                       │
-         │  ✓ Query understanding results       │
-         │  ✓ Token usage statistics            │
-         │  ✓ Refinement details                │
-         └───────────────────────────────────────┘
-```
-
-### Key Design Principles
-
-| Principle | Implementation |
-|-----------|-----------------|
-| **Prefer Early Exits** | Spelling corrected → Fast success path |
-| **Rule-First** | 6 heuristic rules before LLM for ambiguity |
-| **Aggressive Filtering** | Context limited to recent messages + memory |
-| **Lightweight Models** | Qwen2.5-1.5B for refinement (2-3x faster) |
-| **Never Guess** | Clarifying questions instead of assumptions |
-| **Fast Processing** | <500ms per query (without LLM delays) |
-
-### Components
-
-#### 1. **Spelling Checker** (`app/query_understanding/spelling_check.py`)
-```python
-# Corrects typos automatically
-checker = SpellingChecker()
-result = checker.check("whats the best libary for ML?")
-# → "what's the best library for ML?"
-```
-
-#### 2. **Ambiguity Detector** (`app/query_understanding/ambiguity.py`)
-```python
-# Detects 6 types of ambiguous queries
-detector = AmbiguityDetector(llm_client)
-analysis = await detector.detect("How does it compare?", messages)
-# → is_ambiguous=True, rule="RULE 1", reason="Pronoun 'it' without clear antecedent"
-```
-
-#### 3. **Query Refiner** (`app/query_understanding/query_refiner.py`)
-```python
-# Replaces pronouns with entities using lightweight LLM
-refiner = QueryRefiner(llm_client)  # Uses Qwen2.5-1.5B by default
-refined = await refiner.refine("How does it perform?")
-# Cache: ["TensorFlow is fast", "PyTorch is flexible"]
-# → "How does TensorFlow perform?" or "How does PyTorch perform?"
-```
-
-**Query Refinement Details:**
-- **Pronoun Detection**: it, they, them, this, that, he, she
-- **Entity Extraction**: From last 3 queries (lightweight cache)
-- **LLM Rewriting**: Qwen2.5-1.5B model (1.5B params vs 8B for llama3.1)
-- **Performance**: 2-3x faster than standard models
-- **Fallback**: Auto-fallback to active LLM if Qwen unavailable
-
-#### 4. **Context Augmenter** (`app/query_understanding/context.py`)
-```python
-# Intelligently retrieves session memory
-augmenter = ContextAugmenter()
-context, fields = augmenter.augment(
-    query="How does it compare?",
-    messages=messages,
-    session_memory=memory,
-    needed_fields=["key_facts", "decisions"]
-)
-```
-
-#### 5. **Clarifying Question Generator** (`app/query_understanding/clarifier.py`)
-```python
-# Generates clarifying questions if query still unclear
-clarifier = ClarifyingQuestionGenerator(llm_client)
-questions = await clarifier.generate(
-    "What should I choose?",  # Missing object
-    messages=messages
-)
-# → ["Choose what? (library, algorithm, etc.)",
-#    "What's your main priority? (speed, accuracy, etc.)",
-#    "What's your use case?"]
-```
-
----
-
-## Logging System
-
-The system generates **three types of detailed logs** for analysis:
-
-### 📊 Log Types
-
-| Log Type | File | Contents | Use Case |
-|----------|------|----------|----------|
-| **Conversation** | `conversations_*.log` | User-assistant pairs + metadata | Analyze conversations, user behavior |
-| **User Query** | `user_queries_*.log` | Original → refined query + context | Debug ambiguity detection, refinement |
-| **Session Summary** | `session_summaries_*.log` | Session facts, decisions, summary | Understand session evolution |
-
-### 🔍 Log Structure
-
-#### **Conversation Log** (`conversations_*.log`)
-```json
-{
-  "timestamp": "2026-02-04T11:38:06.123456",
-  "session_id": "session-123",
-  "user": "How does it perform?",
-  "assistant": "TensorFlow performs well for...",
-  "metadata": {
-    "is_answerable": true,
-    "token_count": 1234,
-    "summarization_triggered": false,
-    "pipeline_metadata": {
-      "spelling_check_used": false,
-      "ambiguity_llm_used": true,
-      "answerability_check_passed": true,
-      "context_expanded": true,
-      "refinement_applied": true,
-      "llm_call_made": true
-    },
-    "llm_usage_percentage": "45.2%"
-  }
-}
-```
-
-#### **User Query Log** (`user_queries_*.log`)
-```json
-{
-  "timestamp": "2026-02-04T11:38:06.123456",
-  "session_id": "session-123",
-  "original_query": "How does it perform?",
-  "is_ambiguous": true,
-  "rewritten_query": "How does TensorFlow perform?",
-  "needed_context_from_memory": [
-    "user_profile.prefs: [wants speed, flexibility]",
-    "key_facts: [using TensorFlow in project]",
-    "decisions: [chose TensorFlow over PyTorch]"
-  ],
-  "clarifying_questions": [],
-  "final_augmented_context": "Recent discussion: TensorFlow chosen for project..."
-}
-```
-
-#### **Session Summary Log** (`session_summaries_*.log`)
-```json
-{
-  "timestamp": "2026-02-04T11:38:06.123456",
-  "session_id": "session-123",
-  "session_summary": {
-    "user_profile": {
-      "prefs": ["speed", "flexibility"],
-      "constraints": ["budget: limited", "team: 2 engineers"]
-    },
-    "key_facts": [
-      "Building ML system for production",
-      "Team has PyTorch experience"
-    ],
-    "decisions": [
-      "Chose TensorFlow for deployment",
-      "Using transfer learning approach"
-    ],
-    "open_questions": [
-      "How to optimize training speed?"
-    ]
-  },
-  "message_range_summarized": {
-    "from": 0,
-    "to": 42
-  }
-}
-```
-
----
-
-## Running Tests & Generating Logs
-
-### 📝 Test Scripts Location
-```
-tests/
-├── test_ambiguous_query_detection.py    ← Ambiguity detection + all 6 rules
-├── test_query_refinement.py              ← Query refinement with LLM
-├── test_session_summarization.py         ← Session memory & summarization
-├── test_conversation_logging.py          ← Conversation persistence
-├── test_cli_demo.py                      ← CLI interface testing
-├── test_streamlit_app.py                 ← Streamlit UI testing
-└── run_tests.py                          ← Run all tests
-```
-
-### 🚀 Running Tests & Generating Logs
-
-#### **1. Test Ambiguity Detection (All 6 Rules)**
-```bash
-# Run: Tests all 6 ambiguity rules with natural conversation
-python tests/test_ambiguous_query_detection.py
-
-# Generates logs:
-# logs/ambiguous_query_detection/
-# ├── conversations_test.log      (user-assistant pairs with metadata)
-# ├── user_queries_test.log        (original + rewritten queries, ambiguity flags)
-# └── session_summaries_test.log   (session memory evolution)
-
-# Example output:
-# [✓] Test: Ambiguous query detection
-# [✓] Query 1: "We're building a machine learning system" → CLEAR (100% confidence)
-# [✓] Query 3: "How does it perform?" → AMBIGUOUS (RULE 1: pronoun without antecedent)
-# [✓] Query 7: "Which one do you prefer?" → AMBIGUOUS (RULE 1c: which-one without context)
-# [✓] Query 23: "It?" → AMBIGUOUS (RULE 2: very short question)
-# [✓] Overall: 24/28 queries correctly classified (85.7% accuracy)
-```
-
-#### **2. Test Query Refinement (Lightweight Model)**
-```bash
-# Run: Tests pronoun replacement with Qwen2.5-1.5B model
-python tests/test_query_refinement.py
-
-# Prerequisites: Ollama running with qwen2.5:1.5b pulled
-# ollama pull qwen2.5:1.5b
-# ollama serve
-
-# Generates logs:
-# logs/query_refinement/
-# ├── conversations_test.log
-# ├── user_queries_test.log        (shows rewritten_query field populated)
-# └── session_summaries_test.log
-
-# Example output:
-# [Original] "How does it perform?"
-# [Refined]  "How does TensorFlow perform?" ✓
-# [Cache]    ["TensorFlow is fast", "PyTorch is flexible"]
-```
-
-#### **3. Test Session Summarization**
-```bash
-# Run: Tests token-aware summarization when context exceeds threshold
-python tests/test_session_summarization.py
-
-# Generates logs:
-# logs/session_summarization/
-# ├── conversations_test.log
-# ├── user_queries_test.log
-# └── session_summaries_test.log  (shows summarization_triggered + summary content)
-
-# Example output:
-# Token count: 2500
-# [✓] Summarization triggered at 10000 tokens
-# [✓] Extracted 5 key facts
-# [✓] Tracked 3 decisions
-# [✓] Found 2 open questions
-```
-
-#### **4. Run All Tests**
-```bash
-# Run entire test suite
-python tests/run_tests.py
-
-# Generates all logs across test directories:
-logs/
-├── ambiguous_query_detection/
-│   ├── conversations_test.log
-│   ├── user_queries_test.log
-│   └── session_summaries_test.log
-├── query_refinement/
-│   ├── conversations_test.log
-│   ├── user_queries_test.log
-│   └── session_summaries_test.log
-├── session_summarization/
-│   ├── conversations_test.log
-│   ├── user_queries_test.log
-│   └── session_summaries_test.log
-└── ...
+    ┌──────┴──────────────┬────────────┐
+    ↓                     ↓            ↓
+┌─────────────┐  ┌────────────────┐  ┌──────────────┐
+│Session Store│  │LLM APIs        │  │Logging       │
+│ (JSON Files)│  │(Gemini/Ollama) │  │ (JSON Lines) │
+└─────────────┘  └────────────────┘  └──────────────┘
 ```
 
 ## Quick Start
@@ -428,11 +109,6 @@ python cli_demo.py
 **Option B: Streamlit UI**
 ```bash
 streamlit run streamlit_app.py
-```
-
-**Option C: FastAPI Backend**
-```bash
-python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 ### Docker Deployment (Local)
@@ -492,9 +168,6 @@ chat-bot-with-memory/
 │   ├── test_cli_demo.py
 │   ├── test_streamlit_app.py
 │   └── run_tests.py
-├── data/                    # Persistent data
-│   ├── sessions/            # Session summaries (JSON)
-│   └── conversations/       # Conversation logs (JSONL)
 ├── logs/                    # Application logs
 ├── cli_demo.py              # CLI interface
 ├── streamlit_app.py         # Streamlit web UI
@@ -513,11 +186,26 @@ OLLAMA_HOST=http://localhost:11434  # For fallback
 SESSION_TOKEN_THRESHOLD=10000        # Summarize at this token count
 SESSION_STORAGE_TYPE=file            # or 'redis'
 REDIS_URL=redis://localhost:6379     # If using Redis
+
+# Logging
+LOG_LEVEL=INFO
+LOG_DIR=./logs
+
+## Testing
+Run the test files
+Run full test suite:
+```bash
+python tests/run_tests.py
 ```
 
 Run specific test:
 ```bash
 pytest tests/test_session_summarization.py -v
+```
+
+Test with coverage:
+```bash
+pytest tests/ --cov=app --cov-report=html
 ```
 
 **Session Management**
