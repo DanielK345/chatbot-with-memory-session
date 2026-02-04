@@ -78,17 +78,6 @@ graph TD
     classDef decision fill:#fff3e0,stroke:#ef6c00,stroke-width:3px,color:#e65100,font-weight:bold
   ```
 
-### Key Design Principles
-
-| Principle | Implementation |
-|-----------|-----------------|
-| **Prefer Early Exits** | Spelling corrected → Fast success path |
-| **Rule-First** | 6 heuristic rules before LLM for ambiguity |
-| **Aggressive Filtering** | Context limited to recent messages + memory |
-| **Lightweight Models** | Qwen2.5-1.5B for refinement (2-3x faster) |
-| **Never Guess** | Clarifying questions instead of assumptions |
-| **Fast Processing** | <500ms per query (without LLM delays) |
-
 ### Components
 
 #### 1. **Spelling Checker** (`app/query_understanding/spelling_check.py`)
