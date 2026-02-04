@@ -236,7 +236,7 @@ def main():
             <div class="top-banner">
                 <div class="banner-inner">
                     <div class="banner-title">🤖 AI Chatbot</div>
-                    <div class="banner-sub">Chat with AI or generate flashcards from content</div>
+                    <div class="banner-sub">Your reliable AI assistant</div>
                 </div>
             </div>
             ''',

@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-02-04T11:52:21.694123",
+  "session_id": "default_session",
+  "original_query": "hello, how can u help me",
+  "is_ambiguous": false,
+  "rewritten_query": null,
+  "needed_context_from_memory": [],
+  "clarifying_questions": [],
+  "final_augmented_context": "Recent conversation:\nUser: hello, how can u help me"
+}
+

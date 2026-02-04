@@ -4106,3 +4106,46 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2026-02-04 11:41:25 - app.core.pipeline - INFO - [pipeline.py:309] - [Pipeline] Step 6: Generating LLM response (answerable)
 2026-02-04 11:41:30 - app.core.pipeline - INFO - [pipeline.py:327] - [Pipeline] Generated LLM response
 2026-02-04 11:41:30 - scripts.session_manager - INFO - [session_manager.py:144] - Session test_ambiguity_session deleted
+2026-02-04 11:50:40 - app.llm.client - INFO - [client.py:66] - ✓ Gemini client initialized successfully
+2026-02-04 11:50:40 - app.llm.client - INFO - [client.py:101] - ✓ Lightweight Ollama client initialized (qwen2.5:1.5b)
+2026-02-04 11:51:11 - sentence_transformers.SentenceTransformer - INFO - [SentenceTransformer.py:219] - Use pytorch device_name: cpu
+2026-02-04 11:51:11 - sentence_transformers.SentenceTransformer - INFO - [SentenceTransformer.py:227] - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-04 11:51:12 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 11:51:12 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-02-04 11:51:12 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 11:51:12 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-02-04 11:51:12 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 11:51:12 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-02-04 11:51:13 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 11:51:13 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
+2026-02-04 11:51:13 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 11:51:13 - huggingface_hub.utils._http - WARNING - [_http.py:779] - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-02-04 11:51:13 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-02-04 11:51:13 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 11:51:14 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
+2026-02-04 11:51:14 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-02-04 11:51:14 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 11:51:14 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-02-04 11:51:17 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 11:51:17 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-02-04 11:51:17 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 11:51:17 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-02-04 11:51:17 - httpx - INFO - [_client.py:1013] - HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-02-04 11:51:18 - httpx - INFO - [_client.py:1013] - HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-02-04 11:51:18 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-02-04 11:51:19 - httpx - INFO - [_client.py:1013] - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+2026-02-04 11:51:19 - httpx - INFO - [_client.py:1013] - HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+2026-02-04 11:52:14 - app.core.pipeline - INFO - [pipeline.py:126] - [Pipeline] Processing message #1 for session default_session
+2026-02-04 11:52:15 - app.core.pipeline - INFO - [pipeline.py:143] - [Pipeline] Token count: 12
+2026-02-04 11:52:15 - app.core.pipeline - INFO - [pipeline.py:192] - [Pipeline] === QUERY UNDERSTANDING PIPELINE ===
+2026-02-04 11:52:15 - app.core.pipeline - INFO - [pipeline.py:195] - [Pipeline] Step 1: Spelling check (rule-based)
+2026-02-04 11:52:15 - app.core.pipeline - INFO - [pipeline.py:203] - [Pipeline] Step 2: Ambiguity check (rule-first, LLM fallback)
+2026-02-04 11:52:15 - app.core.pipeline - INFO - [pipeline.py:219] - [Pipeline] Ambiguity: False (heuristic only, confidence: 0.95)
+2026-02-04 11:52:15 - app.core.pipeline - INFO - [pipeline.py:224] - [Pipeline] Step 3: Answerability check (similarity-based, NO LLM)
+2026-02-04 11:52:15 - app.core.pipeline - INFO - [pipeline.py:232] - [Pipeline] Answerable: True (confidence: 0.9)
+2026-02-04 11:52:15 - app.core.pipeline - INFO - [pipeline.py:242] - [Pipeline] Step 4: Context retrieval (selective)
+2026-02-04 11:52:15 - app.core.pipeline - INFO - [pipeline.py:250] - [Pipeline] Expanding context to 3 turns (pronoun/contrast detected)
+2026-02-04 11:52:15 - app.core.pipeline - INFO - [pipeline.py:266] - [Pipeline] Memory fields used: []
+2026-02-04 11:52:15 - app.core.pipeline - INFO - [pipeline.py:272] - [Pipeline] Step 5: Query refinement (LLM-assisted pronouns replacement)
+2026-02-04 11:52:15 - app.core.pipeline - INFO - [pipeline.py:309] - [Pipeline] Step 6: Generating LLM response (answerable)
+2026-02-04 11:52:21 - app.core.pipeline - INFO - [pipeline.py:327] - [Pipeline] Generated LLM response
