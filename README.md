@@ -32,113 +32,56 @@ A production-ready conversational AI assistant with advanced memory management, 
 
 The query understanding pipeline processes every user query through 6 sequential steps to ensure clarity before LLM response generation:
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    INCOMING USER QUERY                          │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ↓
-         ┌───────────────────────────────────────┐
-         │  STEP 1: SPELLING CHECK               │
-         │  ✓ Rule-based (NO LLM)               │
-         │  ✓ Corrects typos & grammar          │
-         │  ✓ Fast, deterministic               │
-         └────────────┬────────────────────────┘
-                      │
-                      ↓
-         ┌───────────────────────────────────────┐
-         │  STEP 2: AMBIGUITY DETECTION          │
-         │  ✓ Rule-first (heuristics)           │
-         │  ✓ 6 ambiguity rules:               │
-         │    - RULE 1: Pronouns (it, they)    │
-         │    - RULE 1b: Anaphoric (same, like)│
-         │    - RULE 1c: Which-one patterns    │
-         │    - RULE 2: Very short questions   │
-         │    - RULE 2b: Choose without object│
-         │    - RULE 3: Unclear intent         │
-         │  ✓ LLM fallback if uncertain        │
-         │  ✓ Logs confidence score            │
-         └────────────┬────────────────────────┘
-                      │
-           ┌──────────┴──────────┐
-           │                     │
-        CLEAR            AMBIGUOUS
-           │                     │
-           ↓                     ↓
-      CONTINUE         ┌──────────────────────┐
-                       │ RULE 3b: Is it still │
-                       │ fixable with context?│
-                       └──┬──────────────┬────┘
-                          │              │
-                       YES│              │NO
-                          ↓              ↓
-                      CONTINUE       UNCLEAR
-                                         │
-                                         ↓
-                      ┌──────────────────────────┐
-                      │ STEP 6b: Generate        │
-                      │ Clarifying Questions     │
-                      │ + Return instead of LLM  │
-                      └──────────────────────────┘
-           │
-           ↓
-         ┌───────────────────────────────────────┐
-         │  STEP 3: ANSWERABILITY CHECK          │
-         │  ✓ Similarity-based (NO LLM)         │
-         │  ✓ Compares to known patterns       │
-         │  ✓ Checks if answerable by system   │
-         │  ✓ Falls back to clarifying Qs      │
-         └────────────┬────────────────────────┘
-                      │
-           ┌──────────┴──────────┐
-           │                     │
-       ANSWERABLE         NOT ANSWERABLE
-           │                     │
-           ↓                     ↓
-       CONTINUE          (Clarifying Qs)
-                                 │
-           │
-           ↓
-         ┌───────────────────────────────────────┐
-         │  STEP 4: CONTEXT RETRIEVAL            │
-         │  ✓ Selective memory augmentation     │
-         │  ✓ Detects pronouns → get history   │
-         │  ✓ Extracts key facts, decisions    │
-         │  ✓ Aggressive filtering (no bloat)  │
-         │  ✓ Max 3-turn lookback              │
-         └────────────┬────────────────────────┘
-                      │
-                      ↓
-         ┌───────────────────────────────────────┐
-         │  STEP 5: QUERY REFINEMENT             │
-         │  ✓ Pronoun detection (regex)         │
-         │  ✓ Entity extraction from cache:     │
-         │    - Last 3 queries (lightweight)    │
-         │    - Capitalized word extraction    │
-         │  ✓ LLM rewriting (Qwen2.5-1.5B):    │
-         │    - "Replace [pronouns] with       │
-         │      [entities] in query"           │
-         │    - Max 20 tokens response         │
-         │    - 2-3x faster than llama3.1      │
-         └────────────┬────────────────────────┘
-                      │
-                      ↓
-         ┌───────────────────────────────────────┐
-         │  STEP 6: LLM RESPONSE GENERATION      │
-         │  ✓ Build system + user prompt       │
-         │  ✓ Include augmented context        │
-         │  ✓ Generate response               │
-         │  ✓ Log everything                   │
-         └────────────┬────────────────────────┘
-                      │
-                      ↓
-         ┌───────────────────────────────────────┐
-         │        RESPONSE + METADATA            │
-         │  ✓ Answer text                       │
-         │  ✓ Query understanding results       │
-         │  ✓ Token usage statistics            │
-         │  ✓ Refinement details                │
-         └───────────────────────────────────────┘
+```mermaid
+graph TD
+    A["🔤 User Query"] --> B["<b>STEP 1: Spelling Check</b><br/>Rule-based | No LLM<br/>Correct typos & grammar"]
+    
+    style B fill:#f0f0f0,stroke:#666,stroke-width:2px
+    
+    B --> C["<b>STEP 2: Ambiguity Detection</b><br/>🤖 Gemini Fallback<br/>6 heuristic rules first"]
+    
+    style C fill:#fff3e0,stroke:#ff8a00,stroke-width:2px
+    
+    C -->|CLEAR| D["Continue ✓"]
+    C -->|AMBIGUOUS| E["Fixable with Context?"]
+    
+    style D fill:#c8e6c9,stroke:#4caf50,stroke-width:2px
+    style E fill:#ffe0b2,stroke:#ff8a00,stroke-width:2px
+    
+    E -->|YES| D
+    E -->|NO| F["<b>STEP 6b: Clarifying Questions</b><br/>🤖 Gemini<br/>Ask user for clarity"]
+    
+    style F fill:#ffccbc,stroke:#d84315,stroke-width:2px
+    
+    D --> G["<b>STEP 3: Answerability Check</b><br/>🤖 Sentence-Transformers MiniLM<br/>Similarity matching"]
+    
+    style G fill:#e8d5f2,stroke:#7b1fa2,stroke-width:2px
+    
+    G -->|ANSWERABLE| H["Continue ✓"]
+    G -->|NOT ANSWERABLE| I["Clarifying Questions"]
+    
+    style H fill:#c8e6c9,stroke:#4caf50,stroke-width:2px
+    style I fill:#ffccbc,stroke:#d84315,stroke-width:2px
+    
+    H --> J["<b>STEP 4: Context Retrieval</b><br/>Rule-based | No LLM<br/>Memory augmentation"]
+    
+    style J fill:#f0f0f0,stroke:#666,stroke-width:2px
+    
+    J --> K["<b>STEP 5: Query Refinement</b><br/>🤖 Qwen 2.5-1.5B<br/>Pronoun → Entity replacement"]
+    
+    style K fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    
+    K --> L["<b>STEP 6: LLM Response Generation</b><br/>🤖 Google Gemini<br/>Generate + Log"]
+    
+    style L fill:#fff3e0,stroke:#ff8a00,stroke-width:2px
+    
+    L --> M["✅ Response + Metadata<br/>Answer | Token Usage | Refinement Details"]
+    
+    style M fill:#c8e6c9,stroke:#4caf50,stroke-width:2px
+    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    
+    F --> M
+    I --> M
 ```
 
 ### Key Design Principles
